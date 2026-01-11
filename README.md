@@ -2,6 +2,8 @@
 
 A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
 
+**🚀 [Live Demo](https://nextshopsphere-ui.onrender.com/)**
+
 <p align="center">
   <img width="90%" alt="NextShopSphere Landing Page" src="https://github.com/user-attachments/assets/1dcfcdb6-47bb-4a6b-b5d7-19a1c5684ad3" />
 </p>
