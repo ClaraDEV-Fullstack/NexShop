@@ -1,70 +1,54 @@
-
 # 🛒 NextShopSphere
 
-A modern, full-stack e-commerce platform built with Next.js and Django REST Framework.
+A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
 
-![NextShopSphere](https://img.shields.io/badge/NextShopSphere-E--Commerce-blue)
-![React](https://img.shields.io/badge/React-19.2.1-61DAFB?logo=react)
-![Django](https://img.shields.io/badge/Django-5.1-092E20?logo=django)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)
+<p align="center">
+  <img width="90%" alt="NextShopSphere Landing Page" src="https://github.com/user-attachments/assets/1dcfcdb6-47bb-4a6b-b5d7-19a1c5684ad3" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Django-5.1.4-092E20?logo=django&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Redux-Toolkit-764ABC?logo=redux&style=for-the-badge" />
+</p>
 
 ---
 
 ## 📋 Table of Contents
 
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Environment Variables](#-environment-variables)
-- [Running the Application](#-running-the-application)
-- [API Documentation](#-api-documentation)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📸 Screenshots](#-screenshots)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Installation](#-installation)
+- [📚 API Documentation](#-api-documentation)
+- [👨‍💻 Author](#-author)
 
 ---
 
 ## ✨ Features
 
 ### 🛍️ Shopping Experience
-- Product browsing with categories and filters
-- Advanced search functionality
-- Product details with image galleries
-- Related products suggestions
-- Featured, bestseller, and on-sale sections
+- **Dynamic Catalog:** Product browsing with advanced categories and filtering.
+- **Smart Search:** Real-time search functionality for products.
+- **Rich Galleries:** Interactive image galleries for product details.
+- **Recommendations:** Related products and "Bestseller" algorithms.
 
-### 👤 User Management
-- User registration and authentication
-- JWT-based secure authentication
-- Google OAuth integration
-- User profile management
-- Profile picture upload
+### 👤 User & Security
+- **Secure Auth:** JWT-based login and **Google OAuth 2.0** integration.
+- **Profile Management:** User-specific dashboards with profile picture uploads.
+- **Protected Routes:** Secure checkout and account management.
 
 ### 🛒 Cart & Orders
-- Shopping cart functionality
-- Order placement and tracking
-- Order history
-- Order cancellation
+- **Full Cart Logic:** Persistent shopping cart managed via Redux.
+- **Order Lifecycle:** Placement, history tracking, and cancellation capabilities.
+- **Wishlist:** Personal "save for later" functionality.
 
-### ❤️ Wishlist
-- Add/remove products to wishlist
-- Wishlist management
-
-### ⭐ Reviews & Ratings
-- Product reviews and ratings
-- Review management
-- Rating statistics
-
-### 💳 Payments
-- Secure payment processing
-- Payment history
-
-### 🔔 Alerts
-- User notifications
-- Alert management
+### ⭐ Engagement
+- **Reviews & Ratings:** Comprehensive feedback system with statistical summaries.
+- **Notifications:** Real-time user alerts via **React Hot Toast**.
 
 ---
 
@@ -73,268 +57,85 @@ A modern, full-stack e-commerce platform built with Next.js and Django REST Fram
 ### Frontend
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| React | 19.2.1 | UI Framework |
-| Redux Toolkit | 2.11.1 | State Management |
-| React Router DOM | 7.10.1 | Routing |
-| Axios | 1.13.2 | HTTP Client |
-| Tailwind CSS | 3.4.18 | Styling |
-| Framer Motion | 12.23.26 | Animations |
-| React Hot Toast | 2.6.0 | Notifications |
-| React Icons | 5.5.0 | Icon Library |
+| **React** | 18.2.0 | Core UI Library |
+| **Redux Toolkit** | 2.11.1 | State & Cart Management |
+| **React Router** | 6.22.0 | Client-side Navigation |
+| **Axios** | 1.13.2 | API Communication |
+| **Tailwind CSS** | 3.4.18 | Responsive UI & Styling |
+| **Framer Motion** | 10.18.0 | High-quality UI Animations |
 
 ### Backend
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| Django | 5.1.4 | Web Framework |
-| Django REST Framework | 3.15.2 | REST API |
-| SimpleJWT | 5.4.0 | JWT Authentication |
-| DRF Spectacular | 0.28.0 | API Documentation |
-| Gunicorn | 23.0.0 | Production Server |
-| WhiteNoise | 6.8.2 | Static Files |
-| Pillow | 11.1.0 | Image Processing |
+| **Django** | 5.1.4 | Robust Web Framework |
+| **Django REST Framework** | 3.15.2 | RESTful API Architecture |
+| **SimpleJWT** | 5.4.0 | Token-based Authentication |
+| **MySQL** | 8.0 | Relational Database |
+| **Docker** | Latest | Containerization & Orchestration |
 
-### Database
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| MySQL | 8.0 | Primary Database |
-| PyMySQL | 1.1.1 | MySQL Connector |
+---
 
-### DevOps
-| Technology | Purpose |
-|------------|---------|
-| Docker | Containerization |
-| Docker Compose | Multi-container Orchestration |
-| Nginx | Reverse Proxy & Static Files |
+## 📸 Screenshots
+
+### 📊 Admin Dashboard
+*Effortless management of products, orders, and user analytics.*
+<p align="center">
+  <img width="90%" alt="Dashboard" src="https://github.com/user-attachments/assets/8abcca37-b766-4c70-be11-a8b6e8b83845" />
+</p>
 
 ---
 
 ## 📁 Project Structure
 
+```text
 NextShopSphere/
-├── backend/ # Django Backend
-│ ├── accounts/ # User authentication & profiles
-│ ├── products/ # Product management
-│ ├── orders/ # Order processing
-│ ├── payments/ # Payment handling
-│ ├── reviews/ # Product reviews
-│ ├── wishlist/ # User wishlists
-│ ├── alerts/ # Notifications
-│ ├── nextshopsphere/ # Django settings
-│ ├── Dockerfile # Development Dockerfile
-│ ├── Dockerfile.prod # Production Dockerfile
-│ └── requirements.txt # Python dependencies
-│
-├── frontend/ # React Frontend
-│ ├── src/
-│ │ ├── api/ # API configuration
-│ │ ├── components/ # Reusable components
-│ │ ├── pages/ # Page components
-│ │ ├── redux/ # Redux store & slices
-│ │ └── App.js # Main App component
-│ ├── Dockerfile # Development Dockerfile
-│ ├── Dockerfile.prod # Production Dockerfile
-│ └── nginx.conf # Nginx configuration
-│
-├── nginx/ # Nginx Reverse Proxy
-│ └── nginx.conf # Main Nginx config
-│
-├── docker-compose.yml # Development Docker Compose
-├── docker-compose.prod.yml # Production Docker Compose
-├── deploy.sh # Deployment script
-└── README.md # This file
+├── backend/               # Django REST Framework
+│   ├── accounts/          # User Auth & Google OAuth
+│   ├── products/          # Catalog Management
+│   ├── orders/            # Order Processing
+│   └── nextshopsphere/    # Core Settings
+├── frontend/              # React SPA
+│   ├── src/
+│   │   ├── redux/         # Slices (Cart, Auth, UI)
+│   │   ├── api/           # Axios Interceptors
+│   │   └── components/    # Atomic Design UI Components
+└── nginx/                 # Reverse Proxy Configuration
 
-text
-
----
-
-## 📋 Prerequisites
-
-- **Node.js** >= 18.x
-- **Python** >= 3.12
-- **MySQL** >= 8.0
-- **Docker** & **Docker Compose** (for containerized deployment)
-- **Git**
-
----
-
-## 🚀 Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/NextShopSphere.git
-cd NextShopSphere/Next_Shop_Sphere
-
-2. Backend Setup
+🚀 Installation
+1. Clone & Setup Backend
 Bash
 
-# Navigate to backend
-cd backend
-
-# Create virtual environment
+git clone [https://github.com/ClaraDEV-Fullstack/NextShopSphere.git](https://github.com/ClaraDEV-Fullstack/NextShopSphere.git)
+cd NextShopSphere/backend
 python -m venv venv
-
-# Activate virtual environment
-# Windows:
-.\venv\Scripts\activate
-# Linux/Mac:
-source venv/bin/activate
-
-# Install dependencies
+source venv/bin/activate  # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
-
-# Copy environment file
-cp .env.example .env
-# Edit .env with your values
-
-# Run migrations
 python manage.py migrate
-
-# Create superuser (optional)
-python manage.py createsuperuser
-
-# Start server
 python manage.py runserver
-3. Frontend Setup
+2. Setup Frontend
 Bash
 
-# Navigate to frontend
-cd frontend
-
-# Install dependencies
+cd ../frontend
 npm install
-
-# Copy environment file
-cp .env.example .env
-# Edit .env with your values
-
-# Start development server
 npm start
-🔐 Environment Variables
-Backend (backend/.env)
-env
-
-SECRET_KEY=your-secret-key
-DEBUG=True
-DB_NAME=nextshopsphere
-DB_USER=root
-DB_PASSWORD=your-password
-DB_HOST=localhost
-DB_PORT=3306
-EMAIL_HOST_USER=your-email@gmail.com
-EMAIL_HOST_PASSWORD=your-app-password
-GOOGLE_OAUTH_CLIENT_ID=your-google-client-id
-GOOGLE_OAUTH_CLIENT_SECRET=your-google-client-secret
-Frontend (frontend/.env)
-env
-
-REACT_APP_API_URL=http://localhost:8000/api
-REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
-🏃 Running the Application
-Option 1: Local Development
+3. Docker Quickstart
 Bash
 
-# Terminal 1 - Backend
-cd backend
-.\venv\Scripts\activate
-python manage.py runserver
-
-# Terminal 2 - Frontend
-cd frontend
-npm start
-Access:
-
-Frontend: http://localhost:3000
-Backend API: http://localhost:8000/api
-Admin Panel: http://localhost:8000/admin
-Option 2: Docker Development
-Bash
-
-# Start all services
 docker-compose up --build
-
-# Stop services
-docker-compose down
-Access:
-
-Frontend: http://localhost:3000
-Backend API: http://localhost:8000/api
-Option 3: Docker Production
-Bash
-
-# Copy and configure production environment
-cp .env.example .env.production
-# Edit .env.production with production values
-
-# Deploy
-./deploy.sh
-# Or manually:
-docker-compose -f docker-compose.prod.yml up --build -d
-Access:
-
-Application: http://localhost (port 80)
 📚 API Documentation
-API documentation is available via Swagger UI:
+Fully documented endpoints via Swagger UI:
 
 Development: http://localhost:8000/api/docs/
+
 Schema: http://localhost:8000/api/schema/
-Main API Endpoints
-Endpoint	Method	Description
-/api/accounts/register/	POST	User registration
-/api/accounts/login/	POST	User login
-/api/accounts/profile/	GET/PATCH	User profile
-/api/products/	GET	List products
-/api/products/{slug}/	GET	Product details
-/api/categories/	GET	List categories
-/api/orders/	GET/POST	User orders
-/api/wishlist/	GET/POST	User wishlist
-/api/reviews/	GET/POST	Product reviews
-/api/health/	GET	Health check
-🚀 Deployment
-Recommended Platforms
-Platform	Difficulty	Cost
-Railway	Easy	Free tier available
-Render	Easy	Free tier available
-DigitalOcean	Medium	From $5/month
-AWS	Advanced	Pay-as-you-go
-Quick Deploy
-Bash
 
-# 1. Configure production environment
-cp .env.example .env.production
-nano .env.production  # Edit with production values
-
-# 2. Run deployment script
-chmod +x deploy.sh
-./deploy.sh
-🧪 Testing
-Bash
-
-# Backend tests
-cd backend
-python manage.py test
-
-# Frontend tests
-cd frontend
-npm test
-📝 Contributing
-Fork the repository
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
 👨‍💻 Author
 ClaraDEV-Fullstack
 
 GitHub: @ClaraDEV-Fullstack
-LinkedIn: https://linkedin.com/in/clara-beri-794097217/
-Portfolio: https://claradev.vercel.app/
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
-🙏 Acknowledgments
-Django REST Framework team
-React team
-All open-source contributors
+LinkedIn: Clara Beri
 
-<p align="center"> Made with ❤️ by NextShopSphere Team </p> 
+Portfolio: claradev.vercel.app
+
+<p align="center"> Built with ❤️ for the modern web. </p>
