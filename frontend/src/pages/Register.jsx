@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HiMail, HiLockClosed, HiUser, HiEye, HiEyeOff, HiShieldCheck, HiCheck, HiDeviceMobile, HiGlobe, HiLockOpen, HiUserAdd, HiArrowRight } from 'react-icons/hi';
 import { registerUser, clearError } from '../store/authSlice';
 import toast from 'react-hot-toast';
+import { API_URL } from '../config';
 import { GoogleLogin } from '@react-oauth/google';
-import { loginUserSuccess } from '../store/authSlice';
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -272,7 +272,7 @@ const Register = () => {
                                 const loadingToastId = toast.loading('Signing you in with Google...');
 
                                 try {
-                                    const response = await fetch(`${process.env.REACT_APP_API_URL}/accounts/google/auth/`, {
+                                    const response = await fetch(`${API_URL}/accounts/google/auth/`, {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ credential: credentialResponse.credential }),

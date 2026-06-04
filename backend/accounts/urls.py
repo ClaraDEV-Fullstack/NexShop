@@ -1,24 +1,21 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_spectacular.utils import extend_schema
-from .views import RegisterView, ProfileView, LogoutView
-from .google_auth import google_auth, google_client_id
-from .views import (
-    RegisterView,
-    ProfileView,
-    LogoutView,
-    ChangePasswordView,
-    AvatarUploadView,   # 👈 ADD THIS
-)
 
-# Wrap JWT views with schema tags
-class CustomTokenObtainPairView(TokenObtainPairView):
+from .views import (
+    RegisterView, ProfileView, LogoutView, ChangePasswordView,
+    AvatarUploadView, PasswordResetRequestView, PasswordResetConfirmView,
+)
+from .google_auth import google_auth, google_client_id
+
+
+class TaggedTokenObtainPairView(TokenObtainPairView):
     @extend_schema(tags=['Accounts'])
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
 
-class CustomTokenRefreshView(TokenRefreshView):
+class TaggedTokenRefreshView(TokenRefreshView):
     @extend_schema(tags=['Accounts'])
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
@@ -27,8 +24,8 @@ class CustomTokenRefreshView(TokenRefreshView):
 urlpatterns = [
     # Auth
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('login/', TaggedTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TaggedTokenRefreshView.as_view(), name='token_refresh'),
     path('logout/', LogoutView.as_view(), name='logout'),
 
     # Profile
@@ -36,8 +33,11 @@ urlpatterns = [
     path('profile/avatar/', AvatarUploadView.as_view(), name='profile-avatar'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 
+    # Password reset
+    path('password-reset/', PasswordResetRequestView.as_view(), name='password-reset'),
+    path('password-reset/confirm/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
 
-    # ✅ GOOGLE OAUTH ROUTES — ADD THESE
+    # Google OAuth
     path('google/auth/', google_auth, name='google_auth'),
     path('google/client-id/', google_client_id, name='google_client_id'),
 ]

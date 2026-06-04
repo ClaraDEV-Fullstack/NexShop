@@ -1,12 +1,8 @@
 import os
+import sentry_sdk
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-# settings.py
-
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 import dj_database_url
 
 # Load environment variables from .env file
@@ -68,12 +64,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',   # MUST come first
-
-    'cloudinary',
-    'cloudinary_storage',
+    'django.contrib.staticfiles',
 
     # Third party
+    'storages',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
@@ -89,27 +83,34 @@ INSTALLED_APPS = [
     'reviews',
     'wishlist',
     'alerts',
+    'coupons',
+    'cart',
+    'config',
 ]
 
+# =============================================================================
+# SENTRY — error tracking
+# =============================================================================
+SENTRY_DSN = os.getenv('SENTRY_DSN', '')
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        traces_sample_rate=0.2,
+        send_default_pii=False,
+    )
 
+# =============================================================================
+# SUPABASE MEDIA STORAGE — permanent CDN URLs, free, no credit card needed
+# =============================================================================
+SUPABASE_URL = os.getenv('SUPABASE_URL', '')           # https://xxx.supabase.co
+SUPABASE_SERVICE_KEY = os.getenv('SUPABASE_SERVICE_KEY', '')
+SUPABASE_BUCKET = os.getenv('SUPABASE_BUCKET', 'media')
 
-# Cloudinary Configuration
-cloudinary.config(
-    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    api_key=os.environ.get('CLOUDINARY_API_KEY'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
-    secure=True  # ✅ Important: ensures https:// URLs
-)
-
-# For django-cloudinary-storage
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
-
-# Default file storage
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+if SUPABASE_URL and SUPABASE_SERVICE_KEY:
+    DEFAULT_FILE_STORAGE = 'nextshopsphere.supabase_storage.SupabaseStorage'
+    MEDIA_URL = f'{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/'
+else:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -213,6 +214,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+LOCALE_PATHS = []
 
 # =============================================================================
 # STATIC FILES (CSS, JavaScript, Images)
@@ -227,8 +229,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # =============================================================================
 # MEDIA FILES (User uploads)
 # =============================================================================
-MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if 'MEDIA_URL' not in dir():
+    MEDIA_URL = '/media/'
 
 # File upload settings
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5MB
@@ -272,7 +275,7 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'nextshopsphere.pagination.FlexiblePageNumberPagination',
     'PAGE_SIZE': 12,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
@@ -358,54 +361,51 @@ elif DEBUG:
     print("WARNING: Google OAuth not configured - add GOOGLE_OAUTH_CLIENT_ID to .env")
 
 # =============================================================================
-# LOGGING CONFIGURATION
+# LOGGING — structured JSON in production, verbose in dev
 # =============================================================================
+logs_dir = os.path.join(BASE_DIR, 'logs')
+os.makedirs(logs_dir, exist_ok=True)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
+        'json': {
+            '()': 'logging.Formatter',
+            'format': '{"time":"%(asctime)s","level":"%(levelname)s","logger":"%(name)s","message":"%(message)s"}',
         },
-        'simple': {
-            'format': '{levelname} {message}',
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'json' if not DEBUG else 'verbose',
         },
         'file': {
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
-            'formatter': 'verbose',
-        } if not DEBUG else {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(logs_dir, 'django.log'),
+            'maxBytes': 10 * 1024 * 1024,  # 10 MB
+            'backupCount': 5,
+            'formatter': 'json',
         },
     },
     'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
+        'handlers': ['console', 'file'],
+        'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
     },
     'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        'django.request': {
+            'handlers': ['console', 'file'],
+            'level': 'ERROR',
             'propagate': False,
         },
-        'django.request': {
+        'django.db.backends': {
             'handlers': ['console'],
-            'level': 'ERROR',
+            'level': 'WARNING',
             'propagate': False,
         },
     },
 }
-
-# Create logs directory if it doesn't exist
-logs_dir = os.path.join(BASE_DIR, 'logs')
-if not os.path.exists(logs_dir):
-    os.makedirs(logs_dir)

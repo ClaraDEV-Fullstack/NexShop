@@ -6,7 +6,7 @@ from urllib.parse import unquote
 import re
 from .models import (
     Category, Product, ProductImage, ProductSpecification,
-    Brand, ShippingOption
+    Brand, ShippingOption, ProductVariant
 )
 
 
@@ -211,6 +211,17 @@ class ProductImageSerializer(serializers.ModelSerializer):
         return None
 
 
+# ============ PRODUCT VARIANT SERIALIZER ============
+
+class ProductVariantSerializer(serializers.ModelSerializer):
+    final_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+
+    class Meta:
+        model = ProductVariant
+        fields = ['id', 'name', 'value', 'sku', 'price_adjustment', 'final_price', 'stock', 'is_available']
+        read_only_fields = ['id', 'final_price']
+
+
 # ============ PRODUCT SPECIFICATION SERIALIZER ============
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
@@ -280,6 +291,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     )
     images = ProductImageSerializer(many=True, read_only=True)
     specifications = ProductSpecificationSerializer(many=True, read_only=True)
+    variants = ProductVariantSerializer(many=True, read_only=True)
     in_stock = serializers.ReadOnlyField()
     is_low_stock = serializers.ReadOnlyField()
     discount_percentage = serializers.ReadOnlyField()
@@ -295,7 +307,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'sku', 'stock', 'is_available', 'in_stock', 'is_low_stock',
             'category', 'category_id', 'brand', 'brand_id',
             'weight', 'dimensions', 'meta_title', 'meta_description',
-            'images', 'specifications',
+            'images', 'specifications', 'variants',
             'featured', 'is_new', 'is_bestseller',
             'average_rating', 'review_count', 'related_products',
             'created_at', 'updated_at'

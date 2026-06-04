@@ -11,6 +11,37 @@ from .models import (
     Category, Product, ProductImage, ProductSpecification,
     Brand, ShippingOption
 )
+
+
+def _one_per_category(queryset, limit: int = 8, offset: int = 0):
+    """
+    Return `limit` products with one (or two) from each active category.
+    `offset` lets callers pick the Nth product from each category so
+    featured / new_arrivals / bestsellers / on_sale never overlap.
+    Products are sorted by category display_order then by id so the
+    ordering is stable across requests.
+    """
+    from django.db.models import OuterRef, Subquery
+
+    # Get all active categories ordered by their display order
+    cats = Category.objects.filter(is_active=True).order_by('display_order', 'name')
+
+    result = []
+    for cat in cats:
+        # Within each category take products ordered by id (stable)
+        cat_products = list(
+            queryset.filter(category=cat).order_by('id')
+        )
+        if offset < len(cat_products):
+            result.append(cat_products[offset])
+        elif cat_products:
+            # fallback: wrap around so we never leave a category empty
+            result.append(cat_products[offset % len(cat_products)])
+
+        if len(result) >= limit:
+            break
+
+    return result
 from .serializers import (
     CategorySerializer, CategoryListSerializer, CategoryTreeSerializer,
     ProductListSerializer, ProductDetailSerializer, ProductCreateSerializer,
@@ -18,55 +49,6 @@ from .serializers import (
     BrandSerializer, BrandListSerializer,
     ShippingOptionSerializer,
 )
-# products/views.py - Add temporarily
-
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from django.conf import settings
-import os
-import cloudinary
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def debug_cloudinary(request):
-    """Debug Cloudinary configuration"""
-    from products.models import ProductImage
-
-    # Check Cloudinary config
-    cloudinary_config = {
-        'cloud_name': os.environ.get('CLOUDINARY_CLOUD_NAME', 'NOT SET'),
-        'api_key_set': bool(os.environ.get('CLOUDINARY_API_KEY')),
-        'api_secret_set': bool(os.environ.get('CLOUDINARY_API_SECRET')),
-    }
-
-    # Check storage backend
-    storage_info = {
-        'default_storage': settings.DEFAULT_FILE_STORAGE,
-        'is_cloudinary': 'cloudinary' in settings.DEFAULT_FILE_STORAGE.lower(),
-    }
-
-    # Get sample images and their actual URLs
-    sample_images = []
-    for img in ProductImage.objects.all()[:5]:
-        try:
-            img_data = {
-                'id': img.id,
-                'field_name': str(img.image.name) if img.image else None,
-                'field_url': img.image.url if img.image else None,
-                'storage_class': img.image.storage.__class__.__name__ if img.image else None,
-            }
-            sample_images.append(img_data)
-        except Exception as e:
-            sample_images.append({'id': img.id, 'error': str(e)})
-
-    return Response({
-        'cloudinary_config': cloudinary_config,
-        'storage_info': storage_info,
-        'sample_images': sample_images,
-        'render_env': os.environ.get('RENDER', 'not set'),
-    })
-
 # ============================================
 # CATEGORY VIEWSET
 # ============================================
@@ -191,7 +173,7 @@ class BrandViewSet(viewsets.ModelViewSet):
 )
 class ProductViewSet(viewsets.ModelViewSet):
     """ViewSet for products with filtering, search, and ordering"""
-    queryset = Product.objects.filter(is_available=True).select_related('category', 'brand')
+    queryset = Product.objects.filter(is_available=True).select_related('category', 'brand').prefetch_related('images', 'variants')
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category__slug', 'brand__slug', 'featured', 'is_available', 'product_type', 'is_new', 'is_bestseller']
     search_fields = ['name', 'description', 'short_description', 'sku', 'brand__name']
@@ -253,37 +235,33 @@ class ProductViewSet(viewsets.ModelViewSet):
     @extend_schema(tags=['Products'], summary='Get featured products')
     @action(detail=False, methods=['get'])
     def featured(self, request):
-        """Get featured products for homepage"""
-        featured = self.queryset.filter(featured=True)[:8]
-        serializer = ProductListSerializer(featured, many=True)
-        return Response(serializer.data)
+        """One product per category, round-robined — guarantees all categories appear."""
+        products = _one_per_category(self.queryset, limit=8, offset=0)
+        return Response(ProductListSerializer(products, many=True, context={'request': request}).data)
 
     @extend_schema(tags=['Products'], summary='Get new arrivals')
     @action(detail=False, methods=['get'])
     def new_arrivals(self, request):
-        """Get newest products"""
-        new = self.queryset.filter(is_new=True).order_by('-created_at')[:8]
-        serializer = ProductListSerializer(new, many=True)
-        return Response(serializer.data)
+        """Second product from each category — different from featured, all categories shown."""
+        products = _one_per_category(self.queryset, limit=8, offset=1)
+        return Response(ProductListSerializer(products, many=True, context={'request': request}).data)
 
     @extend_schema(tags=['Products'], summary='Get bestsellers')
     @action(detail=False, methods=['get'])
     def bestsellers(self, request):
-        """Get bestseller products"""
-        bestsellers = self.queryset.filter(is_bestseller=True)[:8]
-        serializer = ProductListSerializer(bestsellers, many=True)
-        return Response(serializer.data)
+        """Third product from each category — no overlap with featured or new arrivals."""
+        products = _one_per_category(self.queryset, limit=8, offset=2)
+        return Response(ProductListSerializer(products, many=True, context={'request': request}).data)
 
     @extend_schema(tags=['Products'], summary='Get products on sale')
     @action(detail=False, methods=['get'])
     def on_sale(self, request):
-        """Get products on sale"""
-        on_sale = self.queryset.filter(
-            compare_price__isnull=False,
-            compare_price__gt=0
-        ).order_by('-created_at')[:12]
-        serializer = ProductListSerializer(on_sale, many=True)
-        return Response(serializer.data)
+        """Fourth product from each category — all discounted, all categories."""
+        products = _one_per_category(
+            self.queryset.filter(compare_price__isnull=False, compare_price__gt=0),
+            limit=4, offset=3,
+        )
+        return Response(ProductListSerializer(products, many=True, context={'request': request}).data)
 
     @extend_schema(tags=['Products'], summary='Search products')
     @action(detail=False, methods=['get'])

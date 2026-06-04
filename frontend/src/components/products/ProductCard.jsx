@@ -10,7 +10,7 @@ import WishlistButton from '../common/WishlistButton';
 import OptimizedImage from '../common/OptimizedImage';
 import toast from 'react-hot-toast';
 
-const ProductCard = memo(({ product }) => {
+const ProductCard = memo(({ product, priority = false }) => {
     const dispatch = useDispatch();
 
     // Get image URL
@@ -52,9 +52,7 @@ const ProductCard = memo(({ product }) => {
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-500 sm:group-hover:scale-105"
                     placeholderClassName="w-full h-full"
-                    width={400}
-                    height={400}
-                    quality="auto:good"
+                    priority={priority}
                 />
 
                 {/* Gradient Overlay on Hover */}

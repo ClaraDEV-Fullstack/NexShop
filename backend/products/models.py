@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from decimal import Decimal
-from cloudinary.models import CloudinaryField
 
 
 class Category(models.Model):
@@ -264,8 +263,6 @@ class Product(models.Model):
         return 0
 
 
-from cloudinary.models import CloudinaryField
-
 class ProductImage(models.Model):
     product = models.ForeignKey(
         Product,
@@ -273,7 +270,7 @@ class ProductImage(models.Model):
         related_name='images',
         help_text="Select the product this image belongs to"
     )
-    image = CloudinaryField('image')  # This stores the Cloudinary URL automatically
+    image = models.ImageField(upload_to='products/')
     alt_text = models.CharField(
         max_length=200,
         blank=True,
@@ -386,3 +383,42 @@ class ShippingOption(models.Model):
         if self.estimated_days_min == self.estimated_days_max:
             return f"{self.estimated_days_min} days"
         return f"{self.estimated_days_min}-{self.estimated_days_max} days"
+
+
+class ProductVariant(models.Model):
+    """Size, color, or any other product variant with its own stock and optional price delta."""
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='variants',
+    )
+    name = models.CharField(
+        max_length=50,
+        help_text="Variant type, e.g. Size, Color",
+    )
+    value = models.CharField(
+        max_length=100,
+        help_text="Variant value, e.g. XL, Red",
+    )
+    sku = models.CharField(max_length=100, unique=True)
+    price_adjustment = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        help_text="Amount added to (positive) or subtracted from (negative) the base price",
+    )
+    stock = models.PositiveIntegerField(default=0)
+    is_available = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['name', 'value']
+        unique_together = ['product', 'name', 'value']
+
+    def __str__(self):
+        return f"{self.product.name} — {self.name}: {self.value}"
+
+    @property
+    def final_price(self):
+        return self.product.price + self.price_adjustment

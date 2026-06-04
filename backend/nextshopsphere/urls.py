@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 
 # Import settings to access DEBUG and MEDIA_ROOT
 from django.conf import settings
@@ -101,8 +102,13 @@ urlpatterns = [
     path('api/', include('payments.urls')),
 
     # Alerts/Notifications - /api/notifications/
-    # - /api/notifications/
     path('api/notifications/', include('alerts.urls')),
+
+    # Cart - /api/cart/
+    path('api/', include('cart.urls')),
+
+    # Coupons - /api/coupons/
+    path('api/', include('coupons.urls')),
 
     # =============================================
     # API DOCUMENTATION

@@ -18,7 +18,7 @@ import {
     HiGift
 } from 'react-icons/hi';
 import { selectCartItems, selectCartTotal, clearCart } from '../store/cartSlice';
-import { ordersAPI } from '../api/api';
+import { ordersAPI, couponsAPI } from '../api/api';
 import { getImageUrl } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
@@ -38,10 +38,32 @@ const Checkout = () => {
         notes: '',
     });
 
+    // Coupon state
+    const [couponInput, setCouponInput] = useState('');
+    const [couponApplied, setCouponApplied] = useState(null); // { code, discount_amount }
+    const [couponLoading, setCouponLoading] = useState(false);
+
     // Calculate totals
-    const shippingCost = cartTotal >= 50 ? 0 : 5;
-    const tax = cartTotal * 0.1;
-    const total = cartTotal + shippingCost + tax;
+    const discount = couponApplied ? parseFloat(couponApplied.discount_amount) : 0;
+    const shippingCost = (cartTotal - discount) >= 50 ? 0 : 5;
+    const tax = (cartTotal - discount) * 0.1;
+    const total = cartTotal - discount + shippingCost + tax;
+
+    const handleApplyCoupon = async () => {
+        if (!couponInput.trim()) return;
+        setCouponLoading(true);
+        try {
+            const res = await couponsAPI.validate(couponInput.trim(), cartTotal);
+            setCouponApplied({ code: res.data.code, discount_amount: res.data.discount_amount });
+            toast.success(`Coupon applied — saving ${res.data.discount_amount}!`);
+        } catch (err) {
+            const msg = err.response?.data?.code?.[0] || err.response?.data?.non_field_errors?.[0] || 'Invalid coupon.';
+            toast.error(msg);
+            setCouponApplied(null);
+        } finally {
+            setCouponLoading(false);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -67,6 +89,7 @@ const Checkout = () => {
         try {
             const orderData = {
                 ...formData,
+                coupon_code: couponApplied?.code || '',
                 items: cartItems.map(item => ({
                     product_id: item.id,
                     quantity: item.quantity,
@@ -398,6 +421,41 @@ const Checkout = () => {
                                 ))}
                             </div>
 
+                            {/* Coupon code */}
+                            <div className="border-t border-gray-200 pt-3 sm:pt-4">
+                                <div className="flex gap-2">
+                                    <input
+                                        type="text"
+                                        value={couponInput}
+                                        onChange={e => setCouponInput(e.target.value.toUpperCase())}
+                                        placeholder="Coupon code"
+                                        className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={handleApplyCoupon}
+                                        disabled={couponLoading || !couponInput.trim()}
+                                        className="px-3 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg disabled:opacity-50"
+                                    >
+                                        {couponLoading ? '...' : 'Apply'}
+                                    </button>
+                                </div>
+                                {couponApplied && (
+                                    <div className="flex items-center justify-between mt-2 px-2 py-1.5 bg-green-50 border border-green-200 rounded-lg text-xs">
+                                        <span className="text-green-700 font-medium">
+                                            {couponApplied.code} applied!
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() => { setCouponApplied(null); setCouponInput(''); }}
+                                            className="text-red-500 hover:text-red-700 ml-2"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Divider */}
                             <div className="border-t border-gray-200 pt-3 sm:pt-4 space-y-2 sm:space-y-2.5 md:space-y-3">
                                 {/* Subtotal */}
@@ -405,6 +463,12 @@ const Checkout = () => {
                                     <span>Subtotal</span>
                                     <span className="font-medium">${cartTotal.toFixed(2)}</span>
                                 </div>
+                                {discount > 0 && (
+                                    <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-green-600">
+                                        <span>Discount ({couponApplied.code})</span>
+                                        <span className="font-medium">-${discount.toFixed(2)}</span>
+                                    </div>
+                                )}
 
                                 {/* Shipping */}
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">

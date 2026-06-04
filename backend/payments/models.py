@@ -1,14 +1,11 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.conf import settings
 from orders.models import Order
 import uuid
 
 
 class Payment(models.Model):
-    """Mock payment record for orders"""
+    """Payment record — processed via CinetPay (card, Orange Money, MTN MoMo)"""
 
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -18,85 +15,47 @@ class Payment(models.Model):
         ('refunded', 'Refunded'),
     ]
 
-    # Unique reference
-    reference = models.CharField(
-        max_length=100,
-        unique=True,
-        help_text="Unique payment reference"
+    METHOD_CHOICES = [
+        ('card', 'Visa / Mastercard'),
+        ('orange_money', 'Orange Money'),
+        ('mtn_money', 'MTN Mobile Money'),
+        ('wave', 'Wave'),
+        ('moov', 'Moov Money'),
+        ('mobile_money', 'Mobile Money (other)'),
+        ('unknown', 'Unknown'),
+    ]
+
+    reference = models.CharField(max_length=100, unique=True)
+    transaction_id = models.CharField(
+        max_length=100, blank=True, null=True, unique=True,
+        help_text="CinetPay transaction ID",
+    )
+    payment_url = models.URLField(
+        max_length=500, blank=True, null=True,
+        help_text="CinetPay hosted checkout URL",
     )
 
-    order = models.OneToOneField(
-        Order,
-        on_delete=models.CASCADE,
-        related_name='payment',
-        help_text="Order this payment is for"
-    )
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='payment')
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='payments',
-        help_text="User who made the payment"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='payments',
     )
 
-    # Payment details
-    amount = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        help_text="Payment amount"
-    )
-    currency = models.CharField(
-        max_length=3,
-        default='USD',
-        help_text="Currency code"
-    )
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='pending',
-        help_text="Payment status"
-    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10, default='XOF')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    payment_method = models.CharField(max_length=20, choices=METHOD_CHOICES, default='unknown')
 
-    # Card details (masked for display)
-    card_last_four = models.CharField(
-        max_length=4,
-        blank=True,
-        null=True,
-        help_text="Last 4 digits of card"
-    )
-    card_brand = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-        help_text="Card brand (Visa, Mastercard)"
-    )
-    card_holder_name = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-        help_text="Name on card"
-    )
+    error_message = models.TextField(blank=True, null=True)
 
-    # Error info
-    error_message = models.TextField(
-        blank=True,
-        null=True,
-        help_text="Error message if payment failed"
-    )
-
-    # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    paid_at = models.DateTimeField(
-        blank=True,
-        null=True,
-        help_text="When payment was confirmed"
-    )
+    paid_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"Payment {self.reference} - Order #{self.order.id} - {self.status}"
+        return f"Payment {self.reference} — Order #{self.order.id} — {self.status}"
 
     def save(self, *args, **kwargs):
         if not self.reference:

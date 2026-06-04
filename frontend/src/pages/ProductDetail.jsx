@@ -31,6 +31,7 @@ const ProductDetail = () => {
     const [selectedImage, setSelectedImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [selectedVariant, setSelectedVariant] = useState(null);
 
     // Reviews
     const [reviews, setReviews] = useState([]);
@@ -400,6 +401,54 @@ const ProductDetail = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Variants selector */}
+                        {product.variants && product.variants.length > 0 && (() => {
+                            // Group by variant name (e.g., Size, Color)
+                            const groups = product.variants.reduce((acc, v) => {
+                                if (!acc[v.name]) acc[v.name] = [];
+                                acc[v.name].push(v);
+                                return acc;
+                            }, {});
+                            return (
+                                <div className="pt-2 space-y-3">
+                                    {Object.entries(groups).map(([name, options]) => (
+                                        <div key={name}>
+                                            <p className="text-sm font-medium text-gray-700 mb-1.5">
+                                                {name}
+                                                {selectedVariant?.name === name && (
+                                                    <span className="ml-2 text-gray-500 font-normal">— {selectedVariant.value}</span>
+                                                )}
+                                            </p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {options.map(v => (
+                                                    <button
+                                                        key={v.id}
+                                                        type="button"
+                                                        disabled={!v.is_available || v.stock === 0}
+                                                        onClick={() => setSelectedVariant(
+                                                            selectedVariant?.id === v.id ? null : v
+                                                        )}
+                                                        className={`px-3 py-1.5 text-sm rounded-lg border-2 transition-all
+                                                            ${selectedVariant?.id === v.id
+                                                                ? 'border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold'
+                                                                : 'border-gray-300 text-gray-700 hover:border-gray-400'}
+                                                            ${(!v.is_available || v.stock === 0) ? 'opacity-40 cursor-not-allowed line-through' : ''}`}
+                                                    >
+                                                        {v.value}
+                                                        {v.price_adjustment !== 0 && (
+                                                            <span className="ml-1 text-xs">
+                                                                ({v.price_adjustment > 0 ? '+' : ''}{v.price_adjustment})
+                                                            </span>
+                                                        )}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            );
+                        })()}
 
                         {/* Quantity & Add to Cart */}
                         <div className="flex flex-col gap-2 sm:gap-3 pt-2">

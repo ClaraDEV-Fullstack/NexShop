@@ -1,29 +1,26 @@
 from django.contrib import admin
-
-# Register your models here.
-from django.contrib import admin
 from .models import Payment
 
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'reference', 'order', 'user', 'amount', 'status', 'card_brand', 'created_at', 'paid_at']
-    list_filter = ['status', 'card_brand', 'created_at']
-    search_fields = ['reference', 'order__id', 'user__email', 'card_holder_name']
-    readonly_fields = ['reference', 'created_at', 'updated_at', 'paid_at']
+    list_display = ['id', 'reference', 'order', 'user', 'amount', 'currency', 'status', 'payment_method', 'created_at', 'paid_at']
+    list_filter = ['status', 'payment_method', 'currency', 'created_at']
+    search_fields = ['reference', 'transaction_id', 'order__id', 'user__email']
+    readonly_fields = ['reference', 'transaction_id', 'payment_url', 'created_at', 'updated_at', 'paid_at']
     raw_id_fields = ['order', 'user']
 
     fieldsets = (
         ('Payment Info', {
-            'fields': ('reference', 'order', 'user', 'amount', 'currency', 'status')
+            'fields': ('reference', 'transaction_id', 'order', 'user', 'amount', 'currency', 'status', 'payment_method'),
         }),
-        ('Card Details', {
-            'fields': ('card_brand', 'card_last_four', 'card_holder_name')
+        ('CinetPay', {
+            'fields': ('payment_url',),
         }),
         ('Status', {
-            'fields': ('error_message',)
+            'fields': ('error_message',),
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at', 'paid_at')
+            'fields': ('created_at', 'updated_at', 'paid_at'),
         }),
     )

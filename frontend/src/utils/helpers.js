@@ -3,7 +3,7 @@
 // Backend URLs for different environments
 const getBackendUrl = () => {
     // Check if we're in production
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
         return 'https://nextshopsphere.onrender.com';
     }
     // Local development

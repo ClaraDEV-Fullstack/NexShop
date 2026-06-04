@@ -1,6 +1,6 @@
 # 🛒 NextShopSphere
 
-A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
+A modern, full-stack e-commerce ecosystem featuring a responsive **React** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
 
 **🚀 [Live Demo](https://nextshopsphere-ui.onrender.com/)**
 ⚠️ Note: This project is hosted on a free instance. Please allow up to 1 minute for the initial load as the server wakes up.
@@ -13,7 +13,7 @@ A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js
 <p align="center">
   <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react&style=for-the-badge" />
   <img src="https://img.shields.io/badge/Django-5.1.4-092E20?logo=django&style=for-the-badge" />
-  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&style=for-the-badge" />
   <img src="https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&style=for-the-badge" />
   <img src="https://img.shields.io/badge/Redux-Toolkit-764ABC?logo=redux&style=for-the-badge" />
 </p>
@@ -38,7 +38,7 @@ A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js
 - **Dynamic Catalog:** Product browsing with advanced categories and filtering.
 - **Smart Search:** Real-time search functionality for products.
 - **Rich Galleries:** Interactive image galleries for product details.
-- **Recommendations:** Related products and "Bestseller" algorithms.
+- **Recommendations:** Related products and curated bestseller collections.
 
 ### 👤 User & Security
 - **Secure Auth:** JWT-based login and **Google OAuth 2.0** integration.
@@ -52,7 +52,7 @@ A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js
 
 ### ⭐ Engagement
 - **Reviews & Ratings:** Comprehensive feedback system with statistical summaries.
-- **Notifications:** Real-time user alerts via **React Hot Toast**.
+- **Notifications:** Dashboard alerts and user feedback via **React Hot Toast**.
 
 ---
 
@@ -74,7 +74,7 @@ A modern, full-stack e-commerce ecosystem featuring a high-performance **Next.js
 | **Django** | 5.1.4 | Robust Web Framework |
 | **Django REST Framework** | 3.15.2 | RESTful API Architecture |
 | **SimpleJWT** | 5.4.0 | Token-based Authentication |
-| **MySQL** | 8.0 | Relational Database |
+| **PostgreSQL** | 16 | Relational Database |
 | **Docker** | Latest | Containerization & Orchestration |
 
 ---

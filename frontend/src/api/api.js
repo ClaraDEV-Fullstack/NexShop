@@ -1,8 +1,7 @@
 import axios from 'axios';
+import { API_URL } from '../config';
 
 // Use environment variable for API URL, fallback to localhost for development
-const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
-
 const api = axios.create({
     baseURL: API_URL,
     headers: { 'Content-Type': 'application/json' },
@@ -149,10 +148,31 @@ export const wishlistAPI = {
 
 // Payments API
 export const paymentsAPI = {
-    process: (paymentData) => api.post('/payments/process/', paymentData),
+    // Initiate CinetPay payment — returns { payment_url, transaction_id }
+    initiate: (orderId, channels = 'ALL') =>
+        api.post('/payments/initiate/', { order_id: orderId, channels }),
+    // Verify payment after CinetPay redirect
+    verify: (transactionId) =>
+        api.post('/payments/verify/', { transaction_id: transactionId }),
     getAll: () => api.get('/payments/'),
     getById: (id) => api.get(`/payments/${id}/`),
     getByOrder: (orderId) => api.get(`/payments/order/${orderId}/`),
+};
+
+// Coupons API
+export const couponsAPI = {
+    validate: (code, subtotal) => api.post('/coupons/validate/', { code, subtotal }),
+};
+
+// Cart API
+export const cartAPI = {
+    getAll: () => api.get('/cart/'),
+    add: (productId, variantId = null, quantity = 1) =>
+        api.post('/cart/', { product: productId, variant: variantId, quantity }),
+    update: (id, quantity) => api.patch(`/cart/${id}/`, { quantity }),
+    remove: (id) => api.delete(`/cart/${id}/`),
+    sync: (items) => api.post('/cart/sync/', { items }),
+    clear: () => api.delete('/cart/clear/'),
 };
 
 // Health Check API

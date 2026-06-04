@@ -24,9 +24,16 @@ class Order(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        null=True, blank=True,
         related_name='orders',
-        help_text="Customer who placed the order"
+        help_text="Authenticated customer (null for guest checkout)",
     )
+    guest_email = models.EmailField(
+        blank=True, null=True,
+        help_text="Email for guest order confirmation",
+    )
+    coupon_code = models.CharField(max_length=50, blank=True, null=True)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     status = models.CharField(
         max_length=20,
@@ -83,11 +90,14 @@ class Order(models.Model):
         return f"Order #{self.id} - {self.user.email}"
 
     def calculate_totals(self):
-        """Calculate order totals from items"""
+        """Calculate order totals using SiteSettings."""
+        from config.models import SiteSettings
+        cfg = SiteSettings.get()
         self.subtotal = sum(item.get_subtotal() for item in self.items.all())
-        self.shipping_cost = 0 if self.subtotal >= 50 else 5
-        self.tax = self.subtotal * 10 / 100
-        self.total = self.subtotal + self.shipping_cost + self.tax
+        net = self.subtotal - self.discount
+        self.shipping_cost = 0 if net >= cfg.free_shipping_threshold else cfg.default_shipping_cost
+        self.tax = net * cfg.tax_rate
+        self.total = net + self.shipping_cost + self.tax
         self.save()
 
 

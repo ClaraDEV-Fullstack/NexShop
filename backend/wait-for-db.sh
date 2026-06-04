@@ -1,10 +1,10 @@
 #!/bin/sh
-# Wait for MySQL to be ready
+# Wait for PostgreSQL to be ready
 
-echo "Waiting for MySQL to be ready..."
+echo "Waiting for PostgreSQL to be ready..."
 
-while ! nc -z db 3306; do
+while ! nc -z db 5432; do
   sleep 1
 done
 
-echo "MySQL is ready!"
+echo "PostgreSQL is ready!"

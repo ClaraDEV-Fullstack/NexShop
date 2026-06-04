@@ -2,13 +2,41 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, extend_schema_view
+from django.db import transaction
 from .models import Order
 from .serializers import OrderSerializer, CreateOrderSerializer
-# from .emails import send_order_confirmation_email  # Comment this out
+from products.models import Product
+from .emails import send_order_confirmation_email
 import logging
-import os
 
 logger = logging.getLogger(__name__)
+
+
+def cancel_order(order_id, user):
+    """Cancel an order once and restore its inventory."""
+    with transaction.atomic():
+        order = Order.objects.select_for_update().get(id=order_id, user=user)
+
+        if order.status not in ['pending', 'processing']:
+            return order, False
+
+        items = list(order.items.select_related('product'))
+        product_ids = [item.product_id for item in items if item.product_id]
+        products = {
+            product.id: product
+            for product in Product.objects.select_for_update().filter(id__in=product_ids)
+        }
+
+        for item in items:
+            product = products.get(item.product_id)
+            if product:
+                product.stock += item.quantity
+                product.save(update_fields=['stock'])
+
+        order.status = 'cancelled'
+        order.save(update_fields=['status', 'updated_at'])
+        return order, True
+
 
 @extend_schema_view(
     list=extend_schema(tags=['Orders']),
@@ -39,15 +67,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             order = serializer.save()
 
-            # Skip email for now - it causes timeout on free tier
-            logger.info(f"Order #{order.id} created successfully")
-
-            # TODO: Add async email later
-            # try:
-            #     email_sent = send_order_confirmation_email(order)
-            #     logger.info(f"Order #{order.id} email sent: {email_sent}")
-            # except Exception as e:
-            #     logger.error(f"Failed to send order email: {str(e)}")
+            logger.info('Order #%s created successfully', order.id)
+            try:
+                send_order_confirmation_email(order)
+            except Exception as exc:
+                logger.error('Failed to send order confirmation email for #%s: %s', order.id, exc)
 
             return Response(
                 OrderSerializer(order).data,
@@ -59,20 +83,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         """Cancel/Delete an order - only if pending or processing"""
         order = self.get_object()
+        order, cancelled = cancel_order(order.id, request.user)
 
-        if order.status not in ['pending', 'processing']:
+        if not cancelled:
             return Response(
                 {'detail': f'Cannot cancel order with status "{order.get_status_display()}".'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
-        for item in order.items.all():
-            if item.product:
-                item.product.stock += item.quantity
-                item.product.save()
-
-        order.status = 'cancelled'
-        order.save()
 
         return Response(
             {'detail': 'Order cancelled successfully.'},
@@ -84,20 +101,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     def cancel(self, request, pk=None):
         """Alternative cancel endpoint"""
         order = self.get_object()
+        order, cancelled = cancel_order(order.id, request.user)
 
-        if order.status not in ['pending', 'processing']:
+        if not cancelled:
             return Response(
                 {'detail': f'Cannot cancel order with status "{order.get_status_display()}".'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
-        for item in order.items.all():
-            if item.product:
-                item.product.stock += item.quantity
-                item.product.save()
-
-        order.status = 'cancelled'
-        order.save()
 
         return Response(
             OrderSerializer(order).data,

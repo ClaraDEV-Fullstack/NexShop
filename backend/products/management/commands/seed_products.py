@@ -3,7 +3,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 from django.utils.text import slugify
 from decimal import Decimal
-import os
+import io, time, requests, os
 
 from products.models import (
     Category,
@@ -18,56 +18,132 @@ from products.models import (
 class Command(BaseCommand):
     help = "Seed complete e-commerce data with real-world products"
 
-    # -------------------------------
-    # PLACEHOLDER IMAGE SEEDING
-    # -------------------------------
+    # ── Unsplash photo IDs per product slug (2-3 shots each) ──────────────
+    PRODUCT_PHOTOS = {
+        "apple-iphone-15-pro-max-256gb-natural-titanium":   ["photo-1592750475338-74b7b21085ab","photo-1510557880182-3d4d3cba35a5"],
+        "samsung-galaxy-s24-ultra-512gb-titanium-black":    ["photo-1610945415295-d9bbf067e59c","photo-1565849904461-04a58ad377e0"],
+        "sony-wh-1000xm5-wireless-noise-cancelling":        ["photo-1505740420928-5e560c06d30e","photo-1484704849700-f032a568e944"],
+        "apple-macbook-pro-14-m3-pro-space-black":          ["photo-1517336714731-489689fd1ca8","photo-1611186871525-b9e028614f3c"],
+        "apple-ipad-pro-12-9-m2-256gb-space-gray":          ["photo-1544244015-0df4b3ffc6b0","photo-1623126908029-58cb08a2b272"],
+        "nike-air-jordan-1-retro-high-og-chicago":          ["photo-1542291026-7eec264c27ff","photo-1595950653106-6c9ebd614d3a"],
+        "levis-501-original-fit-mens-jeans-stonewash":      ["photo-1541099649105-f69ad21f3246","photo-1475178626620-a4d074967452"],
+        "ray-ban-aviator-classic-sunglasses-gold-green":    ["photo-1572635196237-14b3f281503f","photo-1511499767150-a48a237f0083"],
+        "adidas-ultraboost-23-running-shoes-core-black":    ["photo-1608231387042-66d1773070a5","photo-1539185441755-769473a23570"],
+        "ralph-lauren-classic-fit-mesh-polo-navy":          ["photo-1596755094514-f87e34085b2c","photo-1503341733017-1901578f9f1e"],
+        "dyson-v15-detect-absolute-cordless-vacuum":        ["photo-1558618047-3c8c76ca7d13","photo-1581578731548-c64695cc6952"],
+        "ikea-malm-queen-bed-frame-storage-white-oak":      ["photo-1555041469-a586c61ea9bc","photo-1631049307264-da0ec9d70304"],
+        "philips-hue-white-color-ambiance-starter-kit":     ["photo-1507473885765-e6ed057f782c","photo-1513506003901-1e6a18a9e32c"],
+        "le-creuset-signature-dutch-oven-5-5-qt-flame":     ["photo-1585515320310-259814833e62","photo-1556909114-f6e7ad7d3136"],
+        "nespresso-vertuo-next-premium-coffee-machine":     ["photo-1495474472287-4d71bcdd2085","photo-1514432324607-a09d9b4aefdd"],
+        "cerave-hydrating-facial-cleanser-473ml":           ["photo-1556228720-195a672e8a03","photo-1571781926291-c477ebfd024b"],
+        "the-ordinary-niacinamide-zinc-serum-30ml":         ["photo-1620916566398-39f1143ab7be","photo-1556228720-195a672e8a03"],
+        "drunk-elephant-protini-polypeptide-cream":         ["photo-1608248543803-ba4f8c70ae0b","photo-1522335789203-aabd1fc54bc9"],
+        "fenty-beauty-pro-filtr-foundation":                ["photo-1596462502278-27bfdc403348","photo-1522335789203-aabd1fc54bc9"],
+        "estee-lauder-advanced-night-repair-serum":         ["photo-1571781926291-c477ebfd024b","photo-1608248543803-ba4f8c70ae0b"],
+        "atomic-habits-james-clear-hardcover":              ["photo-1512820790803-83ca734da794","photo-1544716278-ca5e3f4abd8c"],
+        "python-crash-course-3rd-edition":                  ["photo-1461749280684-dccba630e2f6","photo-1516116216624-53e697fedbea"],
+        "psychology-of-money-morgan-housel":                ["photo-1589829085413-56de8ae18c73","photo-1495446815901-a7297e633e8d"],
+        "clean-code-robert-martin":                         ["photo-1517842645767-c639042777db","photo-1516116216624-53e697fedbea"],
+        "sapiens-brief-history-humankind":                  ["photo-1507003211169-0a1dd7228f2d","photo-1512820790803-83ca734da794"],
+        "peloton-bike-plus-indoor-exercise":                ["photo-1534438327276-14e5300c3a48","photo-1571019613454-1cb2f99b2d8b"],
+        "bowflex-selecttech-552-adjustable-dumbbells":      ["photo-1583454110551-21f2fa2afe61","photo-1534438327276-14e5300c3a48"],
+        "theragun-pro-percussive-therapy-device":           ["photo-1517344884509-a0c97ec11bcc","photo-1571019613454-1cb2f99b2d8b"],
+        "garmin-forerunner-965-gps-running-watch":          ["photo-1523275335684-37898b6baf30","photo-1434493789847-2f02dc6ca35d"],
+        "manduka-pro-yoga-mat-6mm-black":                   ["photo-1601925260368-ae2f83cf8b7f","photo-1544367567-0f2fcb009e0b"],
+        "lego-star-wars-millennium-falcon-75375":           ["photo-1558618666-fcd25c85cd64","photo-1587654780291-39c9404d746b"],
+        "nintendo-switch-oled-model-white":                 ["photo-1578303512597-81e6cc155b3e","photo-1585620385456-4759f9b5c7d9"],
+        "barbie-dreamhouse-2023-edition":                   ["photo-1515488042361-ee00e0ddd4e4","photo-1545558014-8692077e9b5c"],
+        "melissa-doug-wooden-building-blocks-100":          ["photo-1515488042361-ee00e0ddd4e4","photo-1558618666-fcd25c85cd64"],
+        "hasbro-monopoly-classic-board-game":               ["photo-1611996575749-79a3a250f948","photo-1585620385456-4759f9b5c7d9"],
+        "complete-web-development-bootcamp-2024":           ["photo-1461749280684-dccba630e2f6","photo-1516116216624-53e697fedbea"],
+        "adobe-creative-cloud-all-apps-1-year":             ["photo-1558655146-9f40138edfeb","photo-1611532736597-de2d4265fba3"],
+        "microsoft-365-family-1-year":                      ["photo-1517842645767-c639042777db","photo-1496181133206-80ce9b88a853"],
+        "spotify-premium-12-month-gift-card":               ["photo-1614680376573-df3480f0c6ff","photo-1611339555312-e607c8352fd7"],
+        "canva-pro-annual-subscription":                    ["photo-1611532736597-de2d4265fba3","photo-1558655146-9f40138edfeb"],
+    }
+
+    def _download(self, photo_id):
+        url = f"https://images.unsplash.com/{photo_id}?w=900&q=85&auto=format&fit=crop"
+        try:
+            r = requests.get(url, timeout=25)
+            r.raise_for_status()
+            return io.BytesIO(r.content)
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"      ⚠ Could not download {photo_id}: {e}"))
+            return None
+
+    def _direct_upload(self, path: str, data: bytes) -> bool:
+        """Upload bytes directly to Supabase via REST API — reliable for large images."""
+        from django.conf import settings
+        supabase_url = settings.SUPABASE_URL
+        key = settings.SUPABASE_SERVICE_KEY
+        bucket = settings.SUPABASE_BUCKET
+        upload_url = f"{supabase_url}/storage/v1/object/{bucket}/{path}"
+        try:
+            resp = requests.post(
+                upload_url, data=data,
+                headers={
+                    'Authorization': f'Bearer {key}',
+                    'apikey': key,
+                    'Content-Type': 'image/jpeg',
+                    'x-upsert': 'true',
+                },
+                timeout=30,
+            )
+            if resp.status_code not in (200, 201):
+                self.stdout.write(self.style.WARNING(f"      ⚠ Upload failed ({resp.status_code}): {resp.text[:80]}"))
+                return False
+            return True
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"      ⚠ Upload error: {e}"))
+            return False
+
     def seed_placeholder_images(self):
-        self.stdout.write("\n🖼️  Attaching placeholder images to products...")
+        self.stdout.write("\n📸  Downloading & uploading product images to Supabase…\n")
+        uploaded = 0
+        for product in Product.objects.all():
+            if product.images.exists():
+                self.stdout.write(f"   ⏭  {product.name[:55]} — already has images")
+                continue
 
-        placeholder_path = os.path.join(
-            settings.MEDIA_ROOT,
-            "products",
-            "placeholder-product.jpg"
-        )
+            photo_ids = self.PRODUCT_PHOTOS.get(product.slug, [])
+            if not photo_ids:
+                self.stdout.write(self.style.WARNING(f"   ⚠  No photos mapped for: {product.slug}"))
+                continue
 
-        if not os.path.exists(placeholder_path):
-            self.stdout.write(
-                self.style.ERROR(
-                    "❌ Placeholder image not found at media/products/placeholder-product.jpg"
-                )
-            )
-            return
-
-        with open(placeholder_path, "rb") as f:
-            image_content = ContentFile(
-                f.read(),
-                name="placeholder-product.jpg"
-            )
-
-            for product in Product.objects.all():
-                if product.images.exists():
-                    continue  # Do not overwrite real images
-
+            self.stdout.write(f"   🖼  {product.name[:55]}")
+            for idx, pid in enumerate(photo_ids):
+                raw = self._download(pid)
+                if not raw:
+                    continue
+                fname = f"products/{product.slug}-{idx+1}.jpg"
+                # Upload directly via Supabase REST (bypasses Django storage layer issues)
+                ok = self._direct_upload(fname, raw.read())
+                if not ok:
+                    continue
                 ProductImage.objects.create(
                     product=product,
-                    image=image_content,
-                    alt_text=f"{product.name} image",
-                    is_primary=True,
-                    order=0
+                    image=fname,
+                    alt_text=product.name,
+                    is_primary=(idx == 0),
+                    order=idx,
                 )
+                uploaded += 1
+                self.stdout.write(f"      ✓ uploaded image {idx+1}")
+                time.sleep(0.2)
 
-                self.stdout.write(f"  ✓ Image attached: {product.name}")
-
-        self.stdout.write(
-            self.style.SUCCESS("✅ Placeholder images attached successfully")
-        )
+        self.stdout.write(self.style.SUCCESS(f"\n✅  Images uploaded: {uploaded}"))
 
     # -------------------------------
     # MAIN HANDLER
     # -------------------------------
+    def add_arguments(self, parser):
+        parser.add_argument("--clear", action="store_true", help="Wipe existing products first")
+
     def handle(self, *args, **options):
-        self.stdout.write(self.style.WARNING("🗑️  Clearing existing product data..."))
-        self.clear_existing_data()
+        if options.get("clear"):
+            self.stdout.write(self.style.WARNING("🗑️  Clearing existing product data..."))
+            self.clear_existing_data()
 
         self.stdout.write(
             self.style.HTTP_INFO("\n🚀 Starting comprehensive product seeding...\n")
