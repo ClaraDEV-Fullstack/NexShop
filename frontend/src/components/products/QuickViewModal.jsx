@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatPrice } from '../../utils/helpers';
 import { Link } from 'react-router-dom';
 import { HiX, HiHeart, HiOutlineHeart, HiShoppingCart, HiMinus, HiPlus, HiStar } from 'react-icons/hi';
 import toast from 'react-hot-toast';
@@ -118,11 +119,11 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart, onToggleWishlis
                             {/* Price */}
                             <div className="flex items-center gap-3 mb-6">
                                 <span className="text-3xl font-bold text-primary-500">
-                                    ${product.price?.toFixed(2)}
+                                    {formatPrice(product.price)}
                                 </span>
                                 {product.compare_price && product.compare_price > product.price && (
                                     <span className="text-xl text-secondary-400 line-through">
-                                        ${product.compare_price?.toFixed(2)}
+                                        {formatPrice(product.compare_price)}
                                     </span>
                                 )}
                             </div>

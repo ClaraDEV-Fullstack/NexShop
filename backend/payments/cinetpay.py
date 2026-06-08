@@ -45,7 +45,7 @@ def init_payment(order, return_url: str, notify_url: str, channels: str = 'ALL')
         'transaction_id': transaction_id,
         'amount': int(order.total),          # CinetPay requires integer
         'currency': getattr(settings, 'CINETPAY_CURRENCY', 'XOF'),
-        'description': f'Order #{order.id} — NextShopSphere',
+        'description': f'Order #{order.id} — NEXSHOP',
         'notify_url': notify_url,
         'return_url': return_url,
         'channels': channels,
@@ -64,7 +64,9 @@ def init_payment(order, return_url: str, notify_url: str, channels: str = 'ALL')
 
     try:
         resp = requests.post(CINETPAY_API_URL, json=payload, timeout=15)
-        resp.raise_for_status()
+        if not resp.ok:
+            logger.error('CinetPay init_payment %s: %s', resp.status_code, resp.text)
+            return {'success': False, 'error': f'CinetPay {resp.status_code}: {resp.text}'}
         data = resp.json()
     except requests.RequestException as exc:
         logger.error('CinetPay init_payment network error: %s', exc)

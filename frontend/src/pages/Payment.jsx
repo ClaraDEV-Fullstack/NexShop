@@ -15,14 +15,14 @@ const CHANNELS = [
         label: 'All payment methods',
         description: 'Card, Orange Money, MTN MoMo, Wave & more',
         icon: HiCurrencyDollar,
-        color: 'blue',
+        color: 'primary',
     },
     {
         id: 'CREDIT_CARD',
         label: 'Visa / Mastercard',
         description: 'Pay with your debit or credit card',
         icon: HiCreditCard,
-        color: 'indigo',
+        color: 'primary',
     },
     {
         id: 'MOBILE_MONEY',
@@ -80,7 +80,7 @@ const Payment = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-50">
                 <Loader size="lg" />
             </div>
         );
@@ -88,11 +88,11 @@ const Payment = () => {
 
     if (!order) {
         return (
-            <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-blue-50 to-indigo-50">
+            <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-primary-50 to-primary-50">
                 <div className="max-w-sm w-full text-center bg-white rounded-2xl shadow-lg p-10">
-                    <HiExclamation className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                    <HiExclamation className="w-12 h-12 text-primary-600 mx-auto mb-4" />
                     <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Not Found</h1>
-                    <Link to="/orders" className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    <Link to="/orders" className="inline-flex items-center text-primary-600 hover:text-primary-800 font-medium">
                         <HiArrowLeft className="w-4 h-4 mr-2" />
                         Back to Orders
                     </Link>
@@ -102,12 +102,12 @@ const Payment = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-50">
             <div className="w-full px-4 md:px-6 lg:px-8 py-8 lg:py-12 max-w-6xl mx-auto">
 
                 {/* Header */}
                 <div className="mb-8">
-                    <Link to={`/orders/${orderId}`} className="group inline-flex items-center text-sm text-gray-600 hover:text-blue-600 mb-4">
+                    <Link to={`/orders/${orderId}`} className="group inline-flex items-center text-sm text-gray-600 hover:text-primary-600 mb-4">
                         <HiArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
                         Back to Order
                     </Link>
@@ -116,7 +116,7 @@ const Payment = () => {
                             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">Secure Payment</h1>
                             <p className="text-sm text-gray-600">Complete payment for Order #{order.id}</p>
                         </div>
-                        <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
                             <HiCurrencyDollar className="w-4 h-4 mr-2" />
                             Total: {order.total} XOF
                         </span>
@@ -127,13 +127,13 @@ const Payment = () => {
 
                     {/* Payment method selector */}
                     <div className="order-2 lg:order-1 space-y-6">
-                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
-                            <div className="px-6 py-5 bg-gradient-to-r from-blue-600 to-indigo-700">
+                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-primary-100">
+                            <div className="px-6 py-5 bg-gradient-to-r from-primary-600 to-primary-700">
                                 <h2 className="text-lg font-bold text-white flex items-center gap-2">
                                     <HiCreditCard className="w-6 h-6" />
                                     Choose Payment Method
                                 </h2>
-                                <p className="text-blue-100 text-xs mt-1">Powered by CinetPay — secure & encrypted</p>
+                                <p className="text-primary-100 text-xs mt-1">Powered by CinetPay — secure & encrypted</p>
                             </div>
 
                             <div className="p-6 space-y-3">
@@ -175,7 +175,7 @@ const Payment = () => {
                                 <button
                                     onClick={handlePay}
                                     disabled={isProcessing}
-                                    className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+                                    className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
                                 >
                                     {isProcessing ? (
                                         <>
@@ -210,8 +210,8 @@ const Payment = () => {
 
                     {/* Order Summary */}
                     <div className="order-1 lg:order-2">
-                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100 lg:sticky lg:top-6">
-                            <div className="px-6 py-5 bg-gradient-to-r from-blue-600 to-indigo-700">
+                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-primary-100 lg:sticky lg:top-6">
+                            <div className="px-6 py-5 bg-gradient-to-r from-primary-600 to-primary-700">
                                 <h2 className="text-lg font-bold text-white flex items-center gap-2">
                                     <HiTruck className="w-6 h-6" />
                                     Order Summary
@@ -234,7 +234,7 @@ const Payment = () => {
                                                 <p className="font-medium text-gray-900 truncate text-sm">{item.product_name}</p>
                                                 <p className="text-xs text-gray-500 mt-0.5">Qty: {item.quantity} × {item.product_price}</p>
                                             </div>
-                                            <p className="font-bold text-blue-600 text-sm flex-shrink-0">{item.subtotal}</p>
+                                            <p className="font-bold text-primary-600 text-sm flex-shrink-0">{item.subtotal}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -262,13 +262,13 @@ const Payment = () => {
                                     </div>
                                     <div className="border-t border-gray-200 pt-3 flex justify-between items-center">
                                         <span className="font-bold text-gray-900">Total</span>
-                                        <span className="text-2xl font-bold text-blue-600">{order.total} XOF</span>
+                                        <span className="text-2xl font-bold text-primary-600">{order.total} XOF</span>
                                     </div>
                                 </div>
 
                                 <div className="mt-5 pt-4 border-t border-gray-200">
                                     <h3 className="font-medium text-gray-900 mb-2 flex items-center gap-2 text-sm">
-                                        <HiTruck className="w-4 h-4 text-blue-600" />
+                                        <HiTruck className="w-4 h-4 text-primary-600" />
                                         Shipping To:
                                     </h3>
                                     <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700">

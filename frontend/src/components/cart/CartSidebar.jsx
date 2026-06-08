@@ -9,7 +9,7 @@ import {
     removeFromCart,
     updateQuantity,
 } from '../../store/cartSlice';
-import { getImageUrl } from '../../utils/helpers';
+import { getImageUrl, formatPrice } from '../../utils/helpers';
 
 const CartSidebar = () => {
     const dispatch = useDispatch();
@@ -82,7 +82,7 @@ const CartSidebar = () => {
                                         >
                                             {item.name}
                                         </Link>
-                                        <p className="text-primary-600 font-bold mt-1">${item.price.toFixed(2)}</p>
+                                        <p className="text-primary-600 font-bold mt-1">{formatPrice(item.price)}</p>
 
                                         {/* Quantity */}
                                         <div className="flex items-center justify-between mt-2">
@@ -122,7 +122,7 @@ const CartSidebar = () => {
                     <div className="border-t p-4 space-y-4">
                         <div className="flex justify-between text-lg font-semibold">
                             <span>Subtotal</span>
-                            <span>${cartTotal.toFixed(2)}</span>
+                            <span>{formatPrice(cartTotal)}</span>
                         </div>
                         <p className="text-sm text-secondary-500">
                             Shipping and taxes calculated at checkout

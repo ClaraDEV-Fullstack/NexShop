@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { HiOutlineHeart, HiOutlineTrash, HiOutlineShoppingCart, HiOutlineEye, HiOutlineArrowLeft } from 'react-icons/hi';
 import { wishlistAPI } from '../../api/api';
 import { addToCart } from '../../store/cartSlice';
-import { getImageUrl } from '../../utils/helpers';
+import { getImageUrl, formatPrice } from '../../utils/helpers';
 import Skeleton from '../../components/ui/Skeleton';
 import toast from 'react-hot-toast';
 
@@ -211,11 +211,11 @@ const DashboardWishlist = () => {
                                         {/* Price */}
                                         <div className="flex items-center gap-2 mt-2">
                                             <span className="text-xl font-bold text-primary-500">
-                                                ${productPrice.toFixed(2)}
+                                                {formatPrice(productPrice)}
                                             </span>
                                             {comparePrice && comparePrice > productPrice && (
                                                 <span className="text-sm text-secondary-400 line-through">
-                                                    ${parseFloat(comparePrice).toFixed(2)}
+                                                    {formatPrice(comparePrice)}
                                                 </span>
                                             )}
                                         </div>

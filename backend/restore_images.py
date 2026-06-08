@@ -4,7 +4,7 @@ import sys
 import re
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nextshopsphere.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nexshop.settings')
 
 import django
 django.setup()

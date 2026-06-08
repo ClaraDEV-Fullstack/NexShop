@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Toaster } from 'react-hot-toast';
 import store from './store/store';
 import { loadUser } from './store/authSlice';
 import { ThemeProvider } from './context/ThemeContext';
-import { GOOGLE_CLIENT_ID } from './config';
 
 // Layout Components
 import Navbar from './components/common/Navbar';
@@ -51,7 +49,7 @@ const AppContent = () => {
     }, []);
 
     return (
-        <Router>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <ScrollToTop />
             <div className="min-h-screen flex flex-col bg-white dark:bg-secondary-900 transition-colors duration-300">
                 <Navbar />
@@ -136,11 +134,9 @@ const AppContent = () => {
 function App() {
     return (
         <Provider store={store}>
-            <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                <ThemeProvider>
-                    <AppContent />
-                </ThemeProvider>
-            </GoogleOAuthProvider>
+            <ThemeProvider>
+                <AppContent />
+            </ThemeProvider>
         </Provider>
     );
 }

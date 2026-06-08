@@ -159,7 +159,7 @@ class PasswordResetConfirmView(APIView):
 def _send_password_reset_email(user, reset_link: str):
     from orders.emails import send_email_async
     name = user.first_name or user.username or 'there'
-    subject = 'Reset your NextShopSphere password'
+    subject = 'Reset your NEXSHOP password'
     text = f"Hi {name},\n\nClick to reset your password:\n{reset_link}\n\nThis link expires in 24 hours."
     html = f"""
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">

@@ -4,7 +4,7 @@ import cloudinary
 import cloudinary.uploader
 
 # ---------------- DJANGO SETUP ----------------
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nextshopsphere.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nexshop.settings")
 django.setup()
 
 from products.models import ProductImage, Category, Brand

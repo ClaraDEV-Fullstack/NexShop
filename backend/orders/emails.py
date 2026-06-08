@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 # Environment variables - FIXED
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")  # Set in Render environment
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "claraberi63@gmail.com")
-DEFAULT_FROM_NAME = os.getenv("DEFAULT_FROM_NAME", "NextShopSphere")
-FRONTEND_URL = os.getenv("FRONTEND_URL", "https://nextshopsphere-ui.onrender.com")
+DEFAULT_FROM_NAME = os.getenv("DEFAULT_FROM_NAME", "NEXSHOP")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://nexshop-ui.onrender.com")
 
 BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
 
@@ -66,7 +66,7 @@ Payment: {'Paid' if is_paid else 'Awaiting Payment'}
 
 View your order: {FRONTEND_URL}/orders/{order.id}
 
-Thank you for shopping with NextShopSphere!
+Thank you for shopping with NEXSHOP!
 """
 
     items_html = ""
@@ -120,7 +120,7 @@ Thank you for shopping with NextShopSphere!
             </div>
         </div>
         <div style="background: #1f2937; padding: 20px; text-align: center; border-radius: 0 0 12px 12px;">
-            <p style="color: #9ca3af; margin: 0;">© 2025 NextShopSphere</p>
+            <p style="color: #9ca3af; margin: 0;">© 2025 NEXSHOP</p>
         </div>
     </div>
 </body>
@@ -128,7 +128,7 @@ Thank you for shopping with NextShopSphere!
 """
 
     return send_email_async(
-        f"🛍️ Order Confirmation - #{order.id} | NextShopSphere",
+        f"🛍️ Order Confirmation - #{order.id} | NEXSHOP",
         text_content,
         html_content,
         user_email
@@ -153,7 +153,7 @@ Status: Processing
 
 Track your order: {FRONTEND_URL}/orders/{order.id}
 
-Thank you for shopping with NextShopSphere!
+Thank you for shopping with NEXSHOP!
 """
 
     html_content = f"""
@@ -184,7 +184,7 @@ Thank you for shopping with NextShopSphere!
             </div>
         </div>
         <div style="background: #1f2937; padding: 20px; text-align: center; border-radius: 0 0 12px 12px;">
-            <p style="color: #9ca3af; margin: 0;">© 2025 NextShopSphere</p>
+            <p style="color: #9ca3af; margin: 0;">© 2025 NEXSHOP</p>
         </div>
     </div>
 </body>
@@ -192,7 +192,7 @@ Thank you for shopping with NextShopSphere!
 """
 
     return send_email_async(
-        f"💳 Payment Confirmed - Order #{order.id} | NextShopSphere",
+        f"💳 Payment Confirmed - Order #{order.id} | NEXSHOP",
         text_content,
         html_content,
         user_email

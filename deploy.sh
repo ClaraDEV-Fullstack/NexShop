@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # =============================================================================
-# NextShopSphere Production Deployment Script
+# NEXSHOP Production Deployment Script
 # =============================================================================
 
 set -e  # Exit on error
 
-echo "🚀 Starting NextShopSphere Production Deployment..."
+echo "🚀 Starting NEXSHOP Production Deployment..."
 
 # Colors for output
 RED='\033[0;31m'

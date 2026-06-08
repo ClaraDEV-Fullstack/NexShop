@@ -1,18 +1,19 @@
 # docker-compose.yml
+name: nexshop
 
 services:
   db:
     image: postgres:16-alpine
-    container_name: nextshopsphere_db_dev
+    container_name: nexshop_db_dev
     restart: unless-stopped
     environment:
-      POSTGRES_DB: nextshopsphere
+      POSTGRES_DB: nexshop
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d nextshopsphere"]
+      test: ["CMD-SHELL", "pg_isready -U admin -d nexshop"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -24,7 +25,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: nextshopsphere_backend_dev
+    container_name: nexshop_backend_dev
     command: >
       sh -c "
         echo 'Waiting for PostgreSQL...' &&
@@ -40,7 +41,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://admin:admin123@db:5432/nextshopsphere
+      DATABASE_URL: postgresql://admin:admin123@db:5432/nexshop
       DEBUG: "True"
       SECRET_KEY: dev-secret-key-not-for-production
       ALLOWED_HOSTS: localhost,127.0.0.1,backend
@@ -49,6 +50,12 @@ services:
       SUPABASE_URL: ${SUPABASE_URL:-}
       SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-}
       SUPABASE_BUCKET: ${SUPABASE_BUCKET:-media}
+      # Google OAuth — set in .env file
+      GOOGLE_OAUTH_CLIENT_ID: ${GOOGLE_OAUTH_CLIENT_ID:-}
+      # CinetPay — set in .env file
+      CINETPAY_API_KEY: ${CINETPAY_API_KEY:-}
+      CINETPAY_SITE_ID: ${CINETPAY_SITE_ID:-}
+      CINETPAY_CURRENCY: ${CINETPAY_CURRENCY:-XOF}
     networks:
       - app_network
 
@@ -56,7 +63,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: nextshopsphere_frontend_dev
+    container_name: nexshop_frontend_dev
     ports:
       - "3000:5173"
     volumes:

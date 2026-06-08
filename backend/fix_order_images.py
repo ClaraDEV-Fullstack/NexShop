@@ -5,7 +5,7 @@ import sys
 import django
 
 # Setup Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nextshopsphere.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nexshop.settings')
 django.setup()
 
 from orders.models import OrderItem

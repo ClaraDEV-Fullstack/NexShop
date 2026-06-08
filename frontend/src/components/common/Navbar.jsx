@@ -65,7 +65,7 @@ const getUserAvatar = (user) => {
 
         // For relative paths, use environment variable or fallback
         if (url.startsWith('/')) {
-            const baseUrl = import.meta.env.VITE_API_URL || 'https://nextshopsphere.onrender.com';
+            const baseUrl = import.meta.env.VITE_API_URL || 'https://nexshop.onrender.com';
             return `${baseUrl}${url}`;
         }
 
@@ -112,7 +112,7 @@ const UserAvatar = ({ user, size = 'md', className = '' }) => {
     }
 
     return (
-        <div className={`${sizeClasses[size]} rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold ${className}`}>
+        <div className={`${sizeClasses[size]} rounded-lg bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center text-white font-bold ${className}`}>
             {initials}
         </div>
     );
@@ -177,20 +177,20 @@ const Navbar = () => {
     return (
         <>
             {/* Top Bar */}
-            <div className="hidden lg:block bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white">
+            <div className="hidden lg:block text-white" style={{ backgroundColor: '#0b1326', borderBottom: '1px solid rgba(121,219,141,0.12)' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-8 text-xs">
                         <div className="flex items-center gap-4">
                             <a
-                                href="mailto:nextshopsphere@gmail.com"
-                                className="flex items-center gap-1 text-blue-100 hover:text-white transition-colors"
+                                href="mailto:nexshop@gmail.com"
+                                className="flex items-center gap-1 text-white/60 hover:text-white transition-colors"
                             >
                                 <HiOutlineMail className="w-3 h-3" />
-                                <span>nextshopsphere@gmail.com</span>
+                                <span>nexshop@gmail.com</span>
                             </a>
                             <a
                                 href="tel:+237683669723"
-                                className="flex items-center gap-1 text-blue-100 hover:text-white transition-colors"
+                                className="flex items-center gap-1 text-white/60 hover:text-white transition-colors"
                             >
                                 <HiOutlinePhone className="w-3 h-3" />
                                 <span>+237 683 669 723</span>
@@ -198,23 +198,23 @@ const Navbar = () => {
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1 text-blue-200">
+                            <div className="flex items-center gap-1 text-white/50">
                                 <HiOutlineLocationMarker className="w-3 h-3" />
                                 <span>Douala, Cameroon</span>
                             </div>
-                            <div className="h-3 w-px bg-blue-600"></div>
+                            <div className="h-3 w-px bg-primary-800"></div>
                             <a
                                 href="https://wa.me/237683669723"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors"
+                                className="flex items-center gap-1 text-primary-400 hover:text-primary-300 transition-colors"
                             >
                                 <FaWhatsapp className="w-3 h-3" />
                                 <span>WhatsApp</span>
                             </a>
-                            <div className="h-3 w-px bg-blue-600"></div>
-                            <Link to="/about" className="text-blue-100 hover:text-white transition-colors">About</Link>
-                            <Link to="/faq" className="text-blue-100 hover:text-white transition-colors">FAQ</Link>
+                            <div className="h-3 w-px bg-primary-800"></div>
+                            <Link to="/about" className="text-white/60 hover:text-white transition-colors">About</Link>
+                            <Link to="/faq" className="text-white/60 hover:text-white transition-colors">FAQ</Link>
                         </div>
                     </div>
                 </div>
@@ -233,37 +233,35 @@ const Navbar = () => {
                         <Link to="/" className="flex items-center group">
                             <div className="relative">
                                 {/* Logo Image or Fallback */}
-                                <div className="w-9 h-9 rounded-lg overflow-hidden shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-all mr-2 group-hover:scale-105 flex items-center justify-center bg-white border border-gray-100">
+                                <div className="w-9 h-9 rounded-lg overflow-hidden shadow-lg shadow-primary-500/30 group-hover:shadow-primary-500/50 transition-all mr-2 group-hover:scale-105 flex items-center justify-center bg-white border border-gray-100">
                                     {!logoError ? (
                                         <img
                                             src="/logo.png"
-                                            alt="NextShopSphere"
+                                            alt="NEXSHOP"
                                             className="w-full h-full object-contain p-0.5"
                                             onError={() => setLogoError(true)}
                                         />
                                     ) : (
-                                        <span className="text-blue-600 font-bold text-lg">N</span>
+                                        <span className="text-primary-600 font-bold text-lg">N</span>
                                     )}
                                 </div>
                             </div>
                             <div className="flex flex-col">
-        <span className="text-lg font-bold leading-tight">
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Next</span>
-            <span className="text-green-500 dark:text-white">Shop</span>
-            <span className="text-amber-500">Sphere</span>
-        </span>
+                                <span className="text-lg font-extrabold leading-tight tracking-tight">
+                                    <span className="bg-gradient-to-r from-primary-400 to-primary-700 bg-clip-text text-transparent">NEX</span><span style={{ color: '#ffe083' }}>SHOP</span>
+                                </span>
                                 <span className="text-[9px] text-gray-400 dark:text-gray-500 font-medium tracking-widest uppercase hidden sm:block">
-            Shop with confidence
-        </span>
+                                    Shop with confidence
+                                </span>
                             </div>
                         </Link>
 
                         {/* Search - Desktop */}
                         <button
                             onClick={() => setIsSearchOpen(true)}
-                            className="hidden md:flex items-center gap-2 flex-1 max-w-lg mx-4 px-3 py-2 bg-gray-50 dark:bg-secondary-800 border border-gray-200 dark:border-secondary-700 rounded-lg text-gray-400 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-white dark:hover:bg-secondary-700 transition-all cursor-pointer group shadow-sm hover:shadow-md"
+                            className="hidden md:flex items-center gap-2 flex-1 max-w-lg mx-4 px-3 py-2 bg-gray-50 dark:bg-secondary-800 border border-gray-200 dark:border-secondary-700 rounded-lg text-gray-400 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-white dark:hover:bg-secondary-700 transition-all cursor-pointer group shadow-sm hover:shadow-md"
                         >
-                            <div className="w-7 h-7 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div className="w-7 h-7 bg-gradient-to-br from-primary-600 to-primary-800 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <HiOutlineSearch className="w-3.5 h-3.5 text-white" />
                             </div>
                             <span className="flex-1 text-left text-gray-500 dark:text-gray-400 text-sm">Search for products...</span>
@@ -278,7 +276,7 @@ const Navbar = () => {
                             {/* Products Link */}
                             <Link
                                 to="/products"
-                                className="group flex items-center gap-1.5 px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all text-sm"
+                                className="group flex items-center gap-1.5 px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 font-medium rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all text-sm"
                             >
                                 <HiOutlineShoppingBag className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                 <span>Products</span>
@@ -287,7 +285,7 @@ const Navbar = () => {
                             {/* About Link */}
                             <Link
                                 to="/about"
-                                className="group flex items-center gap-1.5 px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all text-sm"
+                                className="group flex items-center gap-1.5 px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 font-medium rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all text-sm"
                             >
                                 <HiOutlineInformationCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                 <span>About</span>
@@ -296,7 +294,7 @@ const Navbar = () => {
                             {/* Contact Link */}
                             <Link
                                 to="/contact"
-                                className="group flex items-center gap-1.5 px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all text-sm"
+                                className="group flex items-center gap-1.5 px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 font-medium rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all text-sm"
                             >
                                 <HiOutlineMail className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                 <span>Contact</span>
@@ -313,7 +311,7 @@ const Navbar = () => {
                                 {isDark ? (
                                     <HiSun className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform" />
                                 ) : (
-                                    <HiMoon className="w-4 h-4 text-indigo-500 group-hover:-rotate-12 transition-transform" />
+                                    <HiMoon className="w-4 h-4 text-primary-400 group-hover:-rotate-12 transition-transform" />
                                 )}
                             </button>
 
@@ -333,7 +331,7 @@ const Navbar = () => {
                                     to="/dashboard/notifications"
                                     className="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-secondary-800 rounded-lg transition-all group"
                                 >
-                                    <HiOutlineBell className="w-4 h-4 group-hover:scale-110 group-hover:text-blue-500 transition-all" />
+                                    <HiOutlineBell className="w-4 h-4 group-hover:scale-110 group-hover:text-primary-500 transition-all" />
                                     {notificationCount > 0 && (
                                         <span className="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-red-500 to-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-lg shadow-red-500/30 animate-pulse">
                                             {notificationCount > 9 ? '9+' : notificationCount}
@@ -347,9 +345,9 @@ const Navbar = () => {
                                 onClick={() => dispatch(toggleCart())}
                                 className="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-secondary-800 rounded-lg transition-all group"
                             >
-                                <HiOutlineShoppingCart className="w-4 h-4 group-hover:scale-110 group-hover:text-blue-500 transition-all" />
+                                <HiOutlineShoppingCart className="w-4 h-4 group-hover:scale-110 group-hover:text-primary-500 transition-all" />
                                 {cartCount > 0 && (
-                                    <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+                                    <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 bg-gradient-to-r from-[#0b1326] to-primary-800 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-lg shadow-primary-500/30">
                                         {cartCount > 99 ? '99+' : cartCount}
                                     </span>
                                 )}
@@ -362,13 +360,13 @@ const Navbar = () => {
                                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                                         className={`flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all ${
                                             isUserMenuOpen
-                                                ? 'bg-blue-50 dark:bg-blue-900/20'
+                                                ? 'bg-primary-50 dark:bg-primary-900/20'
                                                 : 'hover:bg-gray-100 dark:hover:bg-secondary-800'
                                         }`}
                                     >
                                         <div className="relative">
                                             {/* User Avatar with Profile Picture */}
-                                            <UserAvatar user={user} size="md" className="shadow-lg shadow-blue-500/30" />
+                                            <UserAvatar user={user} size="md" className="shadow-lg shadow-primary-500/30" />
                                             <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border border-white dark:border-secondary-900"></div>
                                         </div>
                                         <div className="hidden lg:block text-left">
@@ -384,7 +382,7 @@ const Navbar = () => {
                                     {isUserMenuOpen && (
                                         <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-secondary-800 rounded-lg shadow-xl shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-secondary-700 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                                             {/* User Info Header */}
-                                            <div className="p-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+                                            <div className="p-3 bg-gradient-to-r from-[#0b1326] to-primary-800 text-white">
                                                 <div className="flex items-center gap-2">
                                                     {/* User Avatar in Dropdown */}
                                                     <UserAvatar user={user} size="lg" className="border-2 border-white/30" />
@@ -392,7 +390,7 @@ const Navbar = () => {
                                                         <p className="font-semibold text-sm truncate">
                                                             {user?.first_name} {user?.last_name}
                                                         </p>
-                                                        <p className="text-xs text-blue-100 truncate">
+                                                        <p className="text-xs text-white/70 truncate">
                                                             {user?.email}
                                                         </p>
                                                     </div>
@@ -406,8 +404,8 @@ const Navbar = () => {
                                                     onClick={() => setIsUserMenuOpen(false)}
                                                     className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-secondary-700 rounded-lg transition-colors group text-sm"
                                                 >
-                                                    <div className="w-7 h-7 bg-blue-100 dark:bg-blue-900/30 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                        <HiOutlineViewGrid className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                                    <div className="w-7 h-7 bg-primary-100 dark:bg-primary-900/30 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                        <HiOutlineViewGrid className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                                                     </div>
                                                     <div className="flex-1">
                                                         <span className="font-medium">Dashboard</span>
@@ -421,8 +419,8 @@ const Navbar = () => {
                                                     onClick={() => setIsUserMenuOpen(false)}
                                                     className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-secondary-700 rounded-lg transition-colors group text-sm"
                                                 >
-                                                    <div className="w-7 h-7 bg-indigo-100 dark:bg-indigo-900/30 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                        <HiOutlineUser className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                                    <div className="w-7 h-7 bg-primary-100 dark:bg-primary-900/30 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                        <HiOutlineUser className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                                                     </div>
                                                     <div className="flex-1">
                                                         <span className="font-medium">Profile</span>
@@ -496,13 +494,13 @@ const Navbar = () => {
                                 <div className="flex items-center gap-1 ml-1">
                                     <Link
                                         to="/login"
-                                        className="px-3 py-1.5 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors text-sm"
+                                        className="px-3 py-1.5 text-gray-600 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 font-semibold transition-colors text-sm"
                                     >
                                         Login
                                     </Link>
                                     <Link
                                         to="/register"
-                                        className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 text-sm"
+                                        className="px-3 py-1.5 bg-gradient-to-r from-primary-600 to-primary-800 hover:from-primary-700 hover:to-primary-900 text-white font-semibold rounded-lg transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-105 text-sm"
                                     >
                                         Sign Up
                                     </Link>
@@ -526,7 +524,7 @@ const Navbar = () => {
                                 {isDark ? (
                                     <HiSun className="w-4 h-4 text-amber-400" />
                                 ) : (
-                                    <HiMoon className="w-4 h-4 text-indigo-500" />
+                                    <HiMoon className="w-4 h-4 text-primary-400" />
                                 )}
                             </button>
 
@@ -536,7 +534,7 @@ const Navbar = () => {
                             >
                                 <HiOutlineShoppingCart className="w-4 h-4" />
                                 {cartCount > 0 && (
-                                    <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                                    <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 bg-gradient-to-r from-[#0b1326] to-primary-800 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                                         {cartCount}
                                     </span>
                                 )}
@@ -563,7 +561,7 @@ const Navbar = () => {
                             {/* Quick Contact - Mobile */}
                             <div className="flex items-center justify-center gap-3 py-2 mb-1 bg-gray-50 dark:bg-secondary-800 rounded-lg text-xs">
                                 <a href="tel:+237683669723" className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
-                                    <HiOutlinePhone className="w-3 h-3 text-blue-500" />
+                                    <HiOutlinePhone className="w-3 h-3 text-primary-500" />
                                     <span>+237 683 669 723</span>
                                 </a>
                                 <div className="h-3 w-px bg-gray-300 dark:bg-secondary-600"></div>
@@ -581,18 +579,18 @@ const Navbar = () => {
                             {/* Nav Links */}
                             <Link
                                 to="/products"
-                                className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                                    <HiOutlineShoppingBag className="w-4 h-4 text-blue-600" />
+                                <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                                    <HiOutlineShoppingBag className="w-4 h-4 text-primary-600" />
                                 </div>
                                 <span className="font-medium text-sm">Products</span>
                             </Link>
 
                             <Link
                                 to="/about"
-                                className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 <div className="w-8 h-8 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center">
@@ -603,11 +601,11 @@ const Navbar = () => {
 
                             <Link
                                 to="/contact"
-                                className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center">
-                                    <HiOutlineMail className="w-4 h-4 text-indigo-600" />
+                                <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                                    <HiOutlineMail className="w-4 h-4 text-primary-600" />
                                 </div>
                                 <span className="font-medium text-sm">Contact Us</span>
                             </Link>
@@ -618,18 +616,18 @@ const Navbar = () => {
 
                                     <Link
                                         to="/dashboard"
-                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
-                                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                                            <HiOutlineViewGrid className="w-4 h-4 text-blue-600" />
+                                        <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                                            <HiOutlineViewGrid className="w-4 h-4 text-primary-600" />
                                         </div>
                                         <span className="font-medium text-sm">Dashboard</span>
                                     </Link>
 
                                     <Link
                                         to="/orders"
-                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
@@ -640,7 +638,7 @@ const Navbar = () => {
 
                                     <Link
                                         to="/wishlist"
-                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <div className="w-8 h-8 bg-rose-100 dark:bg-rose-900/30 rounded-lg flex items-center justify-center">
@@ -651,7 +649,7 @@ const Navbar = () => {
 
                                     <Link
                                         to="/dashboard/notifications"
-                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
@@ -667,7 +665,7 @@ const Navbar = () => {
 
                                     <Link
                                         to="/profile"
-                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <div className="w-8 h-8 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center">
@@ -677,14 +675,14 @@ const Navbar = () => {
                                     </Link>
 
                                     {/* User Info Card with Profile Picture */}
-                                    <div className="mx-2 p-3 mt-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg text-white">
+                                    <div className="mx-2 p-3 mt-1 bg-gradient-to-r from-[#0b1326] to-primary-800 rounded-lg text-white">
                                         <div className="flex items-center gap-2">
                                             <UserAvatar user={user} size="lg" className="border-2 border-white/30" />
                                             <div className="flex-1 min-w-0">
                                                 <p className="font-semibold text-sm truncate">
                                                     {user?.first_name} {user?.last_name}
                                                 </p>
-                                                <p className="text-xs text-blue-200 truncate">
+                                                <p className="text-xs text-white/60 truncate">
                                                     {user?.email}
                                                 </p>
                                             </div>
@@ -705,14 +703,14 @@ const Navbar = () => {
                                 <div className="flex gap-2 pt-2 px-2">
                                     <Link
                                         to="/login"
-                                        className="flex-1 py-2 text-center border-2 border-gray-200 dark:border-secondary-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:border-blue-300 hover:bg-blue-50 transition-colors text-sm"
+                                        className="flex-1 py-2 text-center border-2 border-gray-200 dark:border-secondary-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:border-primary-300 hover:bg-primary-50 transition-colors text-sm"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         Login
                                     </Link>
                                     <Link
                                         to="/register"
-                                        className="flex-1 py-2 text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold shadow-lg shadow-blue-500/30 text-sm"
+                                        className="flex-1 py-2 text-center bg-gradient-to-r from-[#0b1326] to-primary-800 text-white rounded-lg font-semibold shadow-lg shadow-primary-500/30 text-sm"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         Sign Up

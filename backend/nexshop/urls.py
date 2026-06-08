@@ -1,5 +1,5 @@
 """
-URL configuration for nextshopsphere project.
+URL configuration for nexshop project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/6.0/topics/http/urls/
@@ -36,7 +36,7 @@ from drf_spectacular.views import (
 
 # Health check endpoint for container orchestration
 def health_check(request):
-    return JsonResponse({'status': 'healthy', 'service': 'nextshopsphere-api'})
+    return JsonResponse({'status': 'healthy', 'service': 'nexshop-api'})
 
 urlpatterns = [
     # =============================================

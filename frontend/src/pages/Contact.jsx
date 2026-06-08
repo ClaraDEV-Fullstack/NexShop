@@ -38,7 +38,7 @@ const Contact = () => {
     };
 
     const contactInfo = [
-        { icon: HiMail, title: 'Email', value: 'nextshopsphere@gmail.com', link: 'mailto:nextshopsphere@gmail.com', desc: '24hr response' },
+        { icon: HiMail, title: 'Email', value: 'nexshop@gmail.com', link: 'mailto:nexshop@gmail.com', desc: '24hr response' },
         { icon: HiPhone, title: 'Call', value: '+237 683 669 723', link: 'tel:+237683669723', desc: 'Mon-Sat 8am-6pm' },
         { icon: FaWhatsapp, title: 'WhatsApp', value: '+237 683 669 723', link: 'https://wa.me/237683669723', desc: 'Chat instantly' },
         { icon: HiLocationMarker, title: 'Visit', value: 'Akwa, Douala', link: 'https://maps.google.com/?q=Akwa,Douala', desc: 'Cameroon' }
@@ -53,18 +53,18 @@ const Contact = () => {
 
     const socialLinks = [
         { icon: FaGithub, url: 'https://github.com/ClaraDEV-Fullstack', color: 'hover:bg-gray-700' },
-        { icon: FaLinkedin, url: 'https://linkedin.com/in/clara-beri-794097217/', color: 'hover:bg-blue-600' },
+        { icon: FaLinkedin, url: 'https://linkedin.com/in/clara-beri-794097217/', color: 'hover:bg-primary-600' },
         { icon: FaWhatsapp, url: 'https://wa.me/237683669723', color: 'hover:bg-green-600' },
-        { icon: FaBehance, url: 'https://behance.net/claraberi', color: 'hover:bg-blue-500' }
+        { icon: FaBehance, url: 'https://behance.net/claraberi', color: 'hover:bg-primary-500' }
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50/30">
+        <div className="min-h-screen bg-gradient-to-b from-slate-50 to-primary-50/30">
             {/* Hero Section - Compact */}
-            <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-10 md:py-16 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white py-10 md:py-16 relative overflow-hidden">
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl" />
-                    <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-indigo-500/30 rounded-full blur-3xl" />
+                    <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary-500/30 rounded-full blur-3xl" />
+                    <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary-500/30 rounded-full blur-3xl" />
                 </div>
 
                 <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 relative">
@@ -74,11 +74,11 @@ const Contact = () => {
                             We're here to help
                         </div>
                         <h1 className="text-2xl md:text-4xl font-bold mb-3">Get in Touch</h1>
-                        <p className="text-sm md:text-base text-blue-100 mb-5">
+                        <p className="text-sm md:text-base text-primary-100 mb-5">
                             Have questions? Our team is ready to assist you.
                         </p>
                         <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-                            <a href="mailto:nextshopsphere@gmail.com" className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-blue-700 text-sm font-semibold rounded-lg hover:bg-blue-50">
+                            <a href="mailto:nexshop@gmail.com" className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-primary-700 text-sm font-semibold rounded-lg hover:bg-primary-50">
                                 <HiMail className="w-4 h-4" />
                                 Email Us
                             </a>
@@ -102,11 +102,11 @@ const Contact = () => {
                             rel="noopener noreferrer"
                             className="group bg-white rounded-xl p-3 md:p-4 shadow-lg hover:shadow-xl transition-all border border-gray-100"
                         >
-                            <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3 group-hover:scale-105 transition-transform">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3 group-hover:scale-105 transition-transform">
                                 <info.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                             </div>
                             <h3 className="font-bold text-gray-900 text-xs md:text-sm">{info.title}</h3>
-                            <p className="text-blue-600 font-medium text-xs md:text-sm truncate">{info.value}</p>
+                            <p className="text-primary-600 font-medium text-xs md:text-sm truncate">{info.value}</p>
                             <p className="text-[10px] md:text-xs text-gray-500">{info.desc}</p>
                         </a>
                     ))}
@@ -123,14 +123,14 @@ const Contact = () => {
                                     </div>
                                     <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Message Sent!</h3>
                                     <p className="text-sm text-gray-600 mb-4">We'll get back to you within 24 hours.</p>
-                                    <button onClick={() => setIsSubmitted(false)} className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700">
+                                    <button onClick={() => setIsSubmitted(false)} className="px-4 py-2 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700">
                                         Send Another
                                     </button>
                                 </div>
                             ) : (
                                 <>
                                     <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-5">
-                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
                                             <HiChatAlt2 className="w-5 h-5 md:w-6 md:h-6 text-white" />
                                         </div>
                                         <div>
@@ -149,7 +149,7 @@ const Contact = () => {
                                                     <input
                                                         type="text" name="name" value={formData.name} onChange={handleChange}
                                                         placeholder="John Doe" required
-                                                        className="w-full pl-9 pr-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                        className="w-full pl-9 pr-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500"
                                                     />
                                                 </div>
                                             </div>
@@ -160,7 +160,7 @@ const Contact = () => {
                                                     <input
                                                         type="email" name="email" value={formData.email} onChange={handleChange}
                                                         placeholder="you@example.com" required
-                                                        className="w-full pl-9 pr-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                        className="w-full pl-9 pr-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500"
                                                     />
                                                 </div>
                                             </div>
@@ -175,7 +175,7 @@ const Contact = () => {
                                                     <input
                                                         type="tel" name="phone" value={formData.phone} onChange={handleChange}
                                                         placeholder="+237 6XX XXX"
-                                                        className="w-full pl-9 pr-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                        className="w-full pl-9 pr-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500"
                                                     />
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@ const Contact = () => {
                                                 <label className="block text-xs font-medium text-gray-700 mb-1">Subject *</label>
                                                 <select
                                                     name="subject" value={formData.subject} onChange={handleChange} required
-                                                    className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                                                    className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white"
                                                 >
                                                     <option value="">Select topic</option>
                                                     <option value="order">Order Inquiry</option>
@@ -201,13 +201,13 @@ const Contact = () => {
                                             <textarea
                                                 name="message" value={formData.message} onChange={handleChange}
                                                 placeholder="How can we help you?" rows={3} required
-                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 resize-none"
                                             />
                                         </div>
 
                                         <button
                                             type="submit" disabled={isSubmitting}
-                                            className="w-full py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold rounded-xl flex items-center justify-center gap-2 disabled:opacity-70"
+                                            className="w-full py-2.5 md:py-3 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white text-sm font-semibold rounded-xl flex items-center justify-center gap-2 disabled:opacity-70"
                                         >
                                             {isSubmitting ? (
                                                 <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Sending...</>
@@ -249,7 +249,7 @@ const Contact = () => {
                         {/* Social Media */}
                         <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
                             <div className="flex items-center gap-2 mb-3">
-                                <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                                <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
                                     <HiGlobe className="w-4 h-4 text-white" />
                                 </div>
                                 <h3 className="text-sm font-bold text-gray-900">Follow Us</h3>
@@ -266,7 +266,7 @@ const Contact = () => {
                         </div>
 
                         {/* Quick Links */}
-                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl p-4 text-white">
+                        <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl p-4 text-white">
                             <h3 className="text-sm font-bold mb-3">Quick Links</h3>
                             <div className="space-y-2">
                                 {[
@@ -287,7 +287,7 @@ const Contact = () => {
                 {/* FAQ Section - Compact */}
                 <div className="mb-6 md:mb-10">
                     <div className="text-center mb-4 md:mb-6">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium mb-2">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-medium mb-2">
                             <HiQuestionMarkCircle className="w-3.5 h-3.5" />
                             FAQs
                         </div>
@@ -298,7 +298,7 @@ const Contact = () => {
                         {faqs.map((faq, i) => (
                             <div key={i} className="bg-white rounded-xl p-3 md:p-4 shadow-md border border-gray-100">
                                 <h3 className="font-bold text-gray-900 text-xs md:text-sm mb-1.5 flex items-start gap-2">
-                                    <span className="w-5 h-5 md:w-6 md:h-6 bg-blue-100 text-blue-600 rounded-md flex items-center justify-center flex-shrink-0 text-[10px] md:text-xs font-bold">
+                                    <span className="w-5 h-5 md:w-6 md:h-6 bg-primary-100 text-primary-600 rounded-md flex items-center justify-center flex-shrink-0 text-[10px] md:text-xs font-bold">
                                         {i + 1}
                                     </span>
                                     <span className="flex-1">{faq.q}</span>
@@ -314,7 +314,7 @@ const Contact = () => {
                     <div className="p-3 md:p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div className="flex items-center gap-2 md:gap-3">
-                                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
                                     <HiOfficeBuilding className="w-5 h-5 md:w-6 md:h-6 text-white" />
                                 </div>
                                 <div>
@@ -323,7 +323,7 @@ const Contact = () => {
                                 </div>
                             </div>
                             <a href="https://maps.google.com/?q=Akwa,Douala,Cameroon" target="_blank" rel="noopener noreferrer"
-                               className="inline-flex items-center gap-1.5 px-3 md:px-4 py-2 bg-blue-600 text-white text-xs md:text-sm font-semibold rounded-lg hover:bg-blue-700">
+                               className="inline-flex items-center gap-1.5 px-3 md:px-4 py-2 bg-primary-600 text-white text-xs md:text-sm font-semibold rounded-lg hover:bg-primary-700">
                                 <HiLocationMarker className="w-4 h-4" />
                                 Get Directions
                             </a>
@@ -343,17 +343,17 @@ const Contact = () => {
                     <div className="p-3 md:p-4 bg-gray-50 border-t border-gray-100">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                             <div>
-                                <p className="font-semibold text-gray-900 text-sm">NextShopSphere</p>
+                                <p className="font-semibold text-gray-900 text-sm">NEXSHOP</p>
                                 <p className="text-xs text-gray-600">Rue de la Joie, Akwa, Douala</p>
                             </div>
                             <div className="flex flex-wrap gap-2 md:gap-3 text-xs">
-                                <a href="tel:+237683669723" className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700">
+                                <a href="tel:+237683669723" className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700">
                                     <HiPhone className="w-3.5 h-3.5" />
                                     +237 683 669 723
                                 </a>
-                                <a href="mailto:nextshopsphere@gmail.com" className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700">
+                                <a href="mailto:nexshop@gmail.com" className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700">
                                     <HiMail className="w-3.5 h-3.5" />
-                                    nextshopsphere@gmail.com
+                                    nexshop@gmail.com
                                 </a>
                             </div>
                         </div>

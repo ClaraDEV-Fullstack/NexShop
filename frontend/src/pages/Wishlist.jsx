@@ -1,6 +1,7 @@
 // src/pages/Wishlist.jsx
 
 import { useState, useEffect } from 'react';
+import { formatPrice } from '../utils/helpers';
 import { Link } from 'react-router-dom';
 import {
     HiHeart,
@@ -61,8 +62,8 @@ const WishlistItemImage = ({ product }) => {
 
     if (!imageUrl || hasError) {
         return (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sky-50 to-blue-50">
-                <HiCube className="w-10 h-10 text-sky-300" />
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-50">
+                <HiCube className="w-10 h-10 text-primary-300" />
             </div>
         );
     }
@@ -189,7 +190,7 @@ const Wishlist = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-blue-50">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-50">
                 <div className="text-center">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-lg mb-4">
                         <Loader size="lg" />
@@ -201,12 +202,12 @@ const Wishlist = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50 py-8">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-50 py-8">
             {/* Clear Confirmation Modal */}
             {showClearConfirm && (
                 <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-sky-100">
-                        <div className="w-16 h-16 bg-gradient-to-br from-sky-100 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                    <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-primary-100">
+                        <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
                             <HiExclamation className="w-8 h-8 text-amber-500" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Clear Wishlist?</h3>
@@ -222,7 +223,7 @@ const Wishlist = () => {
                             </button>
                             <button
                                 onClick={handleClearAll}
-                                className="flex-1 bg-gradient-to-r from-blue-600 to-sky-500 text-white px-5 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-sky-600 transition-all shadow-lg shadow-blue-500/25"
+                                className="flex-1 bg-gradient-to-r from-primary-600 to-primary-500 text-white px-5 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-600 transition-all shadow-lg shadow-primary-500/25"
                             >
                                 Clear All
                             </button>
@@ -237,7 +238,7 @@ const Wishlist = () => {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                         <div>
                             <div className="flex items-center gap-3 mb-2">
-                                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-sky-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+                                <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/25">
                                     <HiHeart className="w-6 h-6 text-white" />
                                 </div>
                                 <div>
@@ -261,7 +262,7 @@ const Wishlist = () => {
                     {items.length > 0 && (
                         <div className="flex items-center gap-3">
                             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-700 shadow-sm border border-gray-100">
-                                <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                <span className="w-2 h-2 bg-primary-500 rounded-full"></span>
                                 {items.length} item{items.length !== 1 ? 's' : ''} saved
                             </span>
                         </div>
@@ -270,9 +271,9 @@ const Wishlist = () => {
 
                 {items.length === 0 ? (
                     /* Empty State */
-                    <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-12 text-center border border-sky-100">
-                        <div className="w-24 h-24 bg-gradient-to-br from-sky-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <HiOutlineHeart className="w-12 h-12 text-blue-400" />
+                    <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-12 text-center border border-primary-100">
+                        <div className="w-24 h-24 bg-gradient-to-br from-primary-100 to-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <HiOutlineHeart className="w-12 h-12 text-primary-400" />
                         </div>
                         <h2 className="text-2xl font-bold text-gray-900 mb-3">Your Wishlist is Empty</h2>
                         <p className="text-gray-500 mb-8 max-w-md mx-auto">
@@ -280,7 +281,7 @@ const Wishlist = () => {
                         </p>
                         <Link
                             to="/products"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-sky-500 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-sky-600 transition-all shadow-lg shadow-blue-500/25"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all shadow-lg shadow-primary-500/25"
                         >
                             <HiOutlineShoppingBag className="w-5 h-5" />
                             Browse Products
@@ -315,7 +316,7 @@ const Wishlist = () => {
                             return (
                                 <div
                                     key={item.id}
-                                    className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-sky-100 group"
+                                    className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-primary-100 group"
                                 >
                                     <div className="flex flex-col sm:flex-row">
                                         {/* Image Container */}
@@ -328,7 +329,7 @@ const Wishlist = () => {
                                             </div>
 
                                             {/* Image Overlay on Hover */}
-                                            <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-all duration-300"></div>
+                                            <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/10 transition-all duration-300"></div>
 
                                             {/* Badges */}
                                             <div className="absolute top-3 left-3 flex flex-col gap-2">
@@ -352,7 +353,7 @@ const Wishlist = () => {
                                             <div className="flex-1">
                                                 {/* Category */}
                                                 {product.category && (
-                                                    <p className="text-xs text-sky-600 font-medium mb-1.5 uppercase tracking-wide">
+                                                    <p className="text-xs text-primary-600 font-medium mb-1.5 uppercase tracking-wide">
                                                         {typeof product.category === 'string'
                                                             ? product.category
                                                             : product.category.name}
@@ -362,19 +363,19 @@ const Wishlist = () => {
                                                 {/* Product Name */}
                                                 <Link
                                                     to={`/products/${product.slug}`}
-                                                    className="block font-bold text-gray-900 hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-base sm:text-lg"
+                                                    className="block font-bold text-gray-900 hover:text-primary-600 transition-colors line-clamp-2 mb-2 text-base sm:text-lg"
                                                 >
                                                     {product.name}
                                                 </Link>
 
                                                 {/* Price */}
                                                 <div className="flex items-center gap-2 mb-3">
-                                                    <span className="text-xl sm:text-2xl font-bold text-blue-600">
-                                                        ${parseFloat(product.price).toFixed(2)}
+                                                    <span className="text-xl sm:text-2xl font-bold text-primary-600">
+                                                        {formatPrice(product.price)}
                                                     </span>
                                                     {hasDiscount && (
                                                         <span className="text-sm text-gray-400 line-through">
-                                                            ${parseFloat(product.compare_price).toFixed(2)}
+                                                            {formatPrice(product.compare_price)}
                                                         </span>
                                                     )}
                                                 </div>
@@ -400,7 +401,7 @@ const Wishlist = () => {
                                                 <button
                                                     onClick={() => handleAddToCart(product, item.id)}
                                                     disabled={!isInStock || addingToCartId === item.id}
-                                                    className="flex-1 flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-sky-500 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-sky-600 transition-all shadow-md shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                                                    className="flex-1 flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white text-sm font-semibold rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all shadow-md shadow-primary-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
                                                 >
                                                     {addingToCartId === item.id ? (
                                                         <>
@@ -441,7 +442,7 @@ const Wishlist = () => {
                     <div className="mt-8 text-center">
                         <Link
                             to="/products"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl border-2 border-blue-600 hover:bg-blue-50 transition-all"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-600 font-semibold rounded-xl border-2 border-primary-600 hover:bg-primary-50 transition-all"
                         >
                             <HiOutlineShoppingBag className="w-5 h-5" />
                             Continue Shopping

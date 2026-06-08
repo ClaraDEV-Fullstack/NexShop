@@ -33,13 +33,13 @@ const About = () => {
             icon: HiShieldCheck,
             title: 'Quality Assurance',
             description: 'We carefully select and verify all products to ensure you receive only the best quality items.',
-            color: 'from-blue-500 to-blue-600'
+            color: 'from-primary-500 to-primary-600'
         },
         {
             icon: HiTruck,
             title: 'Fast Delivery',
             description: 'We deliver across all 10 regions of Cameroon with tracking available for every order.',
-            color: 'from-purple-500 to-purple-600'
+            color: 'from-primary-500 to-primary-600'
         },
         {
             icon: HiCurrencyDollar,
@@ -68,7 +68,7 @@ const About = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-secondary-900">
             {/* Hero Section - More Compact and Modern */}
             <div className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800">
                     <div className="absolute inset-0 bg-black/20"></div>
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
@@ -78,9 +78,9 @@ const About = () => {
                             Made in Cameroon
                         </div>
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-                            About NextShopSphere
+                            About NEXSHOP
                         </h1>
-                        <p className="text-lg sm:text-xl text-blue-100 max-w-3xl mx-auto">
+                        <p className="text-lg sm:text-xl text-primary-100 max-w-3xl mx-auto">
                             Your trusted online marketplace bringing quality products to every corner of Cameroon.
                             We're on a mission to make online shopping accessible, affordable, and enjoyable for everyone.
                         </p>
@@ -91,7 +91,7 @@ const About = () => {
                                 <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                                     <stat.icon className="w-6 h-6 mx-auto mb-2 text-white" />
                                     <p className="text-2xl font-bold text-white">{stat.value}</p>
-                                    <p className="text-sm text-blue-100">{stat.label}</p>
+                                    <p className="text-sm text-primary-100">{stat.label}</p>
                                 </div>
                             ))}
                         </div>
@@ -99,8 +99,8 @@ const About = () => {
                 </div>
 
                 {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/30 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/30 rounded-full blur-3xl"></div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary-400/30 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-400/30 rounded-full blur-3xl"></div>
             </div>
 
             {/* Our Story Section - More Compact and Modern */}
@@ -108,7 +108,7 @@ const About = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         <div>
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-4">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-4">
                                 <HiLightningBolt className="w-4 h-4" />
                                 Our Story
                             </div>
@@ -117,7 +117,7 @@ const About = () => {
                             </h2>
                             <div className="space-y-4 text-gray-600 dark:text-gray-300">
                                 <p>
-                                    NextShopSphere was founded in 2024 in Douala, Cameroon, with a simple vision:
+                                    NEXSHOP was founded in 2024 in Douala, Cameroon, with a simple vision:
                                     to bring the convenience of online shopping to every Cameroonian.
                                 </p>
                                 <p>
@@ -135,8 +135,8 @@ const About = () => {
                             {/* Key Achievements */}
                             <div className="grid grid-cols-2 gap-4 mt-6">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                                        <HiStar className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                                    <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                                        <HiStar className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                                     </div>
                                     <div>
                                         <p className="font-semibold text-gray-900 dark:text-white">4.8 Rating</p>
@@ -158,7 +158,7 @@ const About = () => {
                             <div className="relative rounded-2xl overflow-hidden shadow-xl">
                                 <img
                                     src="/images/about-store.jpg"
-                                    alt="NextShopSphere Store"
+                                    alt="NEXSHOP Store"
                                     className="w-full h-auto object-cover"
                                     onError={(e) => {
                                         e.target.src = 'https://images.pexels.com/photos/8550655/pexels-photo-8550655.jpeg';
@@ -177,7 +177,7 @@ const About = () => {
                     <div className="text-center mb-8 lg:mb-12">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Values</h2>
                         <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                            These principles guide everything we do at NextShopSphere
+                            These principles guide everything we do at NEXSHOP
                         </p>
                     </div>
                     <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
@@ -200,12 +200,12 @@ const About = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         <div>
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-4">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-4">
                                 <HiStar className="w-4 h-4" />
                                 Why Choose Us
                             </div>
                             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                                What Makes NextShopSphere Special
+                                What Makes NEXSHOP Special
                             </h2>
                             <div className="space-y-4">
                                 {features.map((feature, index) => (
@@ -220,7 +220,7 @@ const About = () => {
                             <div className="mt-8">
                                 <Link
                                     to="/products"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg hover:shadow-xl"
                                 >
                                     Start Shopping
                                     <HiArrowRight className="w-4 h-4" />
@@ -228,10 +228,10 @@ const About = () => {
                             </div>
                         </div>
                         <div className="relative">
-                            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8">
+                            <div className="bg-gradient-to-br from-primary-50 to-primary-50 dark:from-primary-900/20 dark:to-primary-900/20 rounded-2xl p-8">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="bg-white dark:bg-secondary-800 rounded-xl p-4 text-center shadow-md">
-                                        <HiTruck className="w-8 h-8 mx-auto mb-2 text-blue-600 dark:text-blue-400" />
+                                        <HiTruck className="w-8 h-8 mx-auto mb-2 text-primary-600 dark:text-primary-400" />
                                         <p className="font-semibold text-gray-900 dark:text-white">Free Shipping</p>
                                         <p className="text-sm text-gray-500 dark:text-gray-400">Orders above 10,000 XAF</p>
                                     </div>
@@ -241,7 +241,7 @@ const About = () => {
                                         <p className="text-sm text-gray-500 dark:text-gray-400">100% Secure</p>
                                     </div>
                                     <div className="bg-white dark:bg-secondary-800 rounded-xl p-4 text-center shadow-md">
-                                        <HiCurrencyDollar className="w-8 h-8 mx-auto mb-2 text-purple-600 dark:text-purple-400" />
+                                        <HiCurrencyDollar className="w-8 h-8 mx-auto mb-2 text-primary-600 dark:text-primary-400" />
                                         <p className="font-semibold text-gray-900 dark:text-white">Best Price</p>
                                         <p className="text-sm text-gray-500 dark:text-gray-400">Guaranteed</p>
                                     </div>
@@ -258,27 +258,27 @@ const About = () => {
             </section>
 
             {/* Contact CTA Section - More Compact and Modern */}
-            <section className="py-10 sm:py-12 lg:py-16 bg-gradient-to-br from-blue-600 to-indigo-700">
+            <section className="py-10 sm:py-12 lg:py-16 bg-gradient-to-br from-primary-600 to-primary-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Have Questions?</h2>
-                    <p className="text-blue-100 max-w-2xl mx-auto mb-8">
+                    <p className="text-primary-100 max-w-2xl mx-auto mb-8">
                         Our team is here to help. Contact us anytime and we'll get back to you within 24 hours.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                             <HiPhone className="w-6 h-6 mx-auto mb-2 text-white" />
-                            <p className="text-sm text-blue-100">Call Us</p>
+                            <p className="text-sm text-primary-100">Call Us</p>
                             <p className="font-semibold text-white">+237 683 669 723</p>
                         </div>
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                             <HiMail className="w-6 h-6 mx-auto mb-2 text-white" />
-                            <p className="text-sm text-blue-100">Email Us</p>
-                            <p className="font-semibold text-white">nextshopsphere@gmail.com</p>
+                            <p className="text-sm text-primary-100">Email Us</p>
+                            <p className="font-semibold text-white">nexshop@gmail.com</p>
                         </div>
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                             <HiLocationMarker className="w-6 h-6 mx-auto mb-2 text-white" />
-                            <p className="text-sm text-blue-100">Visit Us</p>
+                            <p className="text-sm text-primary-100">Visit Us</p>
                             <p className="font-semibold text-white">Douala, Cameroon</p>
                         </div>
                     </div>
@@ -286,14 +286,14 @@ const About = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             to="/contact"
-                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-colors"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary-600 font-semibold rounded-xl hover:bg-primary-50 transition-colors"
                         >
                             <HiUserGroup className="w-5 h-5" />
                             Contact Us
                         </Link>
                         <Link
                             to="/products"
-                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-500/20 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-blue-500/30 transition-colors"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-500/20 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-primary-500/30 transition-colors"
                         >
                             Browse Products
                             <HiArrowRight className="w-4 h-4" />

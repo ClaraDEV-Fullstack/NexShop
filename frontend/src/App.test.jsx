@@ -18,7 +18,7 @@ vi.mock('./api/api', () => ({
 
 test('renders the storefront', async () => {
   render(<App />);
-  expect(screen.getAllByText(/NextShopSphere/i).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/NEXSHOP/i).length).toBeGreaterThan(0);
   await waitFor(() => {
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
   });

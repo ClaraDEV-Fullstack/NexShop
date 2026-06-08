@@ -22,7 +22,7 @@ import ProductCard from '../components/products/ProductCard';
 // ========== PRODUCT SECTION SKELETON LOADER ==========
 const ProductSectionSkeleton = ({ count = 4 }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
             {[...Array(count)].map((_, i) => (
                 <div
                     key={i}
@@ -154,205 +154,223 @@ const Home = () => {
     return (
         <div className="min-h-screen">
             {/* ==================== HERO SECTION ==================== */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-primary-700 to-primary-900 text-white">
+            <section className="relative overflow-hidden text-white" style={{ backgroundColor: '#0b1326' }}>
 
-                {/* ── Background texture ── */}
-                <div className="absolute inset-0 opacity-[0.04]" style={{
-                    backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                    backgroundSize: '32px 32px'
-                }} />
+                {/* ── Background: green radial glow + accent glows ── */}
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute inset-0" style={{
+                        background: 'radial-gradient(circle at 50% 55%, rgba(21,128,61,0.38) 0%, rgba(11,19,38,0) 68%)'
+                    }} />
+                    <div className="absolute -top-24 right-1/3 w-72 h-72 rounded-full blur-[90px]"
+                        style={{ backgroundColor: 'rgba(238,194,0,0.09)' }} />
+                    <div className="absolute -bottom-8 -left-8 w-64 h-64 rounded-full blur-[80px]"
+                        style={{ backgroundColor: 'rgba(121,219,141,0.1)' }} />
+                </div>
 
-                {/* ── Animated blobs ── */}
-                <motion.div animate={{ scale: [1,1.15,1], x:[0,25,0] }} transition={{ duration: 18, repeat: Infinity, ease:"easeInOut" }}
-                    className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-yellow-400/25 to-orange-500/15 blur-3xl pointer-events-none" />
-                <motion.div animate={{ scale: [1,1.2,1], y:[0,30,0] }} transition={{ duration: 22, repeat: Infinity, ease:"easeInOut" }}
-                    className="absolute -bottom-32 -left-32 w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-violet-500/20 to-pink-500/10 blur-3xl pointer-events-none" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-emerald-500/10 blur-3xl pointer-events-none hidden lg:block" />
+                {/* ── Wave dividers ── */}
+                <div className="absolute -bottom-1 left-0 right-0 z-20 pointer-events-none">
+                    <svg viewBox="0 0 1440 160" fill="none" className="absolute bottom-0 w-full h-10 sm:h-14 md:h-20 lg:h-28" preserveAspectRatio="none">
+                        <path d="M0,100 C240,140 360,50 600,90 C840,130 960,40 1200,80 C1320,100 1380,130 1440,110 L1440,160 L0,160 Z"
+                            style={{ fill: 'rgba(11,19,38,0.35)' }} />
+                    </svg>
+                    <svg viewBox="0 0 1440 160" fill="none" className="relative w-full h-8 sm:h-12 md:h-16 lg:h-20" preserveAspectRatio="none">
+                        <path d="M0,110 C120,130 240,70 420,90 C600,110 720,150 900,120 C1080,90 1200,140 1320,110 C1380,95 1420,120 1440,110 L1440,160 L0,160 Z"
+                            className="fill-white dark:fill-gray-900" />
+                    </svg>
+                </div>
 
-                {/* ── MAIN GRID ── */}
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] xl:grid-cols-[55%_45%] min-h-[92vh] lg:min-h-[88vh] items-center gap-0">
+                {/* ── Main grid ── */}
+                <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 sm:py-12 md:py-16 lg:py-20 pb-20 sm:pb-24 md:pb-28 lg:pb-32">
 
-                        {/* ─────── LEFT: TEXT ─────── */}
-                        <div className="flex flex-col justify-center py-16 sm:py-20 lg:py-24 xl:py-28 order-2 lg:order-1 text-center lg:text-left px-0 lg:pr-10 xl:pr-16">
+                        {/* ─── LEFT: text ─── */}
+                        <div className="flex flex-col gap-4 order-2 md:order-1">
 
-                            {/* Live badge */}
-                            <motion.div initial={{ opacity:0, y:-16 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.45 }}
-                                className="inline-flex justify-center lg:justify-start mb-5 sm:mb-6">
-                                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-xs sm:text-sm font-medium border border-white/20 shadow-lg">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-                                    </span>
-                                    🚚 Free shipping on orders over $50
+                            {/* Shipping badge */}
+                            <motion.div initial={{ opacity:0, y:-14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.45 }}>
+                                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold w-fit"
+                                    style={{
+                                        background: 'rgba(21,128,61,0.2)',
+                                        border: '1px solid rgba(121,219,141,0.3)',
+                                        color: '#79db8d',
+                                        fontFamily: "'Hanken Grotesk', sans-serif"
+                                    }}>
+                                    🚚 Livraison gratuite dès 50 000 FCFA
                                 </span>
                             </motion.div>
 
                             {/* Headline */}
-                            <motion.h1 initial={{ opacity:0, y:22 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.55, delay:0.1 }}
-                                className="font-extrabold leading-[1.08] tracking-tight mb-5 sm:mb-6">
-                                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-white drop-shadow-sm">
-                                    Discover Your
-                                </span>
-                                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl mt-1 sm:mt-2">
-                                    <span className="bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-400 bg-clip-text text-transparent">
-                                        Perfect Style
-                                    </span>
-                                </span>
-                                <span className="block text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl mt-2 sm:mt-3 text-white/60 font-semibold">
+                            <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.55, delay:0.1 }}
+                                className="space-y-1">
+                                <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.15 }}
+                                    className="text-4xl sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem]">
+                                    <span className="block" style={{ color: '#dae2fd' }}>Discover Your</span>
+                                    <span className="block" style={{ color: '#ffe083' }}>Perfect Style</span>
+                                </h1>
+                                <p className="text-lg sm:text-xl font-bold pt-1"
+                                    style={{ color: '#becabc', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                                     Shop Smarter, Live Better
-                                </span>
-                            </motion.h1>
+                                </p>
+                            </motion.div>
 
                             {/* Description */}
-                            <motion.p initial={{ opacity:0, y:18 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.55, delay:0.2 }}
-                                className="text-sm sm:text-base lg:text-lg text-white/75 mb-7 sm:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">
-                                Premium products across every category — Electronics, Fashion, Beauty, Home & more.
-                                Unbeatable prices, fast delivery, 100% secure checkout.
+                            <motion.p initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.18 }}
+                                className="text-sm sm:text-base max-w-md leading-relaxed"
+                                style={{ color: '#becabc', fontFamily: "'Hanken Grotesk', sans-serif" }}>
+                                Électronique, Mode, Beauté, Maison &amp; plus —
+                                prix imbattables, livraison rapide, paiement 100% sécurisé.
                             </motion.p>
 
-                            {/* Category pills */}
-                            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.25 }}
-                                className="flex flex-wrap gap-2 justify-center lg:justify-start mb-7 sm:mb-8">
+                            {/* Category chips */}
+                            <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.24 }}
+                                className="flex overflow-x-auto gap-2 py-1"
+                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                                 {[
-                                    { label:'Electronics', emoji:'💻' },
-                                    { label:'Fashion', emoji:'👗' },
-                                    { label:'Beauty', emoji:'✨' },
-                                    { label:'Home', emoji:'🏠' },
-                                    { label:'Sports', emoji:'🏃' },
-                                ].map((c) => (
-                                    <Link key={c.label} to={`/products?category=${c.label.toLowerCase()}`}
-                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-xs font-medium transition-all hover:scale-105">
-                                        <span>{c.emoji}</span>{c.label}
+                                    { icon: HiLightningBolt, label: 'Électronique' },
+                                    { icon: HiTag,           label: 'Mode' },
+                                    { icon: HiSparkles,      label: 'Beauté' },
+                                ].map((chip, i) => (
+                                    <Link key={i} to="/products"
+                                        className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-opacity hover:opacity-80"
+                                        style={{
+                                            background: 'rgba(255,255,255,0.05)',
+                                            backdropFilter: 'blur(12px)',
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            color: '#dae2fd',
+                                            fontFamily: "'Hanken Grotesk', sans-serif",
+                                            textDecoration: 'none'
+                                        }}>
+                                        <chip.icon className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#79db8d' }} />
+                                        {chip.label}
                                     </Link>
                                 ))}
                             </motion.div>
 
-                            {/* CTA Buttons */}
-                            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.55, delay:0.3 }}
-                                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10 justify-center lg:justify-start">
+                            {/* CTA buttons */}
+                            <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.3 }}
+                                className="flex flex-row gap-3 mt-1">
                                 <Link to="/products"
-                                    className="group inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 bg-white text-primary-800 font-bold rounded-2xl hover:bg-amber-400 hover:text-primary-900 transition-all duration-300 shadow-2xl shadow-black/25 hover:shadow-amber-400/40 hover:scale-[1.03] text-sm sm:text-base">
+                                    className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-[0.98] hover:brightness-110"
+                                    style={{
+                                        background: '#79db8d',
+                                        color: '#003916',
+                                        boxShadow: '0 4px 20px rgba(121,219,141,0.25)',
+                                        fontFamily: "'Hanken Grotesk', sans-serif"
+                                    }}>
                                     <HiShoppingBag className="w-5 h-5" />
                                     Shop Now
-                                    <HiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                                 <Link to="/products?on_sale=true"
-                                    className="inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl border-2 border-white/25 hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:scale-[1.03] text-sm sm:text-base">
+                                    className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-[0.98] hover:bg-white/10"
+                                    style={{
+                                        border: '1px solid rgba(121,219,141,0.3)',
+                                        color: '#dae2fd',
+                                        fontFamily: "'Hanken Grotesk', sans-serif"
+                                    }}>
                                     <HiTag className="w-5 h-5" />
-                                    View Deals
+                                    Promotions
                                 </Link>
                             </motion.div>
 
-                            {/* Stats */}
-                            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.55, delay:0.4 }}
-                                className="flex items-center justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-10 mb-6 lg:mb-0">
+                            {/* Stats bar */}
+                            <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.38 }}
+                                className="grid grid-cols-3 gap-2 py-5 mt-2"
+                                style={{ borderTop: '1px solid rgba(63,73,63,0.35)', borderBottom: '1px solid rgba(63,73,63,0.35)' }}>
                                 {[
-                                    { value:'50K+', label:'Happy Customers' },
-                                    { value:'40+', label:'Product Categories' },
-                                    { value:'4.9★', label:'Avg. Rating' },
+                                    { value: '50K+', label: 'CLIENTS' },
+                                    { value: '40+',  label: 'CATÉGORIES', mid: true },
+                                    { value: '4.9★', label: 'NOTE' },
                                 ].map((s, i) => (
-                                    <div key={i} className="text-center lg:text-left">
-                                        <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white">{s.value}</div>
-                                        <div className="text-[11px] sm:text-xs text-white/55 mt-0.5">{s.label}</div>
-                                    </div>
-                                ))}
-                            </motion.div>
-
-                            {/* Trust row – desktop only */}
-                            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.65 }}
-                                className="hidden lg:flex items-center gap-6 mt-8 pt-7 border-t border-white/10">
-                                {[
-                                    { icon: HiTruck, text: 'Free Shipping $50+' },
-                                    { icon: HiShieldCheck, text: 'Secure Payment' },
-                                    { icon: HiCreditCard, text: '30-Day Returns' },
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-2 text-white/65 text-sm">
-                                        <item.icon className="w-4 h-4 flex-shrink-0" />
-                                        {item.text}
+                                    <div key={i}
+                                        className={s.mid ? 'text-center' : 'text-left md:text-center'}
+                                        style={s.mid ? {
+                                            borderLeft:  '1px solid rgba(63,73,63,0.35)',
+                                            borderRight: '1px solid rgba(63,73,63,0.35)',
+                                            paddingLeft: '8px', paddingRight: '8px'
+                                        } : {}}>
+                                        <p className="font-black text-2xl sm:text-[2rem] leading-none"
+                                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#79db8d' }}>
+                                            {s.value}
+                                        </p>
+                                        <p className="text-[10px] font-bold uppercase mt-1.5"
+                                            style={{ color: '#becabc', letterSpacing: '0.06em', fontFamily: "'Hanken Grotesk', sans-serif" }}>
+                                            {s.label}
+                                        </p>
                                     </div>
                                 ))}
                             </motion.div>
                         </div>
 
-                        {/* ─────── RIGHT: IMAGE ─────── */}
-                        <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }} transition={{ duration:0.7, delay:0.15 }}
-                            className="relative order-1 lg:order-2 flex items-stretch self-stretch min-h-[280px] sm:min-h-[360px] md:min-h-[440px] lg:min-h-0">
-
-                            {/* Glow behind image */}
-                            <div className="absolute inset-4 bg-gradient-to-br from-amber-400/30 via-orange-400/20 to-pink-500/20 rounded-3xl blur-2xl" />
+                        {/* ─── RIGHT: image ─── */}
+                        <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }}
+                            transition={{ duration:0.7, delay:0.15, ease:[0.25,0.46,0.45,0.94] }}
+                            className="relative order-1 md:order-2">
 
                             {/* Image frame */}
-                            <div className="relative w-full lg:ml-6 xl:ml-10 my-8 sm:my-10 lg:my-10 xl:my-12 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-[0_25px_60px_-10px_rgba(0,0,0,0.5)]">
+                            <div className="relative group rounded-2xl overflow-hidden shadow-2xl"
+                                style={{ border: '1px solid rgba(255,255,255,0.1)' }}>
                                 <img
                                     src="/images/hero-shopping.jpg"
-                                    alt="Premium Shopping Experience"
-                                    fetchPriority="high"
+                                    alt="Shopping Experience"
+                                    fetchpriority="high"
                                     loading="eager"
-                                    className="w-full h-full object-cover object-center min-h-[260px] sm:min-h-[340px] md:min-h-[420px] lg:min-h-full"
+                                    className="w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                                    style={{ aspectRatio: '3/4', maxHeight: '520px' }}
                                 />
-                                {/* Gradient overlays */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-primary-900/60 via-transparent to-transparent" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary-800/20 via-transparent to-transparent" />
+                                {/* Bottom gradient */}
+                                <div className="absolute inset-0 pointer-events-none" style={{
+                                    background: 'linear-gradient(to top, rgba(11,19,38,0.55) 0%, rgba(11,19,38,0.08) 45%, transparent 70%)'
+                                }} />
 
-                                {/* Floating badge — bottom left */}
-                                <motion.div
-                                    initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
-                                    transition={{ delay:0.9, type:"spring", stiffness:120 }}
-                                    whileHover={{ scale:1.05, y:-4 }}
-                                    className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 bg-white rounded-2xl p-3 sm:p-4 shadow-2xl flex items-center gap-3">
-                                    <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/40 flex-shrink-0">
-                                        <HiGift className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] sm:text-xs text-gray-400 font-medium">Limited Offer</p>
-                                        <p className="text-sm sm:text-base font-extrabold text-gray-900 leading-tight">Up to 50% OFF</p>
-                                    </div>
-                                </motion.div>
-
-                                {/* Floating badge — top right */}
-                                <motion.div
-                                    initial={{ opacity:0, y:-20 }} animate={{ opacity:1, y:0 }}
-                                    transition={{ delay:1.05, type:"spring", stiffness:120 }}
-                                    whileHover={{ scale:1.05 }}
-                                    className="absolute top-5 right-5 sm:top-6 sm:right-6 bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-2xl">
-                                    <div className="flex items-center gap-1.5 mb-0.5">
+                                {/* ── Rating badge — top right ── */}
+                                <motion.div initial={{ opacity:0, y:-16 }} animate={{ opacity:1, y:0 }}
+                                    transition={{ delay:0.85, type:'spring', stiffness:120 }}
+                                    className="absolute top-5 right-5 bg-white rounded-xl p-3 shadow-2xl flex flex-col items-center min-w-[80px]">
+                                    <div className="flex gap-0.5 mb-1">
                                         {[...Array(5)].map((_,i) => (
-                                            <HiStar key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-current" />
+                                            <HiStar key={i} className="w-3 h-3 fill-current" style={{ color: '#eec200' }} />
                                         ))}
-                                        <span className="text-sm sm:text-base font-extrabold text-gray-900 ml-1">4.9</span>
                                     </div>
-                                    <p className="text-[10px] sm:text-xs text-gray-400">2.5k+ verified reviews</p>
+                                    <p className="text-sm font-black text-slate-900 leading-none">4.9</p>
+                                    <p className="text-[9px] text-slate-500 font-bold leading-tight text-center mt-0.5">
+                                        2.5k+ avis<br/>vérifiés
+                                    </p>
                                 </motion.div>
 
-                                {/* Floating icon — mid right (desktop) */}
-                                <motion.div
-                                    initial={{ opacity:0, scale:0 }} animate={{ opacity:1, scale:1 }}
-                                    transition={{ delay:1.2, type:"spring", stiffness:180 }}
-                                    whileHover={{ scale:1.15, rotate:8 }}
-                                    className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-5 w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl items-center justify-center shadow-xl shadow-rose-500/35">
-                                    <HiHeart className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-                                </motion.div>
-
-                                {/* Floating icon — mid left (desktop) */}
-                                <motion.div
-                                    initial={{ opacity:0, scale:0 }} animate={{ opacity:1, scale:1 }}
-                                    transition={{ delay:1.35, type:"spring", stiffness:180 }}
-                                    whileHover={{ scale:1.15, rotate:-8 }}
-                                    className="hidden md:flex absolute top-1/3 left-5 w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl items-center justify-center shadow-xl shadow-amber-500/35">
-                                    <HiSparkles className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
+                                {/* ── Bottom bar: glass card + arrow button ── */}
+                                <motion.div initial={{ opacity:0, y:18 }} animate={{ opacity:1, y:0 }}
+                                    transition={{ delay:1.0, type:'spring', stiffness:100 }}
+                                    className="absolute bottom-5 left-5 right-5 flex justify-between items-end gap-3">
+                                    <div className="flex-1 p-3.5 rounded-xl"
+                                        style={{
+                                            background: 'rgba(255,255,255,0.08)',
+                                            backdropFilter: 'blur(12px)',
+                                            border: '1px solid rgba(255,255,255,0.12)'
+                                        }}>
+                                        <p className="text-sm font-bold text-white leading-tight"
+                                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                                            Qualité Premium
+                                        </p>
+                                        <p className="text-[11px] mt-0.5 leading-snug" style={{ color: '#becabc' }}>
+                                            Sélection rigoureuse des meilleures marques.
+                                        </p>
+                                    </div>
+                                    <Link to="/products"
+                                        className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-transform active:scale-90 hover:scale-110"
+                                        style={{ background: '#79db8d', boxShadow: '0 4px 16px rgba(121,219,141,0.4)' }}>
+                                        <HiArrowRight className="w-5 h-5" style={{ color: '#003916' }} />
+                                    </Link>
                                 </motion.div>
                             </div>
-                        </motion.div>
-                    </div>
-                </div>
 
-                {/* ── Wave divider ── */}
-                <div className="absolute -bottom-1 left-0 right-0 z-20 pointer-events-none">
-                    <svg viewBox="0 0 1440 80" fill="none" className="w-full h-10 sm:h-14 lg:h-20" preserveAspectRatio="none">
-                        <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,20 1440,40 L1440,80 L0,80 Z"
-                            className="fill-white dark:fill-secondary-900" />
-                    </svg>
+                            {/* Decorative blurs behind the image */}
+                            <div className="absolute -z-10 -bottom-6 -right-6 w-32 h-32 rounded-full blur-3xl"
+                                style={{ background: 'rgba(121,219,141,0.18)' }} />
+                            <div className="absolute -z-10 -top-6 -left-6 w-24 h-24 rounded-full blur-2xl"
+                                style={{ background: 'rgba(238,194,0,0.1)' }} />
+                        </motion.div>
+
+                    </div>
                 </div>
             </section>
 
@@ -451,7 +469,7 @@ const Home = () => {
                     >
                         <Link
                             to="/products"
-                            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg sm:rounded-xl hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md shadow-emerald-500/20 text-xs sm:text-sm"
+                            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-primary-700 to-primary-500 text-white font-semibold rounded-lg sm:rounded-xl hover:from-primary-800 hover:to-primary-600 transition-all shadow-md shadow-primary-500/20 text-xs sm:text-sm"
                         >
                             View All Products
                             <HiArrowRight className="w-3.5 h-3.5" />
@@ -461,23 +479,22 @@ const Home = () => {
             </section>
 
             {/* ==================== FEATURED PRODUCTS ==================== */}
-            <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-emerald-50 via-green-50/50 to-teal-50 dark:from-secondary-900 dark:via-emerald-900/10 dark:to-secondary-900 relative overflow-hidden">
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-bl from-emerald-200/40 to-transparent rounded-full blur-3xl" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-tr from-teal-200/40 to-transparent rounded-full blur-3xl" />
+            <section className="py-10 sm:py-14 md:py-18 bg-gradient-to-br from-primary-50 via-primary-50/40 to-secondary-50 dark:from-secondary-900 dark:via-primary-900/8 dark:to-secondary-900 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-bl from-primary-200/40 to-transparent rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-tr from-primary-200/30 to-transparent rounded-full blur-3xl" />
 
                 <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary-700 to-primary-500 flex items-center justify-center shadow-lg shadow-primary-500/30">
                                 <HiSparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
                             <div>
                                 <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-900 dark:text-white flex items-center gap-2">
                                     Featured Products
                                     {!productsLoading && featuredProducts.length > 0 && (
-                                        <span className="px-2 py-0.5 text-[10px] sm:text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 rounded-full">
+                                        <span className="px-2 py-0.5 text-[10px] sm:text-xs font-semibold bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-400 rounded-full">
                                             {featuredProducts.length}
                                         </span>
                                     )}
@@ -487,7 +504,7 @@ const Home = () => {
                         </div>
                         <Link
                             to="/products?featured=true"
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 transition-colors"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-700 dark:text-primary-400 hover:text-primary-800 transition-colors"
                         >
                             View All <HiArrowRight className="w-4 h-4" />
                         </Link>
@@ -497,7 +514,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={8} />
                     ) : featuredProducts.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                             {featuredProducts.slice(0, 8).map((product, idx) => (
                                 <ProductCard key={product.id} product={product} priority={idx < 4} />
                             ))}
@@ -543,7 +560,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={4} />
                     ) : onSale.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                             {onSale.slice(0, 4).map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
@@ -553,22 +570,21 @@ const Home = () => {
             </section>
 
             {/* ==================== NEW ARRIVALS ==================== */}
-            <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-blue-50 via-sky-50/50 to-indigo-50 dark:from-secondary-900 dark:via-blue-900/10 dark:to-secondary-900 relative overflow-hidden">
-                {/* Decorative Elements */}
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-200/50 to-transparent rounded-full blur-3xl" />
-                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-sky-200/50 to-transparent rounded-full blur-3xl" />
+            <section className="py-10 sm:py-14 md:py-18 bg-white dark:from-secondary-900 dark:via-primary-900/5 dark:to-secondary-900 relative overflow-hidden dark:bg-secondary-900">
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-primary-200/30 to-transparent rounded-full blur-3xl" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-gold-200/20 to-transparent rounded-full blur-3xl" />
 
                 <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-600 to-sky-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary-700 to-primary-500 flex items-center justify-center shadow-lg shadow-primary-500/30">
                                 <HiLightningBolt className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
                             <div>
                                 <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-900 dark:text-white flex items-center gap-2">
                                     New Arrivals
-                                    <span className="px-2 py-0.5 text-[10px] sm:text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full">
+                                    <span className="px-2 py-0.5 text-[10px] sm:text-xs font-semibold bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-full">
                                         NEW
                                     </span>
                                 </h2>
@@ -577,7 +593,7 @@ const Home = () => {
                         </div>
                         <Link
                             to="/products?ordering=-created_at"
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-700 dark:text-primary-400 hover:text-primary-800 transition-colors"
                         >
                             View All <HiArrowRight className="w-4 h-4" />
                         </Link>
@@ -587,7 +603,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={8} />
                     ) : newArrivals.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                             {newArrivals.slice(0, 8).map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
@@ -597,10 +613,9 @@ const Home = () => {
             </section>
 
             {/* ==================== BESTSELLERS ==================== */}
-            <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-purple-50 via-violet-50/50 to-fuchsia-50 dark:from-secondary-900 dark:via-purple-900/10 dark:to-secondary-900 relative overflow-hidden">
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-purple-200/50 to-transparent rounded-full blur-3xl" />
-                <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-fuchsia-200/50 to-transparent rounded-full blur-3xl" />
+            <section className="py-10 sm:py-14 md:py-18 bg-gradient-to-br from-gold-50 via-gold-50/30 to-secondary-50 dark:from-secondary-900 dark:via-gold-900/8 dark:to-secondary-900 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-gold-200/40 to-transparent rounded-full blur-3xl" />
+                <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-gold-200/30 to-transparent rounded-full blur-3xl" />
 
                 <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
                     {/* Header */}
@@ -631,7 +646,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={8} />
                     ) : bestsellers.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                             {bestsellers.slice(0, 8).map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}

@@ -1,13 +1,13 @@
-# 🛒 NextShopSphere
+# 🛒 NEXSHOP
 
 A modern, full-stack e-commerce ecosystem featuring a responsive **React** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
 
-**🚀 [Live Demo](https://nextshopsphere-ui.onrender.com/)**
+**🚀 [Live Demo](https://nexshop-ui.onrender.com/)**
 ⚠️ Note: This project is hosted on a free instance. Please allow up to 1 minute for the initial load as the server wakes up.
 
 
 <p align="center">
-  <img width="90%" alt="NextShopSphere Landing Page" src="https://github.com/user-attachments/assets/1dcfcdb6-47bb-4a6b-b5d7-19a1c5684ad3" />
+  <img width="90%" alt="NEXSHOP Landing Page" src="https://github.com/user-attachments/assets/1dcfcdb6-47bb-4a6b-b5d7-19a1c5684ad3" />
 </p>
 
 <p align="center">
@@ -92,12 +92,12 @@ A modern, full-stack e-commerce ecosystem featuring a responsive **React** front
 ## 📁 Project Structure
 
 ```text
-NextShopSphere/
+NEXSHOP/
 ├── backend/               # Django REST Framework
 │   ├── accounts/          # User Auth & Google OAuth
 │   ├── products/          # Catalog Management
 │   ├── orders/            # Order Processing
-│   └── nextshopsphere/    # Core Settings
+│   └── nexshop/    # Core Settings
 ├── frontend/              # React SPA
 │   ├── src/
 │   │   ├── redux/         # Slices (Cart, Auth, UI)
@@ -109,8 +109,8 @@ NextShopSphere/
 1. Clone & Setup Backend
 Bash
 
-git clone [https://github.com/ClaraDEV-Fullstack/NextShopSphere.git](https://github.com/ClaraDEV-Fullstack/NextShopSphere.git)
-cd NextShopSphere/backend
+git clone [https://github.com/ClaraDEV-Fullstack/NEXSHOP.git](https://github.com/ClaraDEV-Fullstack/NEXSHOP.git)
+cd NEXSHOP/backend
 python -m venv venv
 source venv/bin/activate  # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt

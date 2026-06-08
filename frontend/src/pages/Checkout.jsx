@@ -19,7 +19,7 @@ import {
 } from 'react-icons/hi';
 import { selectCartItems, selectCartTotal, clearCart } from '../store/cartSlice';
 import { ordersAPI, couponsAPI } from '../api/api';
-import { getImageUrl } from '../utils/helpers';
+import { getImageUrl, formatPrice } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
 const Checkout = () => {
@@ -45,8 +45,11 @@ const Checkout = () => {
 
     // Calculate totals
     const discount = couponApplied ? parseFloat(couponApplied.discount_amount) : 0;
-    const shippingCost = (cartTotal - discount) >= 50 ? 0 : 5;
-    const tax = (cartTotal - discount) * 0.1;
+    const FREE_SHIPPING_THRESHOLD = 50000;
+    const SHIPPING_COST = 3500;
+    const TAX_RATE = 0.1925;
+    const shippingCost = (cartTotal - discount) >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const tax = (cartTotal - discount) * TAX_RATE;
     const total = cartTotal - discount + shippingCost + tax;
 
     const handleApplyCoupon = async () => {
@@ -126,7 +129,7 @@ const Checkout = () => {
                     <p className="text-xs sm:text-sm md:text-base text-gray-600 mb-4 sm:mb-6">Looks like you haven't added any items yet.</p>
                     <Link
                         to="/products"
-                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors"
+                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors"
                     >
                         <HiShoppingCart className="w-4 h-4" />
                         Continue Shopping
@@ -141,14 +144,14 @@ const Checkout = () => {
         return (
             <div className="min-h-[60vh] flex items-center justify-center px-4 py-8 sm:py-12">
                 <div className="text-center max-w-sm w-full">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                        <HiLockClosed className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-blue-400" />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                        <HiLockClosed className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary-400" />
                     </div>
                     <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">Please Login</h1>
                     <p className="text-xs sm:text-sm md:text-base text-gray-600 mb-4 sm:mb-6">You need to be logged in to complete your purchase.</p>
                     <Link
                         to="/login"
-                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors"
+                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors"
                     >
                         <HiLockClosed className="w-4 h-4" />
                         Login to Your Account
@@ -173,14 +176,14 @@ const Checkout = () => {
                             <div key={idx} className="flex items-center">
                                 <div className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 ${
                                     step.active
-                                        ? 'text-indigo-600'
+                                        ? 'text-primary-600'
                                         : step.done
                                             ? 'text-green-600'
                                             : 'text-gray-400'
                                 }`}>
                                     <div className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center ${
                                         step.active
-                                            ? 'bg-indigo-100 text-indigo-600'
+                                            ? 'bg-primary-100 text-primary-600'
                                             : step.done
                                                 ? 'bg-green-100 text-green-600'
                                                 : 'bg-gray-100 text-gray-400'
@@ -205,14 +208,14 @@ const Checkout = () => {
                 <div className="mb-4 sm:mb-6 md:mb-8">
                     <Link
                         to="/cart"
-                        className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-600 hover:text-indigo-600 transition-colors mb-2 sm:mb-3 md:mb-4"
+                        className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-600 hover:text-primary-600 transition-colors mb-2 sm:mb-3 md:mb-4"
                     >
                         <HiArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         Back to Cart
                     </Link>
                     <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 md:gap-4">
                         <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">Checkout</h1>
-                        <span className="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] sm:text-xs md:text-sm font-medium rounded-full">
+                        <span className="px-2 py-0.5 bg-primary-100 text-primary-700 text-[10px] sm:text-xs md:text-sm font-medium rounded-full">
                             {cartItems.length} {cartItems.length === 1 ? 'Item' : 'Items'}
                         </span>
                     </div>
@@ -224,8 +227,8 @@ const Checkout = () => {
                     <div className="lg:col-span-3 order-2 lg:order-1">
                         <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 md:p-6 lg:p-8 border border-gray-100">
                             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6">
-                                <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-lg bg-indigo-100 flex items-center justify-center">
-                                    <HiTruck className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-indigo-600" />
+                                <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                                    <HiTruck className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-primary-600" />
                                 </div>
                                 <div>
                                     <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">Shipping Information</h2>
@@ -248,7 +251,7 @@ const Checkout = () => {
                                         onChange={handleChange}
                                         placeholder="123 Main Street, Apt 4B"
                                         required
-                                        className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-gray-50 focus:bg-white"
+                                        className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white"
                                     />
                                 </div>
 
@@ -267,7 +270,7 @@ const Checkout = () => {
                                             onChange={handleChange}
                                             placeholder="New York"
                                             required
-                                            className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-gray-50 focus:bg-white"
+                                            className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white"
                                         />
                                     </div>
                                     <div>
@@ -285,7 +288,7 @@ const Checkout = () => {
                                             onChange={handleChange}
                                             placeholder="United States"
                                             required
-                                            className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-gray-50 focus:bg-white"
+                                            className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white"
                                         />
                                     </div>
                                 </div>
@@ -304,7 +307,7 @@ const Checkout = () => {
                                         onChange={handleChange}
                                         placeholder="+1 (555) 123-4567"
                                         required
-                                        className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-gray-50 focus:bg-white"
+                                        className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white"
                                     />
                                 </div>
 
@@ -322,7 +325,7 @@ const Checkout = () => {
                                         onChange={handleChange}
                                         placeholder="Special delivery instructions..."
                                         rows={2}
-                                        className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-gray-50 focus:bg-white resize-none"
+                                        className="w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm md:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white resize-none"
                                     />
                                 </div>
 
@@ -333,7 +336,7 @@ const Checkout = () => {
                                         <span>Secure Checkout</span>
                                     </div>
                                     <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-gray-600 bg-gray-50 p-1.5 sm:p-2 rounded-lg">
-                                        <HiTruck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500 flex-shrink-0" />
+                                        <HiTruck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary-500 flex-shrink-0" />
                                         <span>Fast Delivery</span>
                                     </div>
                                 </div>
@@ -342,7 +345,7 @@ const Checkout = () => {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full py-2.5 sm:py-3 md:py-3.5 px-3 sm:px-4 md:px-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                                    className="w-full py-2.5 sm:py-3 md:py-3.5 px-3 sm:px-4 md:px-6 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
                                     {isLoading ? (
                                         <>
@@ -352,7 +355,7 @@ const Checkout = () => {
                                     ) : (
                                         <>
                                             <HiLockClosed className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
-                                            <span>Place Order • ${total.toFixed(2)}</span>
+                                            <span>Passer la commande • {formatPrice(total)}</span>
                                         </>
                                     )}
                                 </button>
@@ -363,8 +366,8 @@ const Checkout = () => {
                         <div className="hidden md:grid grid-cols-3 gap-4 mt-6">
                             {[
                                 { icon: HiShieldCheck, title: 'Secure', desc: '256-bit SSL', color: 'green' },
-                                { icon: HiTruck, title: 'Fast Delivery', desc: '2-5 business days', color: 'blue' },
-                                { icon: HiGift, title: 'Gift Ready', desc: 'Free gift wrapping', color: 'purple' },
+                                { icon: HiTruck, title: 'Fast Delivery', desc: '2-5 business days', color: 'primary' },
+                                { icon: HiGift, title: 'Gift Ready', desc: 'Free gift wrapping', color: 'primary' },
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center gap-3 bg-white p-4 rounded-xl border border-gray-100">
                                     <div className={`w-10 h-10 rounded-lg bg-${item.color}-50 flex items-center justify-center`}>
@@ -409,12 +412,12 @@ const Checkout = () => {
                                                 <span className="text-[9px] sm:text-[10px] md:text-xs bg-gray-200 text-gray-600 px-1 sm:px-1.5 py-0.5 rounded">
                                                     Qty: {item.quantity}
                                                 </span>
-                                                <span className="text-[9px] sm:text-[10px] md:text-xs text-gray-500">× ${item.price.toFixed(2)}</span>
+                                                <span className="text-[9px] sm:text-[10px] md:text-xs text-gray-500">× {formatPrice(item.price)}</span>
                                             </div>
                                         </div>
                                         <div className="text-right flex-shrink-0">
-                                            <p className="text-[11px] sm:text-sm md:text-base font-bold text-indigo-600">
-                                                ${(item.price * item.quantity).toFixed(2)}
+                                            <p className="text-[11px] sm:text-sm md:text-base font-bold text-primary-600">
+                                                {formatPrice(item.price * item.quantity)}
                                             </p>
                                         </div>
                                     </div>
@@ -429,13 +432,13 @@ const Checkout = () => {
                                         value={couponInput}
                                         onChange={e => setCouponInput(e.target.value.toUpperCase())}
                                         placeholder="Coupon code"
-                                        className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                                     />
                                     <button
                                         type="button"
                                         onClick={handleApplyCoupon}
                                         disabled={couponLoading || !couponInput.trim()}
-                                        className="px-3 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg disabled:opacity-50"
+                                        className="px-3 py-2 text-sm font-medium bg-primary-600 hover:bg-primary-700 text-white rounded-lg disabled:opacity-50"
                                     >
                                         {couponLoading ? '...' : 'Apply'}
                                     </button>
@@ -461,12 +464,12 @@ const Checkout = () => {
                                 {/* Subtotal */}
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">
                                     <span>Subtotal</span>
-                                    <span className="font-medium">${cartTotal.toFixed(2)}</span>
+                                    <span className="font-medium">{formatPrice(cartTotal)}</span>
                                 </div>
                                 {discount > 0 && (
                                     <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-green-600">
                                         <span>Discount ({couponApplied.code})</span>
-                                        <span className="font-medium">-${discount.toFixed(2)}</span>
+                                        <span className="font-medium">-{formatPrice(discount)}</span>
                                     </div>
                                 )}
 
@@ -474,14 +477,14 @@ const Checkout = () => {
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">
                                     <span>Shipping</span>
                                     <span className={`font-medium ${shippingCost === 0 ? 'text-green-600' : ''}`}>
-                                        {shippingCost === 0 ? 'FREE' : `$${shippingCost.toFixed(2)}`}
+                                        {shippingCost === 0 ? 'GRATUIT' : formatPrice(SHIPPING_COST)}
                                     </span>
                                 </div>
 
                                 {/* Tax */}
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">
-                                    <span>Tax (10%)</span>
-                                    <span className="font-medium">${tax.toFixed(2)}</span>
+                                    <span>TVA (19,25%)</span>
+                                    <span className="font-medium">{formatPrice(tax)}</span>
                                 </div>
 
                                 {/* Free Shipping Banner */}
@@ -490,14 +493,14 @@ const Checkout = () => {
                                         <div className="flex items-start gap-1.5 sm:gap-2">
                                             <HiTruck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 mt-0.5 flex-shrink-0" />
                                             <p className="text-[10px] sm:text-xs text-amber-700">
-                                                Add <span className="font-bold">${(50 - cartTotal).toFixed(2)}</span> more for free shipping!
+                                                Ajoutez encore <span className="font-bold">{formatPrice(FREE_SHIPPING_THRESHOLD - cartTotal)}</span> pour la livraison gratuite !
                                             </p>
                                         </div>
                                         {/* Progress bar */}
                                         <div className="mt-1.5 sm:mt-2 h-1 sm:h-1.5 bg-amber-200 rounded-full overflow-hidden">
                                             <div
                                                 className="h-full bg-amber-500 rounded-full transition-all"
-                                                style={{ width: `${Math.min((cartTotal / 50) * 100, 100)}%` }}
+                                                style={{ width: `${Math.min((cartTotal / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
                                             />
                                         </div>
                                     </div>
@@ -519,7 +522,7 @@ const Checkout = () => {
                                 <div className="border-t border-gray-200 pt-2.5 sm:pt-3 mt-2 sm:mt-3">
                                     <div className="flex justify-between items-center">
                                         <span className="text-sm sm:text-base md:text-lg font-bold text-gray-900">Total</span>
-                                        <span className="text-lg sm:text-xl md:text-2xl font-bold text-indigo-600">${total.toFixed(2)}</span>
+                                        <span className="text-lg sm:text-xl md:text-2xl font-bold text-primary-600">{formatPrice(total)}</span>
                                     </div>
                                 </div>
                             </div>

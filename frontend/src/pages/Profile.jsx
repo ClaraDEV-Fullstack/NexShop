@@ -167,16 +167,16 @@ const Profile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 py-4 md:py-8">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50/30 py-4 md:py-8">
             {/* Avatar Upload Modal */}
             {showAvatarModal && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
                     <div className="bg-white rounded-2xl max-w-sm w-full shadow-2xl overflow-hidden">
                         {/* Modal Header */}
-                        <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+                        <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-primary-50">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-500 rounded-lg flex items-center justify-center">
                                         <HiPhotograph className="w-4 h-4 text-white" />
                                     </div>
                                     <div>
@@ -195,7 +195,7 @@ const Profile = () => {
                             {previewImage ? (
                                 <div className="text-center">
                                     <div className="relative inline-block mb-3">
-                                        <img src={previewImage} alt="Preview" className="w-28 h-28 rounded-full object-cover border-4 border-blue-100 shadow-lg" />
+                                        <img src={previewImage} alt="Preview" className="w-28 h-28 rounded-full object-cover border-4 border-primary-100 shadow-lg" />
                                         <button
                                             onClick={() => { setPreviewImage(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
                                             className="absolute -top-1 -right-1 w-6 h-6 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-700"
@@ -213,11 +213,11 @@ const Profile = () => {
                                     onDrop={handleDrop}
                                     onClick={() => fileInputRef.current.click()}
                                     className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
-                                        dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'
+                                        dragActive ? 'border-primary-500 bg-primary-50' : 'border-gray-200 hover:border-primary-300'
                                     }`}
                                 >
-                                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                        <HiUpload className="w-6 h-6 text-blue-500" />
+                                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                        <HiUpload className="w-6 h-6 text-primary-500" />
                                     </div>
                                     <p className="text-sm font-medium text-gray-700 mb-1">
                                         {dragActive ? 'Drop here' : 'Drag & drop photo'}
@@ -236,7 +236,7 @@ const Profile = () => {
                             <button
                                 onClick={uploadImage}
                                 disabled={!previewImage || isUploading}
-                                className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg text-sm disabled:opacity-50 flex items-center justify-center gap-1.5"
+                                className="flex-1 px-3 py-2 bg-gradient-to-r from-primary-600 to-primary-600 text-white font-medium rounded-lg text-sm disabled:opacity-50 flex items-center justify-center gap-1.5"
                             >
                                 {isUploading ? (
                                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -261,7 +261,7 @@ const Profile = () => {
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                             {/* Cover */}
-                            <div className="h-16 md:h-20 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 relative">
+                            <div className="h-16 md:h-20 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-600 relative">
                                 <div className="absolute inset-0 opacity-20">
                                     <div className="absolute top-0 left-0 w-20 h-20 bg-white rounded-full -translate-x-1/2 -translate-y-1/2" />
                                 </div>
@@ -271,16 +271,16 @@ const Profile = () => {
                                 {/* Avatar */}
                                 <div className="relative -mt-10 md:-mt-12 mb-3">
                                     <div className="relative inline-block">
-                                        <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center overflow-hidden border-3 md:border-4 border-white shadow-lg">
+                                        <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-primary-100 to-primary-100 rounded-xl flex items-center justify-center overflow-hidden border-3 md:border-4 border-white shadow-lg">
                                             {(user.avatar_url || user.avatar) ? (
                                                 <img src={user.avatar_url || user.avatar} alt="Profile" className="w-full h-full object-cover" />
                                             ) : (
-                                                <HiUser className="w-8 h-8 md:w-10 md:h-10 text-blue-500" />
+                                                <HiUser className="w-8 h-8 md:w-10 md:h-10 text-primary-500" />
                                             )}
                                         </div>
                                         <button
                                             onClick={() => setShowAvatarModal(true)}
-                                            className="absolute -bottom-1 -right-1 w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg shadow-lg flex items-center justify-center"
+                                            className="absolute -bottom-1 -right-1 w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-primary-600 to-primary-600 text-white rounded-lg shadow-lg flex items-center justify-center"
                                         >
                                             <HiCamera className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                         </button>
@@ -297,8 +297,8 @@ const Profile = () => {
 
                                 {/* Stats */}
                                 <div className="grid grid-cols-2 gap-2 mb-4">
-                                    <div className="bg-blue-50 rounded-lg p-2.5 md:p-3 text-center">
-                                        <p className="text-lg md:text-xl font-bold text-blue-600">
+                                    <div className="bg-primary-50 rounded-lg p-2.5 md:p-3 text-center">
+                                        <p className="text-lg md:text-xl font-bold text-primary-600">
                                             {new Date().getFullYear() - new Date(user.created_at).getFullYear() || '< 1'}
                                         </p>
                                         <p className="text-[10px] md:text-xs text-gray-500">Years Member</p>
@@ -324,13 +324,13 @@ const Profile = () => {
                         </div>
 
                         {/* Update Photo Card - Hidden on Mobile */}
-                        <div className="hidden md:block mt-4 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl p-4 text-white">
+                        <div className="hidden md:block mt-4 bg-gradient-to-br from-primary-600 to-primary-600 rounded-xl p-4 text-white">
                             <HiPhotograph className="w-6 h-6 mb-2 opacity-80" />
                             <h3 className="font-bold text-sm mb-1">Update Your Photo</h3>
-                            <p className="text-xs text-blue-100 mb-3">Add a photo to personalize your account</p>
+                            <p className="text-xs text-primary-100 mb-3">Add a photo to personalize your account</p>
                             <button
                                 onClick={() => setShowAvatarModal(true)}
-                                className="w-full py-2 bg-white text-blue-600 font-semibold rounded-lg text-sm hover:bg-blue-50"
+                                className="w-full py-2 bg-white text-primary-600 font-semibold rounded-lg text-sm hover:bg-primary-50"
                             >
                                 Choose Photo
                             </button>
@@ -345,7 +345,7 @@ const Profile = () => {
                             <div className="p-3 md:p-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2 md:gap-3">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-500 to-primary-500 rounded-lg flex items-center justify-center">
                                             <HiUser className="w-4 h-4 md:w-5 md:h-5 text-white" />
                                         </div>
                                         <div>
@@ -356,7 +356,7 @@ const Profile = () => {
                                     {!isEditing ? (
                                         <button
                                             onClick={() => setIsEditing(true)}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs md:text-sm font-medium rounded-lg"
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-primary-600 to-primary-600 text-white text-xs md:text-sm font-medium rounded-lg"
                                         >
                                             <HiPencil className="w-3.5 h-3.5" />
                                             <span className="hidden sm:inline">Edit</span>
@@ -387,7 +387,7 @@ const Profile = () => {
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 placeholder="First name"
-                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                             />
                                         </div>
                                         <div>
@@ -399,7 +399,7 @@ const Profile = () => {
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 placeholder="Last name"
-                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                             />
                                         </div>
                                     </div>
@@ -433,7 +433,7 @@ const Profile = () => {
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 placeholder="+1 (555) 123-4567"
-                                                className="w-full px-3 py-2 md:py-2.5 pl-9 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+                                                className="w-full px-3 py-2 md:py-2.5 pl-9 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                             />
                                         </div>
                                     </div>
@@ -460,7 +460,7 @@ const Profile = () => {
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 placeholder="123 Main Street"
-                                                className="w-full px-3 py-2 md:py-2.5 pl-9 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+                                                className="w-full px-3 py-2 md:py-2.5 pl-9 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                             />
                                         </div>
                                     </div>
@@ -476,7 +476,7 @@ const Profile = () => {
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 placeholder="City"
-                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                             />
                                         </div>
                                         <div>
@@ -488,7 +488,7 @@ const Profile = () => {
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 placeholder="Country"
-                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+                                                className="w-full px-3 py-2 md:py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                             />
                                         </div>
                                     </div>
@@ -499,7 +499,7 @@ const Profile = () => {
                                             <button
                                                 type="submit"
                                                 disabled={isLoading}
-                                                className="inline-flex items-center gap-1.5 px-4 md:px-6 py-2 md:py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-lg disabled:opacity-70"
+                                                className="inline-flex items-center gap-1.5 px-4 md:px-6 py-2 md:py-2.5 bg-gradient-to-r from-primary-600 to-primary-600 text-white text-sm font-medium rounded-lg disabled:opacity-70"
                                             >
                                                 {isLoading ? (
                                                     <>

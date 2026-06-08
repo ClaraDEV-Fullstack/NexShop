@@ -17,6 +17,8 @@ import {
 import { productsAPI, categoriesAPI } from '../api/api';
 import ProductCard from '../components/products/ProductCard';
 
+import { formatPrice } from '../utils/helpers';
+
 // ========== SIMPLE CACHE FOR API RESPONSES ==========
 const cache = new Map();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -113,10 +115,10 @@ const Products = () => {
 
     // Featured categories - memoized
     const featuredCategories = useMemo(() => [
-        { name: 'Electronics', slug: 'electronics', icon: '💻', color: 'from-blue-500 to-blue-600' },
+        { name: 'Electronics', slug: 'electronics', icon: '💻', color: 'from-primary-500 to-primary-600' },
         { name: 'Fashion', slug: 'fashion', icon: '👗', color: 'from-pink-500 to-pink-600' },
         { name: 'Home', slug: 'home-living', icon: '🏠', color: 'from-amber-500 to-amber-600' },
-        { name: 'Beauty', slug: 'beauty-skincare', icon: '✨', color: 'from-purple-500 to-purple-600' },
+        { name: 'Beauty', slug: 'beauty-skincare', icon: '✨', color: 'from-primary-500 to-primary-600' },
         { name: 'Books', slug: 'books-education', icon: '📚', color: 'from-green-500 to-green-600' },
         { name: 'Sports', slug: 'sports-fitness', icon: '🏃', color: 'from-red-500 to-red-600' },
         { name: 'Kids', slug: 'kids-toys', icon: '🧸', color: 'from-yellow-500 to-yellow-600' },
@@ -402,12 +404,12 @@ const Products = () => {
                             )}
                             {(filters.minPrice || filters.maxPrice) && (
                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-[10px] md:text-xs rounded-full">
-                                    ${filters.minPrice || '0'}-${filters.maxPrice || '∞'}
+                                    {filters.minPrice || '0'}-{filters.maxPrice || '∞'} FCFA
                                     <button onClick={() => { handleFilterChange('minPrice', ''); handleFilterChange('maxPrice', ''); }}><HiX className="w-3 h-3" /></button>
                                 </span>
                             )}
                             {filters.search && (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-[10px] md:text-xs rounded-full">
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-[10px] md:text-xs rounded-full">
                                     "{filters.search}"
                                     <button onClick={() => handleFilterChange('search', '')}><HiX className="w-3 h-3" /></button>
                                 </span>
@@ -582,7 +584,7 @@ const Products = () => {
                                             <h4 className="font-semibold text-secondary-900 dark:text-white mb-2 text-xs">Price Range</h4>
                                             <div className="flex gap-1.5 items-center mb-2">
                                                 <div className="flex-1 relative">
-                                                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-secondary-400 text-[10px]">$</span>
+                                                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-secondary-400 text-[10px]">F</span>
                                                     <input
                                                         type="number"
                                                         value={filters.minPrice}
@@ -594,7 +596,7 @@ const Products = () => {
                                                 </div>
                                                 <span className="text-secondary-300 text-xs">—</span>
                                                 <div className="flex-1 relative">
-                                                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-secondary-400 text-[10px]">$</span>
+                                                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-secondary-400 text-[10px]">F</span>
                                                     <input
                                                         type="number"
                                                         value={filters.maxPrice}
@@ -608,10 +610,10 @@ const Products = () => {
 
                                             <div className="grid grid-cols-2 gap-1">
                                                 {[
-                                                    { label: '<$25', min: '', max: '25' },
-                                                    { label: '$25-50', min: '25', max: '50' },
-                                                    { label: '$50-100', min: '50', max: '100' },
-                                                    { label: '$100+', min: '100', max: '' },
+                                                    { label: '<10k', min: '', max: '10000' },
+                                                    { label: '10k-50k', min: '10000', max: '50000' },
+                                                    { label: '50k-200k', min: '50000', max: '200000' },
+                                                    { label: '200k+', min: '200000', max: '' },
                                                 ].map((range) => (
                                                     <button
                                                         key={range.label}

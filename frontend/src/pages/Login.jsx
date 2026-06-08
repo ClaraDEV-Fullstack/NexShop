@@ -82,11 +82,11 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-12">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center px-4 py-12">
             <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Left Side - Content */}
                 <div className="hidden lg:block">
-                    <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-10 text-white shadow-2xl">
+                    <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl p-10 text-white shadow-2xl">
                         <div className="flex items-center gap-3 mb-8">
                             <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
                                 <HiUserCircle className="w-8 h-8 text-white" />
@@ -94,7 +94,7 @@ const Login = () => {
                             <h1 className="text-3xl font-bold">Welcome Back</h1>
                         </div>
 
-                        <p className="text-blue-100 mb-10 text-lg">
+                        <p className="text-primary-100 mb-10 text-lg">
                             Sign in to access your personalized shopping experience, track orders, and enjoy exclusive benefits.
                         </p>
 
@@ -105,7 +105,7 @@ const Login = () => {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-lg mb-1">Secure Login</h3>
-                                    <p className="text-blue-100">Your data is protected with industry-standard encryption</p>
+                                    <p className="text-primary-100">Your data is protected with industry-standard encryption</p>
                                 </div>
                             </div>
 
@@ -115,7 +115,7 @@ const Login = () => {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-lg mb-1">Any Device</h3>
-                                    <p className="text-blue-100">Access your account from anywhere, on any device</p>
+                                    <p className="text-primary-100">Access your account from anywhere, on any device</p>
                                 </div>
                             </div>
 
@@ -125,7 +125,7 @@ const Login = () => {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-lg mb-1">Quick Access</h3>
-                                    <p className="text-blue-100">Save time with one-click login options</p>
+                                    <p className="text-primary-100">Save time with one-click login options</p>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@ const Login = () => {
                     {/* Header */}
                     <div className="text-center mb-10">
                         <div className="flex justify-center mb-4">
-                            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full shadow-lg">
+                            <div className="p-3 bg-gradient-to-r from-primary-500 to-primary-500 rounded-full shadow-lg">
                                 <HiUserCircle className="w-10 h-10 text-white" />
                             </div>
                         </div>
@@ -163,7 +163,7 @@ const Login = () => {
                                         onChange={handleChange}
                                         placeholder="you@example.com"
                                         required
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                         disabled={isLoading}
                                     />
                                 </div>
@@ -173,7 +173,7 @@ const Login = () => {
                             <div className="mb-6">
                                 <div className="flex justify-between items-center mb-2">
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                                    <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
+                                    <Link to="/forgot-password" className="text-sm text-primary-600 hover:text-primary-800 transition-colors">
                                         Forgot password?
                                     </Link>
                                 </div>
@@ -189,7 +189,7 @@ const Login = () => {
                                         onChange={handleChange}
                                         placeholder="Enter your password"
                                         required
-                                        className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                        className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                         disabled={isLoading}
                                     />
                                     <button
@@ -207,7 +207,7 @@ const Login = () => {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-800 hover:from-primary-700 hover:to-primary-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
                                 {isLoading ? (
                                     <>
@@ -284,7 +284,7 @@ const Login = () => {
                                     size="large"
                                     text="continue_with"
                                     shape="rectangular"
-                                    width="100%"
+                                    width={400}
                                 />
                             </div>
                         </div>
@@ -293,7 +293,7 @@ const Login = () => {
                     {/* Register Link */}
                     <p className="text-center mt-8 text-gray-600">
                         Don't have an account?{' '}
-                        <Link to="/register" className="text-blue-600 hover:text-blue-800 font-medium transition-colors inline-flex items-center gap-1">
+                        <Link to="/register" className="text-primary-600 hover:text-primary-800 font-medium transition-colors inline-flex items-center gap-1">
                             Sign up
                             <HiArrowRight className="w-4 h-4" />
                         </Link>

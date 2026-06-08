@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { formatPrice } from '../utils/helpers';
 import { Link, useLocation } from 'react-router-dom';
 import { HiCheckCircle, HiShoppingBag, HiHome, HiMail } from 'react-icons/hi';
 import confetti from 'canvas-confetti';
@@ -113,7 +114,7 @@ const PaymentSuccess = () => {
                         <div className="flex justify-between items-center py-3 border-b border-secondary-100 dark:border-secondary-700">
                             <span className="text-secondary-500 dark:text-secondary-400">Amount Paid</span>
                             <span className="font-bold text-green-600 dark:text-green-400 text-2xl">
-                                ${parseFloat(amount).toFixed(2)}
+                                {formatPrice(amount)}
                             </span>
                         </div>
                         <div className="flex justify-between items-center py-3">
@@ -124,8 +125,8 @@ const PaymentSuccess = () => {
                 </div>
 
                 {/* Email Confirmation Notice */}
-                <div className="flex items-center justify-center gap-2 text-secondary-600 dark:text-secondary-400 mb-8 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl">
-                    <HiMail className="w-5 h-5 text-blue-500" />
+                <div className="flex items-center justify-center gap-2 text-secondary-600 dark:text-secondary-400 mb-8 bg-primary-50 dark:bg-primary-900/20 p-4 rounded-xl">
+                    <HiMail className="w-5 h-5 text-primary-500" />
                     <span>A confirmation email has been sent to your inbox.</span>
                 </div>
 

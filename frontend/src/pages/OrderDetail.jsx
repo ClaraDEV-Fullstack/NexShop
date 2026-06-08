@@ -23,7 +23,7 @@ import {
     HiX
 } from 'react-icons/hi';
 import { ordersAPI } from '../api/api';
-import { getImageUrl } from '../utils/helpers';
+import { getImageUrl, formatPrice } from '../utils/helpers';
 import Loader from '../components/common/Loader';
 import toast from 'react-hot-toast';
 
@@ -68,8 +68,8 @@ const OrderDetail = () => {
     const getStatusColor = (status) => {
         const colors = {
             pending: 'bg-amber-500',
-            processing: 'bg-blue-500',
-            shipped: 'bg-indigo-500',
+            processing: 'bg-primary-500',
+            shipped: 'bg-primary-500',
             delivered: 'bg-emerald-500',
             cancelled: 'bg-gray-400',
         };
@@ -79,8 +79,8 @@ const OrderDetail = () => {
     const getStatusBgColor = (status) => {
         const colors = {
             pending: 'bg-amber-50 text-amber-700 border-amber-200',
-            processing: 'bg-blue-50 text-blue-700 border-blue-200',
-            shipped: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+            processing: 'bg-primary-50 text-primary-700 border-primary-200',
+            shipped: 'bg-primary-50 text-primary-700 border-primary-200',
             delivered: 'bg-emerald-50 text-emerald-700 border-emerald-200',
             cancelled: 'bg-gray-100 text-gray-600 border-gray-200',
         };
@@ -198,14 +198,14 @@ const OrderDetail = () => {
                                 <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${
                                     order.status === 'cancelled' ? 'bg-gray-100' :
                                         order.status === 'delivered' ? 'bg-emerald-100' :
-                                            order.status === 'shipped' ? 'bg-indigo-100' :
-                                                order.status === 'processing' ? 'bg-blue-100' : 'bg-amber-100'
+                                            order.status === 'shipped' ? 'bg-primary-100' :
+                                                order.status === 'processing' ? 'bg-primary-100' : 'bg-amber-100'
                                 }`}>
                                     <StatusIcon className={`w-5 h-5 ${
                                         order.status === 'cancelled' ? 'text-gray-500' :
                                             order.status === 'delivered' ? 'text-emerald-600' :
-                                                order.status === 'shipped' ? 'text-indigo-600' :
-                                                    order.status === 'processing' ? 'text-blue-600' : 'text-amber-600'
+                                                order.status === 'shipped' ? 'text-primary-600' :
+                                                    order.status === 'processing' ? 'text-primary-600' : 'text-amber-600'
                                     }`} />
                                 </div>
                                 <div className="min-w-0">
@@ -229,7 +229,7 @@ const OrderDetail = () => {
                             </div>
 
                             <div className="text-right flex-shrink-0">
-                                <p className="text-lg sm:text-xl font-bold text-gray-900">${order.total}</p>
+                                <p className="text-lg sm:text-xl font-bold text-gray-900">{formatPrice(order.total)}</p>
                                 <p className="text-xs text-gray-500">{order.items?.length || 0} item{order.items?.length !== 1 ? 's' : ''}</p>
                             </div>
                         </div>
@@ -374,13 +374,13 @@ const OrderDetail = () => {
                                             )}
                                             <div className="flex items-center gap-2 mt-1">
                                                 <span className="text-xs text-gray-500">
-                                                    ${item.product_price} × {item.quantity}
+                                                    {formatPrice(item.product_price)} × {item.quantity}
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div className="text-right flex-shrink-0">
-                                            <p className="font-bold text-gray-900 text-sm sm:text-base">${item.subtotal}</p>
+                                            <p className="font-bold text-gray-900 text-sm sm:text-base">{formatPrice(item.subtotal)}</p>
                                             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">Qty: {item.quantity}</span>
                                         </div>
 
@@ -407,8 +407,8 @@ const OrderDetail = () => {
                                 {/* Shipping Address */}
                                 <div className="p-4">
                                     <div className="flex items-start gap-3">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                                            <HiLocationMarker className="w-5 h-5 text-blue-600" />
+                                        <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-primary-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                            <HiLocationMarker className="w-5 h-5 text-primary-600" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Shipping To</p>
@@ -482,24 +482,24 @@ const OrderDetail = () => {
                                 <div className="space-y-2.5">
                                     <div className="flex justify-between text-sm">
                                         <span className="text-gray-500">Subtotal</span>
-                                        <span className="text-gray-900 font-medium">${order.subtotal}</span>
+                                        <span className="text-gray-900 font-medium">{formatPrice(order.subtotal)}</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
                                         <span className="text-gray-500">Shipping</span>
                                         <span className={parseFloat(order.shipping_cost) === 0 ? 'text-emerald-600 font-semibold' : 'text-gray-900 font-medium'}>
-                                            {parseFloat(order.shipping_cost) === 0 ? 'Free' : `$${order.shipping_cost}`}
+                                            {parseFloat(order.shipping_cost) === 0 ? 'Gratuit' : formatPrice(order.shipping_cost)}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-sm">
                                         <span className="text-gray-500">Tax</span>
-                                        <span className="text-gray-900 font-medium">${order.tax}</span>
+                                        <span className="text-gray-900 font-medium">{formatPrice(order.tax)}</span>
                                     </div>
 
                                     <div className="h-px bg-gray-100 my-3" />
 
                                     <div className="flex justify-between items-center">
                                         <span className="font-bold text-gray-900">Total</span>
-                                        <span className="text-xl sm:text-2xl font-bold text-gray-900">${order.total}</span>
+                                        <span className="text-xl sm:text-2xl font-bold text-gray-900">{formatPrice(order.total)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -513,7 +513,7 @@ const OrderDetail = () => {
                                     className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-600 shadow-lg shadow-primary-500/25 transition-all text-sm"
                                 >
                                     <HiLockClosed className="w-4 h-4" />
-                                    Pay ${order.total}
+                                    Payer {formatPrice(order.total)}
                                 </Link>
                             )}
 

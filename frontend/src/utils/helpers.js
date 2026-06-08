@@ -4,7 +4,7 @@
 const getBackendUrl = () => {
     // Check if we're in production
     if (import.meta.env.PROD) {
-        return 'https://nextshopsphere.onrender.com';
+        return 'https://nexshop.onrender.com';
     }
     // Local development
     return 'http://127.0.0.1:8000';
@@ -79,10 +79,11 @@ export const getImageUrl = (imageData) => {
     return PLACEHOLDER_IMAGE;
 };
 
-// Format price
+// Format price in XAF (FCFA — Franc CFA, Cameroon)
 export const formatPrice = (price) => {
-    if (price === null || price === undefined) return '$0.00';
-    return `$${parseFloat(price).toFixed(2)}`;
+    if (price === null || price === undefined) return '0 FCFA';
+    const amount = Math.round(parseFloat(price));
+    return amount.toLocaleString('fr-FR') + ' FCFA';
 };
 
 // Format date

@@ -1,6 +1,7 @@
 // src/pages/dashboard/DashboardOverview.jsx
 
 import { useEffect, useState } from 'react';
+import { formatPrice } from '../../utils/helpers';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -121,8 +122,8 @@ const DashboardOverview = () => {
     const getStatusColor = (status) => {
         const colors = {
             pending: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-            processing: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-            shipped: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400',
+            processing: 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400',
+            shipped: 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400',
             delivered: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
             cancelled: 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400',
         };
@@ -130,16 +131,16 @@ const DashboardOverview = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-white to-blue-50/30 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800">
+        <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800">
             <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-2 md:px-4 py-4 md:py-6 lg:py-8">
                 <div className="space-y-4 md:space-y-6">
 
                     {/* Welcome Section - Compact */}
-                    <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 text-white overflow-hidden shadow-xl shadow-blue-500/15">
+                    <div className="relative bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 text-white overflow-hidden shadow-xl shadow-primary-500/15">
                         {/* Decorative Elements */}
                         <div className="absolute inset-0 overflow-hidden">
                             <div className="absolute top-0 right-0 w-48 md:w-72 h-48 md:h-72 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-                            <div className="absolute bottom-0 left-0 w-32 md:w-48 h-32 md:h-48 bg-blue-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
+                            <div className="absolute bottom-0 left-0 w-32 md:w-48 h-32 md:h-48 bg-primary-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
 
                             {/* Pattern dots */}
                             <div className="absolute inset-0 opacity-10 hidden md:block">
@@ -159,7 +160,7 @@ const DashboardOverview = () => {
                             <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-1 md:mb-2">
                                 Welcome back, {user?.first_name || user?.username}! 👋
                             </h1>
-                            <p className="text-blue-100 text-xs md:text-sm lg:text-base max-w-lg">
+                            <p className="text-primary-100 text-xs md:text-sm lg:text-base max-w-lg">
                                 Track your orders, manage your wishlist, and more.
                             </p>
 
@@ -167,7 +168,7 @@ const DashboardOverview = () => {
                             <div className="flex flex-wrap gap-2 mt-4 md:mt-5">
                                 <Link
                                     to="/products"
-                                    className="inline-flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white text-blue-600 text-xs md:text-sm font-semibold rounded-lg hover:bg-blue-50 transition-colors shadow-md"
+                                    className="inline-flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white text-primary-600 text-xs md:text-sm font-semibold rounded-lg hover:bg-primary-50 transition-colors shadow-md"
                                 >
                                     Start Shopping
                                     <HiOutlineArrowRight className="w-3.5 h-3.5" />
@@ -188,8 +189,8 @@ const DashboardOverview = () => {
                             icon={HiOutlineShoppingBag}
                             label="Total Orders"
                             value={stats.orders}
-                            color="text-blue-600"
-                            bgColor="bg-blue-500"
+                            color="text-primary-600"
+                            bgColor="bg-primary-500"
                             link="/dashboard/orders"
                             isLoading={isLoading}
                         />
@@ -206,8 +207,8 @@ const DashboardOverview = () => {
                             icon={HiOutlineTruck}
                             label="In Progress"
                             value={stats.pending}
-                            color="text-indigo-600"
-                            bgColor="bg-indigo-500"
+                            color="text-primary-600"
+                            bgColor="bg-primary-500"
                             link="/dashboard/orders"
                             isLoading={isLoading}
                         />
@@ -225,7 +226,7 @@ const DashboardOverview = () => {
                     {/* Quick Links - Compact */}
                     <div>
                         <h2 className="text-sm md:text-base font-bold text-secondary-900 dark:text-white mb-2 md:mb-3 flex items-center gap-2">
-                            <span className="w-0.5 h-4 md:h-5 bg-gradient-to-b from-blue-500 to-indigo-500 rounded-full"></span>
+                            <span className="w-0.5 h-4 md:h-5 bg-gradient-to-b from-primary-500 to-primary-500 rounded-full"></span>
                             Quick Actions
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
@@ -234,8 +235,8 @@ const DashboardOverview = () => {
                                 label="Notifications"
                                 description="Check your latest updates"
                                 link="/dashboard/notifications"
-                                color="text-indigo-600"
-                                bgColor="bg-indigo-500"
+                                color="text-primary-600"
+                                bgColor="bg-primary-500"
                             />
                             <QuickLinkCard
                                 icon={HiOutlineCog}
@@ -253,7 +254,7 @@ const DashboardOverview = () => {
                         {/* Header */}
                         <div className="flex items-center justify-between p-3 md:p-4 lg:p-5 border-b border-secondary-100 dark:border-secondary-700 bg-gradient-to-r from-secondary-50 to-white dark:from-secondary-800 dark:to-secondary-800">
                             <div className="flex items-center gap-2 md:gap-3">
-                                <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-md shadow-blue-500/20">
+                                <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gradient-to-br from-primary-500 to-primary-500 flex items-center justify-center shadow-md shadow-primary-500/20">
                                     <HiOutlineCube className="w-4 h-4 md:w-5 md:h-5 text-white" />
                                 </div>
                                 <div>
@@ -267,7 +268,7 @@ const DashboardOverview = () => {
                             </div>
                             <Link
                                 to="/dashboard/orders"
-                                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs md:text-sm text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 font-semibold rounded-lg transition-colors"
+                                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs md:text-sm text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 font-semibold rounded-lg transition-colors"
                             >
                                 View All
                                 <HiOutlineArrowRight className="w-3.5 h-3.5" />
@@ -299,14 +300,14 @@ const DashboardOverview = () => {
                                     <Link
                                         key={order.id}
                                         to={`/orders/${order.id}`}
-                                        className="group flex items-center justify-between p-3 md:p-4 hover:bg-blue-50/50 dark:hover:from-blue-900/10 transition-all"
+                                        className="group flex items-center justify-between p-3 md:p-4 hover:bg-primary-50/50 dark:hover:from-primary-900/10 transition-all"
                                     >
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-secondary-100 to-secondary-50 dark:from-secondary-700 dark:to-secondary-600 flex items-center justify-center font-bold text-xs md:text-sm text-secondary-400 dark:text-secondary-300 group-hover:from-blue-100 group-hover:to-blue-50 group-hover:text-blue-500 transition-all">
+                                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-secondary-100 to-secondary-50 dark:from-secondary-700 dark:to-secondary-600 flex items-center justify-center font-bold text-xs md:text-sm text-secondary-400 dark:text-secondary-300 group-hover:from-primary-100 group-hover:to-primary-50 group-hover:text-primary-500 transition-all">
                                                 #{order.id}
                                             </div>
                                             <div>
-                                                <p className="font-bold text-xs md:text-sm text-secondary-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                <p className="font-bold text-xs md:text-sm text-secondary-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                                     Order #{order.id}
                                                 </p>
                                                 <p className="text-[10px] md:text-xs text-secondary-500 dark:text-secondary-400 mt-0.5">
@@ -320,12 +321,12 @@ const DashboardOverview = () => {
                                         </div>
                                         <div className="flex items-center gap-2 md:gap-4">
                                             <span className="text-sm md:text-base font-bold text-secondary-900 dark:text-white">
-                                                ${parseFloat(order.total || 0).toFixed(2)}
+                                                {formatPrice(order.total || 0)}
                                             </span>
                                             <span className={`px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-semibold capitalize ${getStatusColor(order.status)}`}>
                                                 {order.status}
                                             </span>
-                                            <HiOutlineChevronRight className="w-4 h-4 text-secondary-300 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all hidden md:block" />
+                                            <HiOutlineChevronRight className="w-4 h-4 text-secondary-300 group-hover:text-primary-500 group-hover:translate-x-0.5 transition-all hidden md:block" />
                                         </div>
                                     </Link>
                                 ))
@@ -342,7 +343,7 @@ const DashboardOverview = () => {
                                     </p>
                                     <Link
                                         to="/products"
-                                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs md:text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 shadow-md shadow-blue-500/20 transition-all"
+                                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-600 text-white text-xs md:text-sm font-semibold rounded-lg hover:from-primary-700 hover:to-primary-700 shadow-md shadow-primary-500/20 transition-all"
                                     >
                                         Browse Products
                                         <HiOutlineArrowRight className="w-4 h-4" />
@@ -356,7 +357,7 @@ const DashboardOverview = () => {
                             <div className="sm:hidden p-3 border-t border-secondary-100 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-800/50">
                                 <Link
                                     to="/dashboard/orders"
-                                    className="flex items-center justify-center gap-1.5 w-full py-2 text-xs text-blue-600 font-semibold rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                                    className="flex items-center justify-center gap-1.5 w-full py-2 text-xs text-primary-600 font-semibold rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
                                 >
                                     View All Orders
                                     <HiOutlineArrowRight className="w-3.5 h-3.5" />

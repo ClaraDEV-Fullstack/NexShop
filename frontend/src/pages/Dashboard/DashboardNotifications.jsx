@@ -28,9 +28,9 @@ const NotificationItem = memo(({ notification, onMarkAsRead, onDelete }) => {
 
     const getTypeColor = (type) => {
         const colors = {
-            order: 'text-blue-500 bg-blue-100 dark:bg-blue-900/30',
+            order: 'text-primary-500 bg-primary-100 dark:bg-primary-900/30',
             payment: 'text-green-500 bg-green-100 dark:bg-green-900/30',
-            shipping: 'text-purple-500 bg-purple-100 dark:bg-purple-900/30',
+            shipping: 'text-primary-500 bg-primary-100 dark:bg-primary-900/30',
             promo: 'text-orange-500 bg-orange-100 dark:bg-orange-900/30',
             system: 'text-secondary-500 bg-secondary-100 dark:bg-secondary-700',
         };

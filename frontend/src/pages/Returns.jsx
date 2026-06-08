@@ -14,14 +14,14 @@ const Returns = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
             {/* Hero */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white py-16 lg:py-20">
+            <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-16 lg:py-20">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
                         <HiRefresh className="w-4 h-4" />
                         Easy Returns
                     </div>
                     <h1 className="text-4xl lg:text-5xl font-bold mb-6">Returns & Refunds</h1>
-                    <p className="text-xl text-blue-100">
+                    <p className="text-xl text-primary-100">
                         Not satisfied? We make returns simple and hassle-free.
                     </p>
                 </div>
@@ -48,9 +48,9 @@ const Returns = () => {
                             <p className="text-2xl font-bold text-green-600">7 Days</p>
                             <p className="text-sm text-green-700">Return window</p>
                         </div>
-                        <div className="bg-blue-50 rounded-xl p-4 text-center">
-                            <p className="text-2xl font-bold text-blue-600">3-5 Days</p>
-                            <p className="text-sm text-blue-700">Refund processing</p>
+                        <div className="bg-primary-50 rounded-xl p-4 text-center">
+                            <p className="text-2xl font-bold text-primary-600">3-5 Days</p>
+                            <p className="text-sm text-primary-700">Refund processing</p>
                         </div>
                         <div className="bg-amber-50 rounded-xl p-4 text-center">
                             <p className="text-2xl font-bold text-amber-600">Free</p>
@@ -66,7 +66,7 @@ const Returns = () => {
                         {steps.map((step, i) => (
                             <div key={i} className="relative">
                                 <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 h-full">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold mb-4">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center text-white font-bold mb-4">
                                         {step.step}
                                     </div>
                                     <h3 className="font-bold text-gray-900 mb-2">{step.title}</h3>
@@ -112,9 +112,9 @@ const Returns = () => {
                 </div>
 
                 {/* Refund Info */}
-                <div className="bg-blue-50 rounded-2xl p-8 mb-12">
+                <div className="bg-primary-50 rounded-2xl p-8 mb-12">
                     <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <HiClock className="w-6 h-6 text-blue-600" />
+                        <HiClock className="w-6 h-6 text-primary-600" />
                         Refund Timeline
                     </h3>
                     <div className="space-y-4 text-gray-700">
@@ -133,13 +133,13 @@ const Returns = () => {
                 </div>
 
                 {/* Contact */}
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white text-center">
+                <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl p-8 text-white text-center">
                     <h2 className="text-2xl font-bold mb-4">Need to Start a Return?</h2>
-                    <p className="text-blue-100 mb-6">Contact our support team with your order number</p>
+                    <p className="text-primary-100 mb-6">Contact our support team with your order number</p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
-                            href="mailto:nextshopsphere@gmail.com"
-                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors"
+                            href="mailto:nexshop@gmail.com"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition-colors"
                         >
                             <HiMail className="w-5 h-5" />
                             netshopsphere@gmail.com

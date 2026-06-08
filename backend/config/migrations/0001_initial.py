@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('default_shipping_cost', models.DecimalField(decimal_places=2, default=5.0, help_text='Flat shipping cost when below the free threshold', max_digits=10)),
                 ('currency', models.CharField(default='XOF', max_length=10)),
                 ('currency_symbol', models.CharField(default='₣', max_length=5)),
-                ('store_name', models.CharField(default='NextShopSphere', max_length=100)),
+                ('store_name', models.CharField(default='NEXSHOP', max_length=100)),
                 ('support_email', models.EmailField(blank=True, default='', max_length=254)),
                 ('low_stock_alert_email', models.EmailField(blank=True, help_text='Email to notify when a product goes below low_stock_threshold', max_length=254)),
             ],

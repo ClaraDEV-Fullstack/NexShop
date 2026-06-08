@@ -3,7 +3,7 @@ import sys
 import django
 
 # Setup Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nextshopsphere.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nexshop.settings')
 django.setup()
 
 from products.models import Category, Brand, Product, ProductImage, ProductSpecification, ShippingOption

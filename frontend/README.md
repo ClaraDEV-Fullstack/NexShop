@@ -1,4 +1,4 @@
-# NextShopSphere Frontend
+# NEXSHOP Frontend
 
 React storefront powered by Vite.
 

@@ -213,16 +213,16 @@ const DashboardSettings = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 py-8 lg:py-12">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50/30 py-8 lg:py-12">
             {/* Avatar Upload Modal */}
             {showAvatarModal && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
                         {/* Modal Header */}
-                        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+                        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-primary-50">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-500 rounded-xl flex items-center justify-center">
                                         <HiPhotograph className="w-5 h-5 text-white" />
                                     </div>
                                     <div>
@@ -247,7 +247,7 @@ const DashboardSettings = () => {
                                         <img
                                             src={previewImage}
                                             alt="Preview"
-                                            className="w-40 h-40 rounded-full object-cover border-4 border-blue-100 shadow-lg"
+                                            className="w-40 h-40 rounded-full object-cover border-4 border-primary-100 shadow-lg"
                                         />
                                         <button
                                             onClick={() => {
@@ -275,7 +275,7 @@ const DashboardSettings = () => {
                             <button
                                 onClick={uploadAvatar}
                                 disabled={!previewImage || isUploadingAvatar}
-                                className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="flex-1 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-600 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-700 transition-all shadow-lg shadow-primary-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {isUploadingAvatar ? (
                                     <>
@@ -299,7 +299,7 @@ const DashboardSettings = () => {
                 <div className="mb-10">
                     <Link
                         to="/dashboard"
-                        className="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 mb-4 group transition-colors"
+                        className="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 mb-4 group transition-colors"
                     >
                         <HiOutlineArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                         Back to Dashboard
@@ -314,7 +314,7 @@ const DashboardSettings = () => {
                         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                             <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
                                         <HiOutlineUser className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
@@ -328,7 +328,7 @@ const DashboardSettings = () => {
                                 {/* Avatar Upload */}
                                 <div className="flex items-center gap-6 mb-8 p-4 bg-gray-50 rounded-2xl">
                                     <div className="relative">
-                                        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
+                                        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-100 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
                                             {user?.avatar || user?.avatar_url ? (
                                                 <img
                                                     src={user.avatar_url || user.avatar}
@@ -336,7 +336,7 @@ const DashboardSettings = () => {
                                                     className="w-full h-full object-cover"
                                                 />
                                             ) : (
-                                                <span className="text-3xl font-bold text-blue-500">
+                                                <span className="text-3xl font-bold text-primary-500">
                                                     {user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U'}
                                                 </span>
                                             )}
@@ -344,7 +344,7 @@ const DashboardSettings = () => {
                                         <button
                                             onClick={triggerFileInput}
                                             disabled={isUploadingAvatar}
-                                            className="absolute -bottom-2 -right-2 p-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50"
+                                            className="absolute -bottom-2 -right-2 p-2.5 bg-gradient-to-r from-primary-600 to-primary-600 rounded-xl shadow-lg hover:from-primary-700 hover:to-primary-700 transition-all disabled:opacity-50"
                                         >
                                             {isUploadingAvatar ? (
                                                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -365,7 +365,7 @@ const DashboardSettings = () => {
                                         <p className="text-sm text-gray-500 mb-2">JPG, PNG, GIF max 5MB</p>
                                         <button
                                             onClick={triggerFileInput}
-                                            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                                            className="text-sm text-primary-600 hover:text-primary-700 font-medium"
                                         >
                                             Click to upload
                                         </button>
@@ -382,7 +382,7 @@ const DashboardSettings = () => {
                                                 type="text"
                                                 value={profileData.first_name}
                                                 onChange={(e) => setProfileData({...profileData, first_name: e.target.value})}
-                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                                 placeholder="Your first name"
                                             />
                                         </div>
@@ -394,7 +394,7 @@ const DashboardSettings = () => {
                                                 type="text"
                                                 value={profileData.last_name}
                                                 onChange={(e) => setProfileData({...profileData, last_name: e.target.value})}
-                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                                 placeholder="Your last name"
                                             />
                                         </div>
@@ -426,7 +426,7 @@ const DashboardSettings = () => {
                                             type="tel"
                                             value={profileData.phone}
                                             onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
-                                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                             placeholder="+237 6XX XXX XXX"
                                         />
                                     </div>
@@ -435,7 +435,7 @@ const DashboardSettings = () => {
                                         <button
                                             type="submit"
                                             disabled={isUpdatingProfile}
-                                            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all disabled:opacity-50 flex items-center gap-2"
+                                            className="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white rounded-xl font-semibold shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all disabled:opacity-50 flex items-center gap-2"
                                         >
                                             {isUpdatingProfile ? (
                                                 <>
@@ -477,7 +477,7 @@ const DashboardSettings = () => {
                                                 type={showPasswords.current ? 'text' : 'password'}
                                                 value={passwordData.current_password}
                                                 onChange={(e) => setPasswordData({...passwordData, current_password: e.target.value})}
-                                                className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                                 placeholder="Enter current password"
                                                 required
                                             />
@@ -501,7 +501,7 @@ const DashboardSettings = () => {
                                                 type={showPasswords.new ? 'text' : 'password'}
                                                 value={passwordData.new_password}
                                                 onChange={(e) => setPasswordData({...passwordData, new_password: e.target.value})}
-                                                className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                                 placeholder="Enter new password"
                                                 required
                                                 minLength={8}
@@ -527,7 +527,7 @@ const DashboardSettings = () => {
                                                 type={showPasswords.confirm ? 'text' : 'password'}
                                                 value={passwordData.confirm_password}
                                                 onChange={(e) => setPasswordData({...passwordData, confirm_password: e.target.value})}
-                                                className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                                 placeholder="Confirm new password"
                                                 required
                                             />
@@ -568,8 +568,8 @@ const DashboardSettings = () => {
                         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                             <div className="p-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center">
-                                        {isDark ? <HiMoon className="w-5 h-5 text-indigo-600" /> : <HiSun className="w-5 h-5 text-amber-500" />}
+                                    <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-primary-100 rounded-lg flex items-center justify-center">
+                                        {isDark ? <HiMoon className="w-5 h-5 text-primary-600" /> : <HiSun className="w-5 h-5 text-amber-500" />}
                                     </div>
                                     <h2 className="text-lg font-bold text-gray-900">Appearance</h2>
                                 </div>
@@ -583,7 +583,7 @@ const DashboardSettings = () => {
                                         onClick={toggleTheme}
                                         className={`relative w-14 h-8 rounded-full transition-colors ${
                                             isDark
-                                                ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                                                ? 'bg-gradient-to-r from-primary-500 to-primary-500'
                                                 : 'bg-gray-300'
                                         }`}
                                     >
@@ -625,9 +625,9 @@ const DashboardSettings = () => {
                         </div>
 
                         {/* Photo Tips */}
-                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                        <div className="bg-gradient-to-br from-primary-50 to-primary-50 rounded-2xl p-6 border border-primary-100">
                             <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                     <HiPhotograph className="w-5 h-5 text-white" />
                                 </div>
                                 <div>

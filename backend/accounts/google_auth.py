@@ -119,7 +119,7 @@ def google_auth(request):
 
         return Response({
             'success': True,
-            'message': 'Welcome to NextShopSphere!' if is_new_user else 'Welcome back!',
+            'message': 'Welcome to NEXSHOP!' if is_new_user else 'Welcome back!',
             'is_new_user': is_new_user,
             'user': user_data,
             'tokens': tokens,

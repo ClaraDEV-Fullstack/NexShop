@@ -20,7 +20,7 @@ import {
     HiOutlineChevronDoubleRight
 } from 'react-icons/hi';
 import { ordersAPI } from '../../api/api';
-import { getImageUrl } from '../../utils/helpers';
+import { getImageUrl, formatPrice } from '../../utils/helpers';
 import Skeleton from '../../components/ui/Skeleton';
 import toast from 'react-hot-toast';
 
@@ -68,8 +68,8 @@ const DashboardOrders = () => {
     const getStatusColor = (status) => {
         const colors = {
             pending: 'bg-amber-100 text-amber-700 border-amber-200',
-            processing: 'bg-blue-100 text-blue-700 border-blue-200',
-            shipped: 'bg-indigo-100 text-indigo-700 border-indigo-200',
+            processing: 'bg-primary-100 text-primary-700 border-primary-200',
+            shipped: 'bg-primary-100 text-primary-700 border-primary-200',
             delivered: 'bg-emerald-100 text-emerald-700 border-emerald-200',
             cancelled: 'bg-gray-100 text-gray-600 border-gray-200',
         };
@@ -87,10 +87,6 @@ const DashboardOrders = () => {
         return icons[status] || icons.pending;
     };
 
-    const formatPrice = (price) => {
-        const num = parseFloat(price);
-        return isNaN(num) ? '0.00' : num.toFixed(2);
-    };
 
     const getOrderItemImage = (item) => {
         if (item.product_image) {
@@ -142,7 +138,7 @@ const DashboardOrders = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50/30">
             {/* Confirmation Modal */}
             {confirmId && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -187,7 +183,7 @@ const DashboardOrders = () => {
                 {/* Back Button */}
                 <Link
                     to="/dashboard"
-                    className="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 font-medium mb-4 group transition-colors"
+                    className="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 font-medium mb-4 group transition-colors"
                 >
                     <HiOutlineArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     Back to Dashboard
@@ -221,7 +217,7 @@ const DashboardOrders = () => {
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3 mb-6">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
                                 <HiOutlineFilter className="w-4 h-4 text-white" />
                             </div>
                             <div>
@@ -242,7 +238,7 @@ const DashboardOrders = () => {
                                         }}
                                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                                             filter === btn.key
-                                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25'
+                                                ? 'bg-gradient-to-r from-primary-600 to-primary-600 text-white shadow-md shadow-primary-500/25'
                                                 : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
                                         }`}
                                     >
@@ -297,17 +293,17 @@ const DashboardOrders = () => {
                             return (
                                 <div
                                     key={order.id}
-                                    className="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all duration-300 overflow-hidden"
+                                    className="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-primary-100 transition-all duration-300 overflow-hidden"
                                 >
                                     {/* Order Header - Compact */}
                                     <div className="p-4">
                                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
                                             <div className="flex items-start gap-3">
-                                                <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                                    <span className="text-blue-600 font-bold text-sm">#{order.id}</span>
+                                                <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                    <span className="text-primary-600 font-bold text-sm">#{order.id}</span>
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-bold text-gray-900 text-base group-hover:text-blue-600 transition-colors">
+                                                    <h3 className="font-bold text-gray-900 text-base group-hover:text-primary-600 transition-colors">
                                                         Order #{order.id}
                                                     </h3>
                                                     <div className="flex items-center gap-1.5 mt-0.5 text-gray-500 text-xs">
@@ -330,7 +326,7 @@ const DashboardOrders = () => {
                                                 </div>
                                                 <div className="flex items-center gap-1 px-3 py-1 bg-gray-900 text-white rounded-full">
                                                     <HiOutlineCurrencyDollar className="w-3 h-3" />
-                                                    <span className="font-bold text-sm">${formatPrice(order.total)}</span>
+                                                    <span className="font-bold text-sm">{formatPrice(order.total)}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -368,7 +364,7 @@ const DashboardOrders = () => {
                                                         );
                                                     })}
                                                     {order.items?.length > 3 && (
-                                                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 border-2 border-white flex items-center justify-center text-xs font-bold text-white shadow-lg">
+                                                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 border-2 border-white flex items-center justify-center text-xs font-bold text-white shadow-lg">
                                                             +{order.items.length - 3}
                                                         </div>
                                                     )}
@@ -399,7 +395,7 @@ const DashboardOrders = () => {
                                                 )}
                                                 <Link
                                                     to={`/orders/${order.id}`}
-                                                    className="flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg transition-all shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/30 font-medium text-xs"
+                                                    className="flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white rounded-lg transition-all shadow-sm shadow-primary-500/20 hover:shadow-md hover:shadow-primary-500/30 font-medium text-xs"
                                                 >
                                                     <HiOutlineEye className="w-3.5 h-3.5" />
                                                     <span>View</span>
@@ -422,12 +418,12 @@ const DashboardOrders = () => {
                                                         <div key={step} className="flex-1 flex items-center">
                                                             <div className={`h-1 flex-1 rounded-full transition-all ${
                                                                 isActive
-                                                                    ? 'bg-gradient-to-r from-blue-500 to-indigo-500'
+                                                                    ? 'bg-gradient-to-r from-primary-500 to-primary-500'
                                                                     : 'bg-gray-200'
                                                             }`} />
                                                             {idx < 3 && (
                                                                 <div className={`w-1.5 h-1.5 rounded-full mx-0.5 ${
-                                                                    isActive ? 'bg-indigo-500' : 'bg-gray-200'
+                                                                    isActive ? 'bg-primary-500' : 'bg-gray-200'
                                                                 }`} />
                                                             )}
                                                         </div>
@@ -442,8 +438,8 @@ const DashboardOrders = () => {
                     ) : (
                         <div className="col-span-2 bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm">
                             <div className="max-w-md mx-auto">
-                                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <HiOutlineShoppingBag className="w-8 h-8 text-blue-500" />
+                                <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <HiOutlineShoppingBag className="w-8 h-8 text-primary-500" />
                                 </div>
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                                     {filter === 'all' ? 'No orders yet' : `No ${filter} orders`}
@@ -464,7 +460,7 @@ const DashboardOrders = () => {
                                     )}
                                     <Link
                                         to="/products"
-                                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg font-medium shadow-lg shadow-blue-500/25 transition-all text-sm"
+                                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white rounded-lg font-medium shadow-lg shadow-primary-500/25 transition-all text-sm"
                                     >
                                         <HiOutlineShoppingBag className="w-4 h-4" />
                                         Start Shopping
@@ -519,7 +515,7 @@ const DashboardOrders = () => {
                                             onClick={() => paginate(pageNum)}
                                             className={`w-8 h-8 rounded-lg text-sm font-medium ${
                                                 currentPage === pageNum
-                                                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25'
+                                                    ? 'bg-gradient-to-r from-primary-600 to-primary-600 text-white shadow-md shadow-primary-500/25'
                                                     : 'text-gray-700 hover:bg-gray-100'
                                             }`}
                                         >

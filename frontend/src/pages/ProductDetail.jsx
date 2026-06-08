@@ -17,7 +17,7 @@ import StarRating from '../components/common/StarRating';
 import WishlistButton from '../components/common/WishlistButton';
 import ReviewForm from '../components/reviews/ReviewForm';
 import ReviewList from '../components/reviews/ReviewList';
-import { getImageUrl } from '../utils/helpers';
+import { getImageUrl, formatPrice } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
 const ProductDetail = () => {
@@ -129,11 +129,11 @@ const ProductDetail = () => {
     // Loading State
     if (isLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-indigo-50/30">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-primary-50/30">
                 <div className="text-center">
                     <div className="relative">
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-indigo-100 flex items-center justify-center mx-auto animate-pulse">
-                            <HiCube className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-400" />
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary-100 flex items-center justify-center mx-auto animate-pulse">
+                            <HiCube className="w-8 h-8 sm:w-10 sm:h-10 text-primary-400" />
                         </div>
                         <div className="absolute inset-0 flex items-center justify-center">
                             <Loader size="lg" />
@@ -148,16 +148,16 @@ const ProductDetail = () => {
     // Not Found State
     if (!product) {
         return (
-            <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-slate-50 to-indigo-50/30">
+            <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-slate-50 to-primary-50/30">
                 <div className="text-center max-w-sm">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                        <HiTag className="w-7 h-7 sm:w-8 sm:h-8 text-indigo-500" />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                        <HiTag className="w-7 h-7 sm:w-8 sm:h-8 text-primary-500" />
                     </div>
                     <h1 className="text-lg sm:text-xl font-bold mb-2 text-gray-900">Product Not Found</h1>
                     <p className="text-gray-500 mb-4 sm:mb-6 text-xs sm:text-sm">This product doesn't exist or has been removed.</p>
                     <Link
                         to="/products"
-                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-indigo-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/25"
+                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-primary-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-primary-700 transition-all shadow-lg shadow-primary-500/25"
                     >
                         <HiChevronLeft className="w-4 h-4" />
                         Back to Products
@@ -188,27 +188,27 @@ const ProductDetail = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/30">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50/30">
             {/* Breadcrumb */}
             <div className="bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-10">
                 <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-2 sm:py-2.5">
                     <nav className="text-[10px] sm:text-xs md:text-sm">
                         <ol className="flex items-center gap-1 sm:gap-1.5 text-gray-500 overflow-x-auto whitespace-nowrap scrollbar-hide">
                             <li>
-                                <Link to="/" className="flex items-center gap-1 hover:text-indigo-600 transition-colors p-1">
+                                <Link to="/" className="flex items-center gap-1 hover:text-primary-600 transition-colors p-1">
                                     <HiHome className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                     <span className="hidden xs:inline">Home</span>
                                 </Link>
                             </li>
                             <HiChevronRight className="w-3 h-3 text-gray-300 flex-shrink-0" />
                             <li>
-                                <Link to="/products" className="hover:text-indigo-600 transition-colors p-1">Products</Link>
+                                <Link to="/products" className="hover:text-primary-600 transition-colors p-1">Products</Link>
                             </li>
                             {product.category && (
                                 <>
                                     <HiChevronRight className="w-3 h-3 text-gray-300 flex-shrink-0" />
                                     <li>
-                                        <Link to={`/products?category=${product.category.slug}`} className="hover:text-indigo-600 transition-colors p-1">
+                                        <Link to={`/products?category=${product.category.slug}`} className="hover:text-primary-600 transition-colors p-1">
                                             {product.category.name}
                                         </Link>
                                     </li>
@@ -304,8 +304,8 @@ const ProductDetail = () => {
                                         onClick={() => setSelectedImage(idx)}
                                         className={`w-12 h-12 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-lg sm:rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
                                             selectedImage === idx
-                                                ? 'border-indigo-500 ring-2 ring-indigo-200 scale-105 shadow-md'
-                                                : 'border-gray-200 hover:border-indigo-300 opacity-70 hover:opacity-100'
+                                                ? 'border-primary-500 ring-2 ring-primary-200 scale-105 shadow-md'
+                                                : 'border-gray-200 hover:border-primary-300 opacity-70 hover:opacity-100'
                                         }`}
                                     >
                                         <img src={img.image} alt={img.alt} className="w-full h-full object-cover" />
@@ -322,7 +322,7 @@ const ProductDetail = () => {
                                 { icon: HiRefresh, label: 'Easy', sub: 'Returns' },
                             ].map((item, idx) => (
                                 <div key={idx} className="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-lg p-2 text-center">
-                                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 mx-auto mb-0.5" />
+                                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary-500 mx-auto mb-0.5" />
                                     <p className="text-[9px] sm:text-[10px] font-medium text-gray-800">{item.label}</p>
                                     <p className="text-[8px] sm:text-[9px] text-gray-500">{item.sub}</p>
                                 </div>
@@ -336,7 +336,7 @@ const ProductDetail = () => {
                         {product.category && (
                             <Link
                                 to={`/products?category=${product.category.slug}`}
-                                className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-full transition-colors font-medium"
+                                className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-primary-600 bg-primary-50 hover:bg-primary-100 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-full transition-colors font-medium"
                             >
                                 <HiTag className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                 {product.category.name}
@@ -366,14 +366,14 @@ const ProductDetail = () => {
 
                         {/* Price Section */}
                         <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 py-2 sm:py-3 border-y border-gray-100">
-                            <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                                ${product.price}
+                            <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-600 bg-clip-text text-transparent">
+                                {formatPrice(product.price)}
                             </span>
                             {product.compare_price && (
                                 <>
-                                    <span className="text-base sm:text-lg md:text-xl text-gray-400 line-through">${product.compare_price}</span>
+                                    <span className="text-base sm:text-lg md:text-xl text-gray-400 line-through">{formatPrice(product.compare_price)}</span>
                                     <span className="text-[10px] sm:text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-                                        Save ${(product.compare_price - product.price).toFixed(2)}
+                                        Économie {formatPrice(product.compare_price - product.price)}
                                     </span>
                                 </>
                             )}
@@ -431,7 +431,7 @@ const ProductDetail = () => {
                                                         )}
                                                         className={`px-3 py-1.5 text-sm rounded-lg border-2 transition-all
                                                             ${selectedVariant?.id === v.id
-                                                                ? 'border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold'
+                                                                ? 'border-primary-600 bg-primary-50 text-primary-700 font-semibold'
                                                                 : 'border-gray-300 text-gray-700 hover:border-gray-400'}
                                                             ${(!v.is_available || v.stock === 0) ? 'opacity-40 cursor-not-allowed line-through' : ''}`}
                                                     >
@@ -478,7 +478,7 @@ const ProductDetail = () => {
                                 <button
                                     onClick={handleAddToCart}
                                     disabled={!product.in_stock || isAddingToCart}
-                                    className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-2.5 sm:py-3 md:py-3.5 px-4 sm:px-5 md:px-6 rounded-lg sm:rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm md:text-base active:scale-[0.98]"
+                                    className="flex-1 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white font-bold py-2.5 sm:py-3 md:py-3.5 px-4 sm:px-5 md:px-6 rounded-lg sm:rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm md:text-base active:scale-[0.98]"
                                 >
                                     {isAddingToCart ? (
                                         <>
@@ -524,7 +524,7 @@ const ProductDetail = () => {
                         {/* Trust Badges - Desktop */}
                         <div className="hidden lg:grid grid-cols-3 gap-2 pt-3">
                             {[
-                                { icon: HiTruck, label: 'Free Shipping', desc: 'On orders $50+', color: 'indigo' },
+                                { icon: HiTruck, label: 'Free Shipping', desc: 'On orders $50+', color: 'primary' },
                                 { icon: HiShieldCheck, label: 'Secure Checkout', desc: '256-bit SSL', color: 'emerald' },
                                 { icon: HiRefresh, label: 'Easy Returns', desc: '30-day policy', color: 'amber' },
                             ].map((item, idx) => (
@@ -551,7 +551,7 @@ const ProductDetail = () => {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-md sm:rounded-lg text-[10px] sm:text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
                                     activeTab === tab.id
-                                        ? 'bg-white text-indigo-600 shadow-sm'
+                                        ? 'bg-white text-primary-600 shadow-sm'
                                         : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
                                 }`}
                             >
@@ -568,8 +568,8 @@ const ProductDetail = () => {
                         {activeTab === 'description' && (
                             <div>
                                 <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
-                                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
-                                        <HiDocumentText className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
+                                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary-100 flex items-center justify-center">
+                                        <HiDocumentText className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600" />
                                     </div>
                                     Product Description
                                 </h2>
@@ -600,15 +600,15 @@ const ProductDetail = () => {
                                 {/* Review Header */}
                                 <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
                                     <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
-                                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
-                                            <HiChatAlt2 className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
+                                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary-100 flex items-center justify-center">
+                                            <HiChatAlt2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600" />
                                         </div>
                                         Customer Reviews
                                     </h2>
                                     {isAuthenticated && !hasReviewed && !showReviewForm && (
                                         <button
                                             onClick={() => setShowReviewForm(true)}
-                                            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-[10px] sm:text-xs md:text-sm font-semibold py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-md"
+                                            className="bg-gradient-to-r from-primary-600 to-primary-600 text-white text-[10px] sm:text-xs md:text-sm font-semibold py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all shadow-md"
                                         >
                                             Write a Review
                                         </button>
@@ -617,11 +617,11 @@ const ProductDetail = () => {
 
                                 {/* Rating Summary */}
                                 {reviewStats && reviewStats.total_reviews > 0 && (
-                                    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-3 sm:p-4 md:p-5 mb-4 sm:mb-6 border border-indigo-100">
+                                    <div className="bg-gradient-to-br from-primary-50 to-primary-50 rounded-xl p-3 sm:p-4 md:p-5 mb-4 sm:mb-6 border border-primary-100">
                                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6">
                                             {/* Average Rating */}
-                                            <div className="text-center sm:pr-4 md:pr-6 sm:border-r border-indigo-200">
-                                                <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-1">
+                                            <div className="text-center sm:pr-4 md:pr-6 sm:border-r border-primary-200">
+                                                <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-600 to-primary-600 bg-clip-text text-transparent mb-1">
                                                     {reviewStats.average_rating}
                                                 </div>
                                                 <StarRating rating={Math.round(reviewStats.average_rating)} readonly size="sm" />
@@ -636,10 +636,10 @@ const ProductDetail = () => {
                                                     return (
                                                         <div key={star} className="flex items-center gap-1.5 sm:gap-2">
                                                             <span className="text-[10px] sm:text-xs text-gray-600 w-3">{star}</span>
-                                                            <HiStar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 fill-current" />
+                                                            <HiStar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gold-400 fill-current" />
                                                             <div className="flex-1 h-1.5 sm:h-2 bg-gray-200 rounded-full overflow-hidden">
                                                                 <div
-                                                                    className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full transition-all"
+                                                                    className="h-full bg-gradient-to-r from-gold-400 to-gold-500 rounded-full transition-all"
                                                                     style={{ width: `${percentage}%` }}
                                                                 />
                                                             </div>
@@ -665,15 +665,15 @@ const ProductDetail = () => {
 
                                 {/* Login Prompt */}
                                 {!isAuthenticated && (
-                                    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 text-center border border-indigo-100">
-                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                                            <HiUser className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
+                                    <div className="bg-gradient-to-br from-primary-50 to-primary-50 rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 text-center border border-primary-100">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                                            <HiUser className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600" />
                                         </div>
                                         <h3 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-1">Login to Review</h3>
                                         <p className="text-[10px] sm:text-xs md:text-sm text-gray-600 mb-3 sm:mb-4">Please login to write a review for this product.</p>
                                         <Link
                                             to="/login"
-                                            className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold py-2 px-4 rounded-lg transition-all shadow-md"
+                                            className="inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-700 text-white text-xs sm:text-sm font-semibold py-2 px-4 rounded-lg transition-all shadow-md"
                                         >
                                             Login
                                             <HiChevronRight className="w-4 h-4" />
@@ -683,8 +683,8 @@ const ProductDetail = () => {
 
                                 {/* Already Reviewed */}
                                 {isAuthenticated && hasReviewed && !showReviewForm && (
-                                    <div className="bg-indigo-50 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 border border-indigo-100">
-                                        <p className="text-indigo-700 flex items-center gap-2 text-xs sm:text-sm">
+                                    <div className="bg-primary-50 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 border border-primary-100">
+                                        <p className="text-primary-700 flex items-center gap-2 text-xs sm:text-sm">
                                             <HiCheck className="w-4 h-4 sm:w-5 sm:h-5" />
                                             You have already reviewed this product.
                                         </p>
@@ -724,7 +724,7 @@ const ProductDetail = () => {
                             </div>
                             <Link
                                 to={`/products?category=${product.category?.slug}`}
-                                className="text-[10px] sm:text-xs md:text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1 hover:gap-1.5 transition-all"
+                                className="text-[10px] sm:text-xs md:text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 hover:gap-1.5 transition-all"
                             >
                                 View All
                                 <HiChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />

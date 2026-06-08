@@ -15,7 +15,7 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_DB: nextshopsphere_test
+          POSTGRES_DB: nexshop_test
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: admin123
         ports:
@@ -42,7 +42,7 @@ jobs:
       - name: Run Django system checks
         working-directory: backend
         env:
-          DATABASE_URL: postgresql://admin:admin123@localhost:5432/nextshopsphere_test
+          DATABASE_URL: postgresql://admin:admin123@localhost:5432/nexshop_test
           SECRET_KEY: ci-test-secret-key
           DEBUG: "True"
           ALLOWED_HOSTS: localhost,127.0.0.1
@@ -51,7 +51,7 @@ jobs:
       - name: Run migrations
         working-directory: backend
         env:
-          DATABASE_URL: postgresql://admin:admin123@localhost:5432/nextshopsphere_test
+          DATABASE_URL: postgresql://admin:admin123@localhost:5432/nexshop_test
           SECRET_KEY: ci-test-secret-key
           DEBUG: "True"
         run: python manage.py migrate --noinput
@@ -59,7 +59,7 @@ jobs:
       - name: Run tests
         working-directory: backend
         env:
-          DATABASE_URL: postgresql://admin:admin123@localhost:5432/nextshopsphere_test
+          DATABASE_URL: postgresql://admin:admin123@localhost:5432/nexshop_test
           SECRET_KEY: ci-test-secret-key
           DEBUG: "True"
         run: python manage.py test --verbosity=2

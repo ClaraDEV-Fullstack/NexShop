@@ -18,7 +18,7 @@ import {
     HiArrowRight
 } from 'react-icons/hi';
 import { ordersAPI } from '../api/api';
-import { getImageUrl } from '../utils/helpers';
+import { getImageUrl, formatPrice } from '../utils/helpers';
 import Loader from '../components/common/Loader';
 import toast from 'react-hot-toast';
 
@@ -118,8 +118,8 @@ const Orders = () => {
     const getStatusColor = (status) => {
         const colors = {
             pending: 'bg-amber-50 text-amber-700 border-amber-200',
-            processing: 'bg-blue-50 text-blue-700 border-blue-200',
-            shipped: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+            processing: 'bg-primary-50 text-primary-700 border-primary-200',
+            shipped: 'bg-primary-50 text-primary-700 border-primary-200',
             delivered: 'bg-emerald-50 text-emerald-700 border-emerald-200',
             cancelled: 'bg-gray-100 text-gray-600 border-gray-200',
         };
@@ -230,9 +230,9 @@ const Orders = () => {
                                     <p className="text-lg font-bold text-amber-200">{stats.pending}</p>
                                     <p className="text-[10px] text-amber-200/70">Pending</p>
                                 </div>
-                                <div className="px-3 py-1.5 bg-blue-400/20 backdrop-blur-sm rounded-lg text-center">
-                                    <p className="text-lg font-bold text-blue-200">{stats.inProgress}</p>
-                                    <p className="text-[10px] text-blue-200/70">Transit</p>
+                                <div className="px-3 py-1.5 bg-primary-400/20 backdrop-blur-sm rounded-lg text-center">
+                                    <p className="text-lg font-bold text-primary-200">{stats.inProgress}</p>
+                                    <p className="text-[10px] text-primary-200/70">Transit</p>
                                 </div>
                                 <div className="px-3 py-1.5 bg-emerald-500/20 backdrop-blur-sm rounded-lg text-center">
                                     <p className="text-lg font-bold text-emerald-200">{stats.delivered}</p>
@@ -310,7 +310,7 @@ const Orders = () => {
                                                         {getStatusIcon(order.status)}
                                                         <span className="capitalize">{order.status_display || order.status}</span>
                                                     </div>
-                                                    <span className="text-sm font-bold text-gray-900">${order.total}</span>
+                                                    <span className="text-sm font-bold text-gray-900">{formatPrice(order.total)}</span>
                                                 </div>
                                             </div>
 

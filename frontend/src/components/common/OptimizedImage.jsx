@@ -31,7 +31,7 @@ const OptimizedImage = ({
                 alt={alt}
                 loading={priority ? 'eager' : 'lazy'}
                 decoding="async"
-                fetchPriority={priority ? 'high' : 'auto'}
+                fetchpriority={priority ? 'high' : 'auto'}
                 onLoad={() => setIsLoaded(true)}
                 onError={() => { setHasError(true); setIsLoaded(true); }}
                 className={`${className} transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}

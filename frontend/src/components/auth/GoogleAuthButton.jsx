@@ -2,7 +2,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setCredentials } from '../../store/authSlice';
-import api from '../../api/axios';
+import api from '../../api/api';
 import toast from 'react-hot-toast';
 
 const GoogleAuthButton = ({ mode = 'login' }) => {
@@ -17,7 +17,7 @@ const GoogleAuthButton = ({ mode = 'login' }) => {
 
         try {
             // Send Google credential to backend
-            const response = await api.post('/accounts/google/', {
+            const response = await api.post('/accounts/google/auth/', {
                 credential: credentialResponse.credential
             });
 
@@ -40,7 +40,7 @@ const GoogleAuthButton = ({ mode = 'login' }) => {
                 // Show success message
                 toast.success(
                     is_new_user
-                        ? `Welcome to NextShopSphere, ${user.first_name || user.username}!`
+                        ? `Welcome to NEXSHOP, ${user.first_name || user.username}!`
                         : `Welcome back, ${user.first_name || user.username}!`,
                     { duration: 4000 }
                 );
@@ -74,7 +74,7 @@ const GoogleAuthButton = ({ mode = 'login' }) => {
                 size="large"
                 text={mode === 'login' ? 'signin_with' : 'signup_with'}
                 shape="rectangular"
-                width="100%"
+                width={400}
             />
         </div>
     );

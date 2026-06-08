@@ -48,10 +48,10 @@ const WelcomeToast = ({ t, user }) => {
                         </p>
                         <p className="mt-1 text-sm text-secondary-500">
                             {user?.is_new_user
-                                ? 'Welcome to NextShopSphere! 🛍️'
+                                ? 'Welcome to NEXSHOP! 🛍️'
                                 : user?.last_login
                                     ? `Last seen: ${new Date(user.last_login).toLocaleDateString()}`
-                                    : 'Welcome back to NextShopSphere!'
+                                    : 'Welcome back to NEXSHOP!'
                             }
                         </p>
 

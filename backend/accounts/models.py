@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """Custom User model for NextShopSphere"""
+    """Custom User model for NEXSHOP"""
 
     email = models.EmailField(
         unique=True,

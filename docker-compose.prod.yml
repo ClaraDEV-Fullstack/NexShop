@@ -3,7 +3,7 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: nextshopsphere_db
+    container_name: nexshop_db
     restart: always
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -24,14 +24,14 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    container_name: nextshopsphere_backend
+    container_name: nexshop_backend
     restart: always
     command: >
       sh -c "
         echo 'Waiting for PostgreSQL...' &&
         sleep 15 &&
         python manage.py migrate --noinput &&
-        gunicorn --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-3} --threads 2 --worker-class gthread --timeout 120 nextshopsphere.wsgi:application
+        gunicorn --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-3} --threads 2 --worker-class gthread --timeout 120 nexshop.wsgi:application
       "
     volumes:
       - static_volume:/app/staticfiles
@@ -61,7 +61,7 @@ services:
       - R2_ACCOUNT_ID=${R2_ACCOUNT_ID}
       - R2_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID}
       - R2_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}
-      - R2_BUCKET_NAME=${R2_BUCKET_NAME:-nextshopsphere-media}
+      - R2_BUCKET_NAME=${R2_BUCKET_NAME:-nexshop-media}
       - R2_PUBLIC_URL=${R2_PUBLIC_URL}
       - FRONTEND_URL=${FRONTEND_URL}
       - BACKEND_URL=${BACKEND_URL}
@@ -76,7 +76,7 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
         - VITE_GOOGLE_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
-    container_name: nextshopsphere_frontend
+    container_name: nexshop_frontend
     restart: always
     expose:
       - "80"
@@ -87,7 +87,7 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: nextshopsphere_nginx
+    container_name: nexshop_nginx
     restart: always
     ports:
       - "80:80"

@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nextshopsphere.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nexshop.settings')
 django.setup()
 
 from django.core.mail import send_mail
@@ -14,7 +14,7 @@ print(f"Email configured: {'Yes' if settings.EMAIL_HOST_USER else 'No'}")
 if settings.EMAIL_HOST_USER:
     try:
         send_mail(
-            subject='🎉 NextShopSphere Test Email',
+            subject='🎉 NEXSHOP Test Email',
             message='If you receive this, your email configuration is working!',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[settings.EMAIL_HOST_USER],  # Send to yourself

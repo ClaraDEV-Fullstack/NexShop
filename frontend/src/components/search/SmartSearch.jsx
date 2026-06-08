@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiSearch, HiX, HiClock, HiTrendingUp, HiArrowRight } from 'react-icons/hi';
 import api from '../../api/api';
-import { getImageUrl } from '../../utils/helpers';
+import { getImageUrl, formatPrice } from '../../utils/helpers';
 
 const SmartSearch = ({ onClose, isOpen }) => {
     const navigate = useNavigate();
@@ -216,7 +216,7 @@ const SmartSearch = ({ onClose, isOpen }) => {
                                             </h4>
                                             <div className="flex items-center gap-2 mt-1">
                                                 <span className="text-primary-500 font-semibold">
-                                                    ${parseFloat(product.price).toFixed(2)}
+                                                    {formatPrice(product.price)}
                                                 </span>
                                                 {product.category?.name && (
                                                     <span className="text-xs text-secondary-400">

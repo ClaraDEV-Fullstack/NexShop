@@ -4,7 +4,7 @@ import os
 import django
 
 # ---------------- Setup Django ----------------
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nextshopsphere.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nexshop.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model

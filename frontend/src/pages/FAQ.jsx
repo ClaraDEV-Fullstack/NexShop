@@ -113,14 +113,14 @@ const FAQ = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
             {/* Hero */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white py-16 lg:py-20">
+            <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-16 lg:py-20">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
                         <HiQuestionMarkCircle className="w-4 h-4" />
                         Help Center
                     </div>
                     <h1 className="text-4xl lg:text-5xl font-bold mb-6">Frequently Asked Questions</h1>
-                    <p className="text-xl text-blue-100 mb-8">
+                    <p className="text-xl text-primary-100 mb-8">
                         Find answers to common questions about orders, payments, and more
                     </p>
 
@@ -147,7 +147,7 @@ const FAQ = () => {
                         <p className="text-gray-600 mb-6">Try a different search term or browse categories below</p>
                         <button
                             onClick={() => setSearchQuery('')}
-                            className="text-blue-600 font-medium hover:underline"
+                            className="text-primary-600 font-medium hover:underline"
                         >
                             Clear search
                         </button>
@@ -157,7 +157,7 @@ const FAQ = () => {
                         {filteredCategories.map((category, catIndex) => (
                             <div key={catIndex}>
                                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                                    <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-sm font-bold">
+                                    <span className="w-8 h-8 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center text-sm font-bold">
                                         {category.faqs.length}
                                     </span>
                                     {category.category}
@@ -170,7 +170,7 @@ const FAQ = () => {
                                         return (
                                             <div
                                                 key={faqIndex}
-                                                className={`bg-white rounded-2xl border transition-all ${isOpen ? 'border-blue-200 shadow-lg' : 'border-gray-100 shadow-sm hover:shadow-md'}`}
+                                                className={`bg-white rounded-2xl border transition-all ${isOpen ? 'border-primary-200 shadow-lg' : 'border-gray-100 shadow-sm hover:shadow-md'}`}
                                             >
                                                 <button
                                                     onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
@@ -196,15 +196,15 @@ const FAQ = () => {
                 )}
 
                 {/* Still Need Help */}
-                <div className="mt-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 lg:p-12 text-white text-center">
+                <div className="mt-16 bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl p-8 lg:p-12 text-white text-center">
                     <h2 className="text-2xl lg:text-3xl font-bold mb-4">Still have questions?</h2>
-                    <p className="text-blue-100 mb-8 max-w-lg mx-auto">
+                    <p className="text-primary-100 mb-8 max-w-lg mx-auto">
                         Can't find the answer you're looking for? Our support team is happy to help.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             to="/contact"
-                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition-colors"
                         >
                             <HiMail className="w-5 h-5" />
                             Contact Support

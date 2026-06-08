@@ -107,7 +107,7 @@ SUPABASE_SERVICE_KEY = os.getenv('SUPABASE_SERVICE_KEY', '')
 SUPABASE_BUCKET = os.getenv('SUPABASE_BUCKET', 'media')
 
 if SUPABASE_URL and SUPABASE_SERVICE_KEY:
-    DEFAULT_FILE_STORAGE = 'nextshopsphere.supabase_storage.SupabaseStorage'
+    DEFAULT_FILE_STORAGE = 'nexshop.supabase_storage.SupabaseStorage'
     MEDIA_URL = f'{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/'
 else:
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
@@ -124,7 +124,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'nextshopsphere.urls'
+ROOT_URLCONF = 'nexshop.urls'
 
 TEMPLATES = [
     {
@@ -142,7 +142,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'nextshopsphere.wsgi.application'
+WSGI_APPLICATION = 'nexshop.wsgi.application'
 
 # =============================================================================
 # DATABASE CONFIGURATION - FIXED FOR RENDER BUILD
@@ -275,7 +275,7 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'nextshopsphere.pagination.FlexiblePageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'nexshop.pagination.FlexiblePageNumberPagination',
     'PAGE_SIZE': 12,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
@@ -303,7 +303,7 @@ REST_FRAMEWORK = {
 # SWAGGER/OPENAPI SETTINGS
 # =============================================================================
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'NextShopSphere API',
+    'TITLE': 'NEXSHOP API',
     'DESCRIPTION': 'E-commerce REST API with JWT authentication',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
@@ -340,7 +340,7 @@ EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@nextshopsphere.com')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@nexshop.com')
 
 # Fallback to console backend if email not configured
 if not EMAIL_HOST_USER and DEBUG:
