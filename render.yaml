@@ -101,6 +101,9 @@ services:
       - path: /index.html
         name: Cache-Control
         value: public, max-age=0, must-revalidate
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin-allow-popups
     envVars:
       - key: NODE_VERSION
         value: "20"

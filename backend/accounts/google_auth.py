@@ -41,14 +41,23 @@ def google_auth(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        client_id = getattr(settings, 'GOOGLE_OAUTH_CLIENT_ID', '')
+        if not client_id:
+            logger.error('GOOGLE_OAUTH_CLIENT_ID is not set on the server')
+            return Response(
+                {'error': 'Google OAuth is not configured on the server. Set GOOGLE_OAUTH_CLIENT_ID in Render.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
         # Verify the Google token using Google's API
         google_url = f"https://oauth2.googleapis.com/tokeninfo?id_token={credential}"
 
         try:
             google_response = requests.get(google_url)
             if google_response.status_code != 200:
+                logger.error('Google tokeninfo failed: %s', google_response.text[:200])
                 return Response(
-                    {'error': 'Invalid Google token'},
+                    {'error': 'Invalid Google token. Check authorized origins in Google Cloud Console.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
             idinfo = google_response.json()
@@ -60,9 +69,16 @@ def google_auth(request):
             )
 
         # Verify the token is for our app
-        if idinfo.get('aud') != settings.GOOGLE_OAUTH_CLIENT_ID:
+        token_aud = idinfo.get('aud')
+        if token_aud != client_id:
+            logger.error(
+                'Google token audience mismatch: token aud=%s, server client_id=%s',
+                token_aud, client_id,
+            )
             return Response(
-                {'error': 'Invalid token audience'},
+                {
+                    'error': 'Google Client ID mismatch. VITE_GOOGLE_CLIENT_ID (frontend) must match GOOGLE_OAUTH_CLIENT_ID (backend).',
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
