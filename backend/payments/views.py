@@ -15,7 +15,7 @@ from .models import Payment
 from .serializers import PaymentSerializer, InitPaymentSerializer
 from .cinetpay import init_payment, verify_payment, is_mock_mode
 from orders.models import Order
-from orders.emails import send_payment_confirmation_email
+from orders.emails import send_payment_confirmation_email_async
 
 logger = logging.getLogger(__name__)
 
@@ -57,9 +57,18 @@ class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Process a mobile money payment (Orange Money or MTN MoMo).
 
-        In mock/portfolio mode, completes instantly and returns payment details
-        for an on-page success modal. In live mode, returns a CinetPay redirect URL.
+        In mock mode, completes instantly. In live mode, returns a CinetPay redirect URL.
         """
+        try:
+            return self._initiate_payment(request)
+        except Exception as exc:
+            logger.exception('Payment initiate failed: %s', exc)
+            return Response(
+                {'error': 'Payment could not be processed. Please try again.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+    def _initiate_payment(self, request):
         serializer = InitPaymentSerializer(data=request.data, context={'request': request})
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -216,18 +225,22 @@ def _mark_payment_successful(payment: Payment) -> bool:
 
     email_sent = False
     try:
-        email_sent = send_payment_confirmation_email(order, payment=payment)
+        email_sent = send_payment_confirmation_email_async(order, payment=payment)
     except Exception as exc:
-        logger.error('Failed to send payment confirmation email for order #%s: %s', order.id, exc)
+        logger.error('Failed to queue payment confirmation email for order #%s: %s', order.id, exc)
 
     method_label = PAYMENT_METHOD_LABELS.get(payment.payment_method, 'Mobile Money')
-    notify_user(
-        payment.user,
-        'payment',
-        f'Payment confirmed — Order #{order.id}',
-        f'Your {method_label} payment of {order.total} {payment.currency} was successful.',
-        frontend_link(f'/orders/{order.id}'),
-    )
+    try:
+        notify_user(
+            payment.user,
+            'payment',
+            f'Payment confirmed — Order #{order.id}',
+            f'Your {method_label} payment of {order.total} {payment.currency} was successful.',
+            frontend_link(f'/orders/{order.id}'),
+        )
+    except Exception as exc:
+        logger.error('Failed to send payment notification for order #%s: %s', order.id, exc)
+
     return email_sent
 
 

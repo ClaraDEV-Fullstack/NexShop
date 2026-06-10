@@ -16,6 +16,7 @@ import ScrollToTop from './components/common/ScrollToTop';
 import ScrollToTopButton from './components/common/ScrollToTopButton';
 import PageLoader from './components/common/PageLoader';
 import BackendStatusBanner from './components/common/BackendStatusBanner';
+import GoogleAuthProvider from './components/auth/GoogleAuthProvider';
 
 // Pages — lazy-loaded to shrink the initial bundle
 const Home = lazy(() => import('./pages/Home'));
@@ -66,8 +67,8 @@ const AppContent = () => {
                             <Route path="/products" element={<Products />} />
                             <Route path="/products/:slug" element={<ProductDetail />} />
                             <Route path="/cart" element={<Cart />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
+                            <Route path="/login" element={<GoogleAuthProvider><Login /></GoogleAuthProvider>} />
+                            <Route path="/register" element={<GoogleAuthProvider><Register /></GoogleAuthProvider>} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/FAQ" element={<FAQ />} />
                             <Route path="/about" element={<About />} />

@@ -277,3 +277,17 @@ Thank you for shopping with NEXSHOP!
         html_content,
         user_email,
     )
+
+
+def send_payment_confirmation_email_async(order, payment=None) -> bool:
+    """Queue payment confirmation email so checkout API responds immediately."""
+
+    def _run():
+        try:
+            send_payment_confirmation_email(order, payment)
+        finally:
+            from django.db import close_old_connections
+            close_old_connections()
+
+    threading.Thread(target=_run, daemon=True).start()
+    return _uses_real_email_provider()

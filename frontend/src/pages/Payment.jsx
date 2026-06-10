@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-    HiArrowLeft, HiLockClosed, HiExclamation, HiShieldCheck,
+    HiArrowLeft, HiLockClosed, HiExclamation,
     HiTruck, HiCheckCircle, HiShoppingBag, HiMail,
 } from 'react-icons/hi';
 import { ordersAPI, paymentsAPI } from '../api/api';
@@ -125,13 +125,27 @@ const Payment = () => {
                 colors: ['#22c55e', '#f59e0b', '#3b82f6'],
             });
         } catch (err) {
-            const msg =
-                err.response?.data?.error ||
-                err.response?.data?.phone_number?.[0] ||
-                err.response?.data?.payment_method?.[0] ||
-                'Failed to process payment. Please try again.';
-            setError(typeof msg === 'string' ? msg : JSON.stringify(msg));
-            toast.error(typeof msg === 'string' ? msg : 'Payment failed');
+            const data = err.response?.data;
+            let msg = 'Failed to process payment. Please try again.';
+
+            if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+                msg = 'Payment timed out. Please check your order — it may still have been processed.';
+            } else if (data) {
+                if (typeof data.error === 'string') {
+                    msg = data.error;
+                } else if (data.detail) {
+                    msg = data.detail;
+                } else if (data.order_id?.[0]) {
+                    msg = data.order_id[0];
+                } else if (data.phone_number?.[0]) {
+                    msg = data.phone_number[0];
+                } else if (data.payment_method?.[0]) {
+                    msg = data.payment_method[0];
+                }
+            }
+
+            setError(msg);
+            toast.error(msg);
         } finally {
             setIsProcessing(false);
         }
@@ -179,16 +193,6 @@ const Payment = () => {
                             <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
                                 Total: {formatPrice(order.total)}
                             </span>
-                        </div>
-                    </div>
-
-                    <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
-                        <HiExclamation className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-semibold text-amber-900 text-sm">Portfolio demo mode</p>
-                            <p className="text-amber-800 text-xs mt-1">
-                                No real charge is made. Enter your details and click Pay to simulate a successful mobile money checkout.
-                            </p>
                         </div>
                     </div>
 
@@ -289,9 +293,9 @@ const Payment = () => {
                                     )}
                                 </button>
 
-                                <p className="text-center text-xs text-gray-500 flex items-center justify-center gap-1.5">
-                                    <HiShieldCheck className="w-4 h-4 text-green-500" />
-                                    Demo checkout — no real funds are transferred
+                                <p className="text-center text-xs text-gray-500 leading-relaxed">
+                                    Demo checkout for now — no real payment is processed.
+                                    Live mobile money integration will be enabled in production.
                                 </p>
                             </div>
                         </div>

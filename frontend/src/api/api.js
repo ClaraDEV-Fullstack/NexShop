@@ -155,7 +155,7 @@ export const paymentsAPI = {
             payment_method: paymentMethod,
             phone_number: phoneNumber,
             payer_name: payerName,
-        }),
+        }, { timeout: 45000 }),
     verify: (transactionId) =>
         api.post('/payments/verify/', { transaction_id: transactionId }),
     getAll: () => api.get('/payments/'),
