@@ -21,6 +21,10 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 allowed_hosts_str = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1")
 ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_str.split(",") if h.strip()]
 
+# Render sets RENDER=true — allow any *.onrender.com hostname automatically
+if os.getenv("RENDER") == "true" and ".onrender.com" not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(".onrender.com")
+
 # CSRF Trusted Origins (for production)
 csrf_origins_str = os.getenv("CSRF_TRUSTED_ORIGINS", "")
 CSRF_TRUSTED_ORIGINS = [h.strip() for h in csrf_origins_str.split(",") if h.strip()]
