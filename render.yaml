@@ -63,6 +63,8 @@ services:
         sync: false
       - key: SUPABASE_BUCKET
         value: media
+      - key: AUTO_SEED_DB
+        value: "true"
       - key: R2_ACCOUNT_ID
         sync: false
       - key: R2_ACCESS_KEY_ID

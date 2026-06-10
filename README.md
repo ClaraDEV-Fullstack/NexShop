@@ -143,7 +143,22 @@ docker-compose up --build
 | | `VITE_GOOGLE_CLIENT_ID` | *(same as backend)* |
 
 3. Use **Static Site** for the frontend (included in blueprint) — assets are CDN-cached for faster loads.
-4. Optional: add [UptimeRobot](https://uptimerobot.com) to ping `https://your-api.onrender.com/api/health/` every 5 minutes to reduce cold starts.
+4. Optional: add [UptimeRobot](https://uptimerobot.com) to ping `https://nexshop-shur.onrender.com/api/health/` every 5 minutes to reduce cold starts.
+
+### Empty database / images on Render free tier
+
+Render free Web Services have **no Shell**. Images are served from **Supabase CDN** (not Render disk).
+
+Add to the **NexShop backend** environment:
+
+```env
+SUPABASE_URL=https://oknwvldrydezoxazfqgx.supabase.co
+SUPABASE_SERVICE_KEY=<Supabase → Settings → API → service_role key>
+SUPABASE_BUCKET=media
+AUTO_SEED_DB=true
+```
+
+Redeploy — the backend auto-seeds products and uploads images to Supabase in the background (~5–10 min). Watch logs for `AUTO_SEED_DB: seeding finished.`
 
 📚 API Documentation
 Fully documented endpoints via Swagger UI:
