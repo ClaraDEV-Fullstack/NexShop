@@ -8,12 +8,12 @@ databases:
     plan: free
 
 services:
-  # Django API — Docker, 1 worker for faster cold starts on free tier
+  # Django API — Docker (uses root Dockerfile in monorepo)
   - type: web
     name: nexshop-api
     runtime: docker
-    dockerfilePath: ./backend/Dockerfile.prod
-    dockerContext: ./backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     plan: free
     healthCheckPath: /api/health/
     envVars:
@@ -68,9 +68,9 @@ services:
       - key: R2_PUBLIC_URL
         sync: false
 
-  # React SPA — static CDN (loads much faster than a Docker web service)
+  # React SPA — Static Site (Option A: fast CDN, no Vite dev server)
   - type: web
-    name: nexshop-ui
+    name: nextshopsphere-ui
     runtime: static
     rootDir: frontend
     buildCommand: npm ci && npm run build
@@ -94,7 +94,9 @@ services:
         name: Cache-Control
         value: public, max-age=0, must-revalidate
     envVars:
+      - key: NODE_VERSION
+        value: "20"
       - key: VITE_API_URL
-        sync: false
+        value: https://nexshop-shur.onrender.com/api
       - key: VITE_GOOGLE_CLIENT_ID
         sync: false
