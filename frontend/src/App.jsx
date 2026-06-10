@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import store from './store/store';
 import { loadUser } from './store/authSlice';
 import { ThemeProvider } from './context/ThemeContext';
+import { useBackendWarmup } from './hooks/useBackendWarmup';
 
 // Layout Components
 import Navbar from './components/common/Navbar';
@@ -13,37 +14,38 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import CartSidebar from './components/cart/CartSidebar';
 import ScrollToTop from './components/common/ScrollToTop';
 import ScrollToTopButton from './components/common/ScrollToTopButton';
+import PageLoader from './components/common/PageLoader';
+import BackendStatusBanner from './components/common/BackendStatusBanner';
 
-// Pages
-import Home from './pages/Home';
-import Products from './pages/Products';
-import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Orders from './pages/Orders';
-import OrderDetail from './pages/OrderDetail';
-import Wishlist from './pages/Wishlist';
-import Payment from './pages/Payment';
-import PaymentSuccess from './pages/PaymentSuccess';
-import Contact from './pages/Contact';
-// Dashboard Pages (Now with Navbar)
-import DashboardOverview from './pages/Dashboard/DashboardOverview';
-import DashboardOrders from './pages/Dashboard/DashboardOrders';
-import DashboardWishlist from './pages/Dashboard/DashboardWishlist';
-import DashboardSettings from './pages/Dashboard/DashboardSettings';
-import DashboardNotifications from './pages/Dashboard/DashboardNotifications';
-
-// Error Pages
-import NotFound from './pages/NotFound';
-import FAQ from "./pages/FAQ";
-import About from "./pages/About";
-import Returns from "./pages/Returns";
+// Pages — lazy-loaded to shrink the initial bundle
+const Home = lazy(() => import('./pages/Home'));
+const Products = lazy(() => import('./pages/Products'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Orders = lazy(() => import('./pages/Orders'));
+const OrderDetail = lazy(() => import('./pages/OrderDetail'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
+const Payment = lazy(() => import('./pages/Payment'));
+const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
+const Contact = lazy(() => import('./pages/Contact'));
+const DashboardOverview = lazy(() => import('./pages/Dashboard/DashboardOverview'));
+const DashboardOrders = lazy(() => import('./pages/Dashboard/DashboardOrders'));
+const DashboardWishlist = lazy(() => import('./pages/Dashboard/DashboardWishlist'));
+const DashboardSettings = lazy(() => import('./pages/Dashboard/DashboardSettings'));
+const DashboardNotifications = lazy(() => import('./pages/Dashboard/DashboardNotifications'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const About = lazy(() => import('./pages/About'));
+const Returns = lazy(() => import('./pages/Returns'));
 
 
 const AppContent = () => {
+    const backendStatus = useBackendWarmup();
+
     useEffect(() => {
         store.dispatch(loadUser());
     }, []);
@@ -51,43 +53,46 @@ const AppContent = () => {
     return (
         <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <ScrollToTop />
+            <BackendStatusBanner status={backendStatus} />
             <div className="min-h-screen flex flex-col bg-white dark:bg-secondary-900 transition-colors duration-300">
                 <Navbar />
                 <CartSidebar />
 
                 <main className="flex-grow">
-                    <Routes>
-                        {/* Public Routes */}
-                        <Route path="/" element={<Home />} />
-                        <Route path="/products" element={<Products />} />
-                        <Route path="/products/:slug" element={<ProductDetail />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/FAQ" element={<FAQ />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/returns" element={<Returns />} />
+                    <Suspense fallback={<PageLoader />}>
+                        <Routes>
+                            {/* Public Routes */}
+                            <Route path="/" element={<Home />} />
+                            <Route path="/products" element={<Products />} />
+                            <Route path="/products/:slug" element={<ProductDetail />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/FAQ" element={<FAQ />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/returns" element={<Returns />} />
 
-                        {/* Protected Routes */}
-                        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-                        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-                        <Route path="/orders/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
-                        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-                        <Route path="/payment/:orderId" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
-                        <Route path="/payment/success" element={<PaymentSuccess />} />
+                            {/* Protected Routes */}
+                            <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+                            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                            <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+                            <Route path="/orders/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
+                            <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+                            <Route path="/payment/:orderId" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+                            <Route path="/payment/success" element={<PaymentSuccess />} />
 
-                        {/* Dashboard Routes (with Navbar) */}
-                        <Route path="/dashboard" element={<ProtectedRoute><DashboardOverview /></ProtectedRoute>} />
-                        <Route path="/dashboard/orders" element={<ProtectedRoute><DashboardOrders /></ProtectedRoute>} />
-                        <Route path="/dashboard/wishlist" element={<ProtectedRoute><DashboardWishlist /></ProtectedRoute>} />
-                        <Route path="/dashboard/notifications" element={<ProtectedRoute><DashboardNotifications /></ProtectedRoute>} />
-                        <Route path="/dashboard/settings" element={<ProtectedRoute><DashboardSettings /></ProtectedRoute>} />
+                            {/* Dashboard Routes (with Navbar) */}
+                            <Route path="/dashboard" element={<ProtectedRoute><DashboardOverview /></ProtectedRoute>} />
+                            <Route path="/dashboard/orders" element={<ProtectedRoute><DashboardOrders /></ProtectedRoute>} />
+                            <Route path="/dashboard/wishlist" element={<ProtectedRoute><DashboardWishlist /></ProtectedRoute>} />
+                            <Route path="/dashboard/notifications" element={<ProtectedRoute><DashboardNotifications /></ProtectedRoute>} />
+                            <Route path="/dashboard/settings" element={<ProtectedRoute><DashboardSettings /></ProtectedRoute>} />
 
-                        {/* 404 */}
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
+                            {/* 404 */}
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </Suspense>
                 </main>
 
                 <Footer />

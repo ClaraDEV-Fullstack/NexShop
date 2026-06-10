@@ -1,0 +1,100 @@
+# Render Blueprint — NEXSHOP
+# Connect this repo in Render → New → Blueprint → apply, then fill secret env vars in the dashboard.
+
+databases:
+  - name: nexshop-db
+    databaseName: nexshop
+    user: nexshop
+    plan: free
+
+services:
+  # Django API — Docker, 1 worker for faster cold starts on free tier
+  - type: web
+    name: nexshop-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile.prod
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /api/health/
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexshop-db
+          property: connectionString
+      - key: DEBUG
+        value: "False"
+      - key: WEB_CONCURRENCY
+        value: "1"
+      - key: PAYMENT_MODE
+        value: mock
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: BACKEND_URL
+        sync: false
+      - key: EMAIL_HOST
+        value: smtp-relay.brevo.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_USE_TLS
+        value: "True"
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: DEFAULT_FROM_EMAIL
+        sync: false
+      - key: DEFAULT_FROM_NAME
+        value: NEXSHOP
+      - key: GOOGLE_OAUTH_CLIENT_ID
+        sync: false
+      - key: GOOGLE_OAUTH_CLIENT_SECRET
+        sync: false
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        value: nexshop-media
+      - key: R2_PUBLIC_URL
+        sync: false
+
+  # React SPA — static CDN (loads much faster than a Docker web service)
+  - type: web
+    name: nexshop-ui
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: true
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.js
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.css
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /index.html
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false

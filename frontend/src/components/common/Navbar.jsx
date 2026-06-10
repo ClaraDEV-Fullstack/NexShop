@@ -29,6 +29,7 @@ import { useTheme } from '../../context/ThemeContext';
 import SmartSearch from '../search/SmartSearch';
 import toast from 'react-hot-toast';
 import { notificationsAPI } from '../../api/api';
+import { BACKEND_BASE_URL } from '../../config';
 
 
 // Helper function to get user avatar (Cloudinary compatible)
@@ -66,8 +67,7 @@ const getUserAvatar = (user) => {
 
         // For relative paths, use environment variable or fallback
         if (url.startsWith('/')) {
-            const baseUrl = import.meta.env.VITE_API_URL || 'https://nexshop.onrender.com';
-            return `${baseUrl}${url}`;
+            return `${BACKEND_BASE_URL}${url}`;
         }
 
         return url;

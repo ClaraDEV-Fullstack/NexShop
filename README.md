@@ -3,7 +3,7 @@
 A modern, full-stack e-commerce ecosystem featuring a responsive **React** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
 
 **🚀 [Live Demo](https://nexshop-ui.onrender.com/)**
-⚠️ Note: This project is hosted on a free instance. Please allow up to 1 minute for the initial load as the server wakes up.
+⚠️ Note: Free Render instances sleep after ~15 min idle. The UI loads from a static CDN; the API may take up to ~60s to wake on first visit.
 
 
 <p align="center">
@@ -126,6 +126,25 @@ npm start
 Bash
 
 docker-compose up --build
+
+## 🌐 Deploy on Render (fast setup)
+
+1. Push to GitHub, then in [Render](https://render.com) → **New → Blueprint** → select this repo (`render.yaml` is included).
+2. Set these env vars after the blueprint is applied:
+
+| Service | Variable | Example |
+|---------|----------|---------|
+| **nexshop-api** | `ALLOWED_HOSTS` | `nexshop-api.onrender.com` |
+| | `BACKEND_URL` | `https://nexshop-api.onrender.com` |
+| | `CORS_ALLOWED_ORIGINS` | `https://nexshop-ui.onrender.com` |
+| | `CSRF_TRUSTED_ORIGINS` | `https://nexshop-ui.onrender.com` |
+| | `FRONTEND_URL` | `https://nexshop-ui.onrender.com` |
+| **nexshop-ui** | `VITE_API_URL` | `https://nexshop-api.onrender.com/api` |
+| | `VITE_GOOGLE_CLIENT_ID` | *(same as backend)* |
+
+3. Use **Static Site** for the frontend (included in blueprint) — assets are CDN-cached for faster loads.
+4. Optional: add [UptimeRobot](https://uptimerobot.com) to ping `https://your-api.onrender.com/api/health/` every 5 minutes to reduce cold starts.
+
 📚 API Documentation
 Fully documented endpoints via Swagger UI:
 

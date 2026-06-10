@@ -1,16 +1,8 @@
 // src/utils/helpers.js
 
-// Backend URLs for different environments
-const getBackendUrl = () => {
-    // Check if we're in production
-    if (import.meta.env.PROD) {
-        return 'https://nexshop.onrender.com';
-    }
-    // Local development
-    return 'http://127.0.0.1:8000';
-};
+import { BACKEND_BASE_URL } from '../config';
 
-export const BACKEND_URL = getBackendUrl();
+export const BACKEND_URL = BACKEND_BASE_URL;
 
 // Default placeholder
 export const PLACEHOLDER_IMAGE = `data:image/svg+xml,${encodeURIComponent(`

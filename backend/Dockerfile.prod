@@ -26,11 +26,13 @@ RUN addgroup --system django && adduser --system --ingroup django django
 RUN chown -R django:django /app
 USER django
 
+# Run Gunicorn (Render sets PORT; 1 worker default for faster cold starts)
+RUN chmod +x start.sh
+
 EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health/', timeout=5)"
+    CMD python -c "import os, urllib.request; urllib.request.urlopen(f'http://localhost:{os.environ.get(\"PORT\", \"8000\")}/api/health/', timeout=5)"
 
-# Run Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--threads", "2", "--worker-class", "gthread", "--worker-tmp-dir", "/dev/shm", "--access-logfile", "-", "--error-logfile", "-", "nexshop.wsgi:application"]
+CMD ["./start.sh"]
