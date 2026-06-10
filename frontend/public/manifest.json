@@ -1,6 +1,6 @@
 {
   "short_name": "NEXSHOP",
-  "name": "NEXSHOP",
+  "name": "NEXSHOP — Your Shopping Destination",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#0b1326",
+  "background_color": "#0b1326"
 }
