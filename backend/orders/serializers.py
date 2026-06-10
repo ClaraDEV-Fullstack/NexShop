@@ -33,7 +33,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'id', 'status', 'status_display', 'payment_status', 'payment_status_display',
             'shipping_address', 'shipping_city', 'shipping_country', 'shipping_phone',
             'subtotal', 'shipping_cost', 'tax', 'discount', 'total',
-            'coupon_code', 'notes', 'guest_email',
+            'notes', 'guest_email',
             'items', 'created_at', 'updated_at',
         ]
         read_only_fields = ['id', 'subtotal', 'shipping_cost', 'tax', 'total', 'created_at', 'updated_at']
@@ -51,7 +51,6 @@ class CreateOrderSerializer(serializers.Serializer):
     shipping_phone = serializers.CharField(max_length=20)
     notes = serializers.CharField(required=False, allow_blank=True, default='')
     items = CreateOrderItemSerializer(many=True)
-    coupon_code = serializers.CharField(required=False, allow_blank=True, default='')
     # Guest checkout: provide email if not authenticated
     guest_email = serializers.EmailField(required=False, allow_blank=True, default='')
 
@@ -81,21 +80,7 @@ class CreateOrderSerializer(serializers.Serializer):
         request = self.context['request']
         user = request.user if request.user.is_authenticated else None
         items_data = validated_data.pop('items')
-        coupon_code = validated_data.pop('coupon_code', '').strip().upper()
         guest_email = validated_data.pop('guest_email', '')
-
-        # Resolve coupon discount
-        discount = 0
-        if coupon_code:
-            try:
-                from coupons.models import Coupon
-                coupon = Coupon.objects.get(code=coupon_code, is_active=True)
-                # We'll apply discount after subtotal is known
-            except Coupon.DoesNotExist:
-                coupon_code = ''
-                coupon = None
-        else:
-            coupon = None
 
         product_ids = [i['product_id'] for i in items_data]
         products = {
@@ -115,7 +100,6 @@ class CreateOrderSerializer(serializers.Serializer):
         order = Order.objects.create(
             user=user,
             guest_email=guest_email if not user else '',
-            coupon_code=coupon_code,
             **{k: validated_data[k] for k in
                ('shipping_address', 'shipping_city', 'shipping_country', 'shipping_phone', 'notes')},
         )
@@ -148,16 +132,6 @@ class CreateOrderSerializer(serializers.Serializer):
             # Trigger low-stock alert
             if product.stock <= product.low_stock_threshold:
                 _send_low_stock_alert(product)
-
-        # Apply coupon after subtotal is computed
-        if coupon:
-            subtotal = sum(
-                p.price * next(i['quantity'] for i in items_data if i['product_id'] == pid)
-                for pid, p in products.items()
-            )
-            order.discount = coupon.calculate_discount(subtotal)
-            coupon.times_used += 1
-            coupon.save(update_fields=['times_used'])
 
         order.calculate_totals()
         return order

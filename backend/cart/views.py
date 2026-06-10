@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from .models import CartItem
 from .serializers import CartItemSerializer, CartSyncSerializer
+from alerts.services import notify_user, frontend_link
 
 
 @extend_schema_view(
@@ -34,7 +35,27 @@ class CartViewSet(viewsets.ModelViewSet):
             existing.quantity += quantity
             existing.save(update_fields=['quantity', 'updated_at'])
         else:
-            serializer.save(user=self.request.user)
+            item = serializer.save(user=self.request.user)
+            notify_user(
+                self.request.user,
+                'system',
+                'Added to cart',
+                f'"{product.name}" was added to your cart.',
+                frontend_link('/cart'),
+            )
+
+    def destroy(self, request, *args, **kwargs):
+        item = self.get_object()
+        product_name = item.product.name
+        response = super().destroy(request, *args, **kwargs)
+        notify_user(
+            request.user,
+            'system',
+            'Removed from cart',
+            f'"{product_name}" was removed from your cart.',
+            frontend_link('/cart'),
+        )
+        return response
 
     @extend_schema(tags=['Cart'])
     @action(detail=False, methods=['post'], url_path='sync')
@@ -65,5 +86,14 @@ class CartViewSet(viewsets.ModelViewSet):
     @extend_schema(tags=['Cart'])
     @action(detail=False, methods=['delete'], url_path='clear')
     def clear(self, request):
+        count = CartItem.objects.filter(user=request.user).count()
         CartItem.objects.filter(user=request.user).delete()
+        if count:
+            notify_user(
+                request.user,
+                'system',
+                'Cart cleared',
+                f'{count} item(s) were removed from your cart.',
+                frontend_link('/cart'),
+            )
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -8,6 +8,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import requests
 import logging
 
+from alerts.services import notify_user, frontend_link
+
 logger = logging.getLogger(__name__)
 User = get_user_model()
 
@@ -104,6 +106,13 @@ def google_auth(request):
 
             is_new_user = True
             logger.info(f"Created new user via Google: {email}")
+            notify_user(
+                user,
+                'system',
+                'Welcome to NEXSHOP!',
+                'Your Google account is connected. Start exploring our catalog!',
+                frontend_link('/products'),
+            )
 
         # Generate JWT tokens
         tokens = get_tokens_for_user(user)

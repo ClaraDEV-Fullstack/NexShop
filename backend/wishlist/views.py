@@ -8,6 +8,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from .models import WishlistItem
 from .serializers import WishlistItemSerializer, AddToWishlistSerializer
 from products.models import Product
+from alerts.services import notify_user, frontend_link
 
 
 @extend_schema_view(
@@ -37,6 +38,13 @@ class WishlistViewSet(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             item = serializer.save()
+            notify_user(
+                request.user,
+                'promo',
+                'Added to wishlist',
+                f'"{item.product.name}" was saved to your wishlist.',
+                frontend_link('/wishlist'),
+            )
             return Response(
                 WishlistItemSerializer(item).data,
                 status=status.HTTP_201_CREATED
@@ -62,13 +70,28 @@ class WishlistViewSet(viewsets.ModelViewSet):
         ).first()
 
         if wishlist_item:
+            product_name = wishlist_item.product.name
             wishlist_item.delete()
+            notify_user(
+                request.user,
+                'promo',
+                'Removed from wishlist',
+                f'"{product_name}" was removed from your wishlist.',
+                frontend_link('/wishlist'),
+            )
             return Response({
                 'action': 'removed',
                 'message': 'Product removed from wishlist'
             })
         else:
             item = WishlistItem.objects.create(user=request.user, product=product)
+            notify_user(
+                request.user,
+                'promo',
+                'Added to wishlist',
+                f'"{product.name}" was saved to your wishlist.',
+                frontend_link('/wishlist'),
+            )
             return Response({
                 'action': 'added',
                 'message': 'Product added to wishlist',
@@ -91,6 +114,14 @@ class WishlistViewSet(viewsets.ModelViewSet):
     def clear(self, request):
         """Clear entire wishlist"""
         count = WishlistItem.objects.filter(user=request.user).delete()[0]
+        if count:
+            notify_user(
+                request.user,
+                'promo',
+                'Wishlist cleared',
+                f'{count} item(s) were removed from your wishlist.',
+                frontend_link('/wishlist'),
+            )
         return Response({
             'message': f'Removed {count} items from wishlist'
         })

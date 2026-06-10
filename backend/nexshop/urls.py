@@ -107,9 +107,6 @@ urlpatterns = [
     # Cart - /api/cart/
     path('api/', include('cart.urls')),
 
-    # Coupons - /api/coupons/
-    path('api/', include('coupons.urls')),
-
     # =============================================
     # API DOCUMENTATION
     # =============================================

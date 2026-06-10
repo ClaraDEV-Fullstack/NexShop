@@ -18,7 +18,7 @@ import {
     HiGift
 } from 'react-icons/hi';
 import { selectCartItems, selectCartTotal, clearCart } from '../store/cartSlice';
-import { ordersAPI, couponsAPI } from '../api/api';
+import { ordersAPI } from '../api/api';
 import { getImageUrl, formatPrice } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
@@ -38,35 +38,12 @@ const Checkout = () => {
         notes: '',
     });
 
-    // Coupon state
-    const [couponInput, setCouponInput] = useState('');
-    const [couponApplied, setCouponApplied] = useState(null); // { code, discount_amount }
-    const [couponLoading, setCouponLoading] = useState(false);
-
-    // Calculate totals
-    const discount = couponApplied ? parseFloat(couponApplied.discount_amount) : 0;
     const FREE_SHIPPING_THRESHOLD = 50000;
     const SHIPPING_COST = 3500;
     const TAX_RATE = 0.1925;
-    const shippingCost = (cartTotal - discount) >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-    const tax = (cartTotal - discount) * TAX_RATE;
-    const total = cartTotal - discount + shippingCost + tax;
-
-    const handleApplyCoupon = async () => {
-        if (!couponInput.trim()) return;
-        setCouponLoading(true);
-        try {
-            const res = await couponsAPI.validate(couponInput.trim(), cartTotal);
-            setCouponApplied({ code: res.data.code, discount_amount: res.data.discount_amount });
-            toast.success(`Coupon applied — saving ${res.data.discount_amount}!`);
-        } catch (err) {
-            const msg = err.response?.data?.code?.[0] || err.response?.data?.non_field_errors?.[0] || 'Invalid coupon.';
-            toast.error(msg);
-            setCouponApplied(null);
-        } finally {
-            setCouponLoading(false);
-        }
-    };
+    const shippingCost = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const tax = cartTotal * TAX_RATE;
+    const total = cartTotal + shippingCost + tax;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -92,7 +69,6 @@ const Checkout = () => {
         try {
             const orderData = {
                 ...formData,
-                coupon_code: couponApplied?.code || '',
                 items: cartItems.map(item => ({
                     product_id: item.id,
                     quantity: item.quantity,
@@ -355,7 +331,7 @@ const Checkout = () => {
                                     ) : (
                                         <>
                                             <HiLockClosed className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
-                                            <span>Passer la commande • {formatPrice(total)}</span>
+                                            <span>Place Order • {formatPrice(total)}</span>
                                         </>
                                     )}
                                 </button>
@@ -424,66 +400,23 @@ const Checkout = () => {
                                 ))}
                             </div>
 
-                            {/* Coupon code */}
-                            <div className="border-t border-gray-200 pt-3 sm:pt-4">
-                                <div className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        value={couponInput}
-                                        onChange={e => setCouponInput(e.target.value.toUpperCase())}
-                                        placeholder="Coupon code"
-                                        className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={handleApplyCoupon}
-                                        disabled={couponLoading || !couponInput.trim()}
-                                        className="px-3 py-2 text-sm font-medium bg-primary-600 hover:bg-primary-700 text-white rounded-lg disabled:opacity-50"
-                                    >
-                                        {couponLoading ? '...' : 'Apply'}
-                                    </button>
-                                </div>
-                                {couponApplied && (
-                                    <div className="flex items-center justify-between mt-2 px-2 py-1.5 bg-green-50 border border-green-200 rounded-lg text-xs">
-                                        <span className="text-green-700 font-medium">
-                                            {couponApplied.code} applied!
-                                        </span>
-                                        <button
-                                            type="button"
-                                            onClick={() => { setCouponApplied(null); setCouponInput(''); }}
-                                            className="text-red-500 hover:text-red-700 ml-2"
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Divider */}
                             <div className="border-t border-gray-200 pt-3 sm:pt-4 space-y-2 sm:space-y-2.5 md:space-y-3">
                                 {/* Subtotal */}
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">
                                     <span>Subtotal</span>
                                     <span className="font-medium">{formatPrice(cartTotal)}</span>
                                 </div>
-                                {discount > 0 && (
-                                    <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-green-600">
-                                        <span>Discount ({couponApplied.code})</span>
-                                        <span className="font-medium">-{formatPrice(discount)}</span>
-                                    </div>
-                                )}
-
                                 {/* Shipping */}
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">
                                     <span>Shipping</span>
                                     <span className={`font-medium ${shippingCost === 0 ? 'text-green-600' : ''}`}>
-                                        {shippingCost === 0 ? 'GRATUIT' : formatPrice(SHIPPING_COST)}
+                                        {shippingCost === 0 ? 'Free' : formatPrice(SHIPPING_COST)}
                                     </span>
                                 </div>
 
                                 {/* Tax */}
                                 <div className="flex justify-between text-[11px] sm:text-xs md:text-sm text-gray-600">
-                                    <span>TVA (19,25%)</span>
+                                    <span>Tax (19.25%)</span>
                                     <span className="font-medium">{formatPrice(tax)}</span>
                                 </div>
 
@@ -493,7 +426,7 @@ const Checkout = () => {
                                         <div className="flex items-start gap-1.5 sm:gap-2">
                                             <HiTruck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 mt-0.5 flex-shrink-0" />
                                             <p className="text-[10px] sm:text-xs text-amber-700">
-                                                Ajoutez encore <span className="font-bold">{formatPrice(FREE_SHIPPING_THRESHOLD - cartTotal)}</span> pour la livraison gratuite !
+                                                Add <span className="font-bold">{formatPrice(FREE_SHIPPING_THRESHOLD - cartTotal)}</span> more for free shipping!
                                             </p>
                                         </div>
                                         {/* Progress bar */}

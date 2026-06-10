@@ -45,6 +45,9 @@ class Payment(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     payment_method = models.CharField(max_length=20, choices=METHOD_CHOICES, default='unknown')
 
+    payer_name = models.CharField(max_length=120, blank=True, default='')
+    payer_phone = models.CharField(max_length=20, blank=True, default='')
+
     error_message = models.TextField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

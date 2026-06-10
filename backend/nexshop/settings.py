@@ -83,7 +83,6 @@ INSTALLED_APPS = [
     'reviews',
     'wishlist',
     'alerts',
-    'coupons',
     'cart',
     'config',
 ]
@@ -342,12 +341,33 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@nexshop.com')
 
-# Fallback to console backend if email not configured
-if not EMAIL_HOST_USER and DEBUG:
+# Fallback to console backend only when no real provider is configured
+_has_email_provider = bool(os.getenv('BREVO_API_KEY') or os.getenv('EMAIL_HOST_USER'))
+if not _has_email_provider and DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    print("WARNING: EMAIL_HOST_USER not set - emails will print to console")
-elif DEBUG:
-    print(f"Email configured for: {EMAIL_HOST_USER}")
+    print('WARNING: No BREVO_API_KEY or EMAIL_HOST_USER — emails print to console only')
+elif os.getenv('BREVO_API_KEY'):
+    print('Email configured via Brevo API')
+elif EMAIL_HOST_USER:
+    print(f'Email configured via SMTP: {EMAIL_HOST_USER}')
+
+# =============================================================================
+# PAYMENTS — CinetPay (live) or mock (portfolio / local demo)
+# =============================================================================
+PAYMENT_MODE = os.getenv('PAYMENT_MODE', 'mock').lower()
+CINETPAY_API_KEY = os.getenv('CINETPAY_API_KEY', '')
+CINETPAY_SITE_ID = os.getenv('CINETPAY_SITE_ID', '')
+CINETPAY_CURRENCY = os.getenv('CINETPAY_CURRENCY', 'XOF')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+BACKEND_URL = os.getenv('BACKEND_URL', 'http://localhost:8000')
+
+if DEBUG:
+    if PAYMENT_MODE == 'mock':
+        print('Payment mode: MOCK (no real charges — portfolio demo)')
+    elif CINETPAY_API_KEY and CINETPAY_SITE_ID:
+        print('Payment mode: LIVE (CinetPay configured)')
+    else:
+        print('WARNING: PAYMENT_MODE=live but CinetPay credentials are missing')
 
 # =============================================================================
 # GOOGLE OAUTH CONFIGURATION

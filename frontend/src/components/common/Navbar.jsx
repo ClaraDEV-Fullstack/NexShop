@@ -28,6 +28,7 @@ import { logoutUser } from '../../store/authSlice';
 import { useTheme } from '../../context/ThemeContext';
 import SmartSearch from '../search/SmartSearch';
 import toast from 'react-hot-toast';
+import { notificationsAPI } from '../../api/api';
 
 
 // Helper function to get user avatar (Cloudinary compatible)
@@ -172,7 +173,34 @@ const Navbar = () => {
         setIsUserMenuOpen(false);
     };
 
-    const notificationCount = 3;
+    const [notificationCount, setNotificationCount] = useState(0);
+
+    const fetchNotificationCount = async () => {
+        if (!isAuthenticated) {
+            setNotificationCount(0);
+            return;
+        }
+        try {
+            const response = await notificationsAPI.getUnreadCount();
+            setNotificationCount(response.data?.count ?? 0);
+        } catch {
+            // silently ignore
+        }
+    };
+
+    useEffect(() => {
+        fetchNotificationCount();
+        if (!isAuthenticated) return undefined;
+
+        const interval = setInterval(fetchNotificationCount, 60000);
+        const onRefresh = () => fetchNotificationCount();
+        window.addEventListener('notifications:refresh', onRefresh);
+
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener('notifications:refresh', onRefresh);
+        };
+    }, [isAuthenticated]);
 
     return (
         <>

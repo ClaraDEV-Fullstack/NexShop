@@ -1,7 +1,4 @@
-import hashlib
-import hmac
 import logging
-import json
 
 from django.conf import settings
 from django.utils import timezone
@@ -13,13 +10,19 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema, extend_schema_view
 
+from alerts.services import notify_user, frontend_link
 from .models import Payment
 from .serializers import PaymentSerializer, InitPaymentSerializer
-from .cinetpay import init_payment, verify_payment
+from .cinetpay import init_payment, verify_payment, is_mock_mode
 from orders.models import Order
 from orders.emails import send_payment_confirmation_email
 
 logger = logging.getLogger(__name__)
+
+PAYMENT_METHOD_LABELS = {
+    'orange_money': 'Orange Money',
+    'mtn_money': 'MTN Mobile Money',
+}
 
 
 @extend_schema_view(
@@ -36,30 +39,55 @@ class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
         return Payment.objects.filter(user=self.request.user)
 
     @extend_schema(tags=['Payments'])
+    @action(detail=False, methods=['get'], url_path='config', permission_classes=[permissions.AllowAny])
+    def config(self, request):
+        """Public payment configuration."""
+        return Response({
+            'payment_mode': 'mock' if is_mock_mode() else 'live',
+            'currency': getattr(settings, 'CINETPAY_CURRENCY', 'XOF'),
+            'providers': [
+                {'id': 'orange_money', 'label': 'Orange Money'},
+                {'id': 'mtn_money', 'label': 'MTN Mobile Money'},
+            ],
+        })
+
+    @extend_schema(tags=['Payments'])
     @action(detail=False, methods=['post'], url_path='initiate')
     def initiate(self, request):
         """
-        Initiate a CinetPay payment for an order.
+        Process a mobile money payment (Orange Money or MTN MoMo).
 
-        Returns a `payment_url` the frontend should redirect the user to.
-        Supports all channels: Visa/Mastercard, Orange Money, MTN MoMo, Wave.
+        In mock/portfolio mode, completes instantly and returns payment details
+        for an on-page success modal. In live mode, returns a CinetPay redirect URL.
         """
         serializer = InitPaymentSerializer(data=request.data, context={'request': request})
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         order_id = serializer.validated_data['order_id']
-        channels = serializer.validated_data.get('channels', 'ALL')
+        payment_method = serializer.validated_data['payment_method']
+        phone_number = serializer.validated_data['phone_number']
+        payer_name = serializer.validated_data.get('payer_name', '').strip()
         order = Order.objects.get(id=order_id)
+
+        if not payer_name:
+            payer_name = (
+                f"{request.user.first_name} {request.user.last_name}".strip()
+                or request.user.username
+            )
 
         frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
         backend_url = getattr(settings, 'BACKEND_URL', 'http://localhost:8000')
+        currency = getattr(settings, 'CINETPAY_CURRENCY', 'XOF')
 
         result = init_payment(
             order=order,
             return_url=f"{frontend_url}/payment/success?order_id={order.id}",
             notify_url=f"{backend_url}/api/payments/webhook/",
-            channels=channels,
+            channels='MOBILE_MONEY',
+            payment_method=payment_method,
+            payer_name=payer_name,
+            phone_number=phone_number,
         )
 
         if not result['success']:
@@ -73,24 +101,43 @@ class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
             defaults={
                 'user': request.user,
                 'amount': order.total,
-                'currency': getattr(settings, 'CINETPAY_CURRENCY', 'XOF'),
+                'currency': currency,
                 'transaction_id': result['transaction_id'],
-                'payment_url': result['payment_url'],
+                'payment_url': result.get('payment_url'),
+                'payment_method': payment_method,
+                'payer_name': payer_name,
+                'payer_phone': phone_number,
                 'status': 'processing',
             },
         )
 
-        return Response({
-            'payment_url': result['payment_url'],
+        if result.get('mock'):
+            email_sent = _mark_payment_successful(payment)
+        else:
+            email_sent = False
+
+        response_data = {
+            'success': True,
+            'order_id': order.id,
+            'amount': str(order.total),
+            'currency': currency,
             'transaction_id': result['transaction_id'],
             'reference': payment.reference,
-            'order_id': order.id,
-        })
+            'payment_method': payment_method,
+            'payment_method_label': PAYMENT_METHOD_LABELS.get(payment_method, payment_method),
+            'mock': bool(result.get('mock')),
+            'email_sent': email_sent,
+        }
+
+        if result.get('payment_url') and not result.get('mock'):
+            response_data['payment_url'] = result['payment_url']
+
+        return Response(response_data)
 
     @extend_schema(tags=['Payments'])
     @action(detail=False, methods=['post'], url_path='verify')
     def verify(self, request):
-        """Manually verify a payment by transaction ID (called from frontend on return)."""
+        """Manually verify a payment by transaction ID."""
         transaction_id = request.data.get('transaction_id')
         if not transaction_id:
             return Response({'error': 'transaction_id required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -122,10 +169,7 @@ class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CinetPayWebhookView(APIView):
-    """
-    Webhook endpoint called by CinetPay after payment completion (IPN).
-    CinetPay posts form data; cpm_result='00' means success.
-    """
+    """Webhook endpoint called by CinetPay after payment completion (IPN)."""
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -134,14 +178,16 @@ class CinetPayWebhookView(APIView):
         result_code = str(data.get('cpm_result', ''))
         trans_status = data.get('cpm_trans_status', '')
 
-        logger.info('CinetPay IPN received: transaction=%s result=%s status=%s',
-                    transaction_id, result_code, trans_status)
+        logger.info(
+            'CinetPay IPN received: transaction=%s result=%s status=%s',
+            transaction_id, result_code, trans_status,
+        )
 
         try:
             payment = Payment.objects.get(transaction_id=transaction_id)
         except Payment.DoesNotExist:
             logger.warning('CinetPay IPN: unknown transaction_id %s', transaction_id)
-            return Response({'status': 'ok'})  # Acknowledge to CinetPay
+            return Response({'status': 'ok'})
 
         if result_code == '00' and trans_status == 'ACCEPTED':
             if payment.status != 'successful':
@@ -153,11 +199,12 @@ class CinetPayWebhookView(APIView):
             payment.save(update_fields=['status', 'error_message', 'updated_at'])
             payment.order.payment_status = 'failed'
             payment.order.save(update_fields=['payment_status', 'updated_at'])
+            _notify_payment_failed(payment)
 
         return Response({'status': 'ok'})
 
 
-def _mark_payment_successful(payment: Payment):
+def _mark_payment_successful(payment: Payment) -> bool:
     payment.status = 'successful'
     payment.paid_at = timezone.now()
     payment.save(update_fields=['status', 'paid_at', 'payment_method', 'updated_at'])
@@ -167,10 +214,32 @@ def _mark_payment_successful(payment: Payment):
     order.status = 'processing'
     order.save(update_fields=['payment_status', 'status', 'updated_at'])
 
+    email_sent = False
     try:
-        send_payment_confirmation_email(order)
+        email_sent = send_payment_confirmation_email(order, payment=payment)
     except Exception as exc:
         logger.error('Failed to send payment confirmation email for order #%s: %s', order.id, exc)
+
+    method_label = PAYMENT_METHOD_LABELS.get(payment.payment_method, 'Mobile Money')
+    notify_user(
+        payment.user,
+        'payment',
+        f'Payment confirmed — Order #{order.id}',
+        f'Your {method_label} payment of {order.total} {payment.currency} was successful.',
+        frontend_link(f'/orders/{order.id}'),
+    )
+    return email_sent
+
+
+def _notify_payment_failed(payment: Payment):
+    order = payment.order
+    notify_user(
+        payment.user,
+        'payment',
+        f'Payment failed — Order #{order.id}',
+        payment.error_message or 'Your payment could not be processed. Please try again.',
+        frontend_link(f'/payment/{order.id}'),
+    )
 
 
 def _detect_payment_method(payment: Payment, ipn_data: dict):

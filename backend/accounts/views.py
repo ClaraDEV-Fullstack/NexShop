@@ -14,6 +14,7 @@ from .serializers import (
     UserSerializer, RegisterSerializer, ChangePasswordSerializer,
     PasswordResetRequestSerializer, PasswordResetConfirmSerializer,
 )
+from alerts.services import notify_user, frontend_link
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -24,6 +25,19 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        notify_user(
+            user,
+            'system',
+            'Welcome to NEXSHOP!',
+            'Your account has been created. Explore products and start shopping!',
+            frontend_link('/products'),
+        )
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @extend_schema(tags=['Accounts'])
@@ -45,6 +59,13 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            notify_user(
+                request.user,
+                'system',
+                'Profile updated',
+                'Your account details have been saved successfully.',
+                frontend_link('/dashboard/settings'),
+            )
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -72,6 +93,13 @@ class AvatarUploadView(APIView):
 
         request.user.avatar = avatar_file
         request.user.save()
+        notify_user(
+            request.user,
+            'system',
+            'Profile photo updated',
+            'Your avatar has been updated.',
+            frontend_link('/dashboard/settings'),
+        )
         return Response(UserSerializer(request.user, context={'request': request}).data)
 
     def delete(self, request):
@@ -90,6 +118,13 @@ class ChangePasswordView(APIView):
         serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
+            notify_user(
+                request.user,
+                'system',
+                'Password changed',
+                'Your password was updated successfully. If this was not you, contact support immediately.',
+                frontend_link('/dashboard/settings'),
+            )
             return Response({'message': 'Password changed successfully.'})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
     HiOutlineBell,
@@ -10,7 +10,7 @@ import {
     HiOutlineSpeakerphone,
     HiOutlineArrowLeft
 } from 'react-icons/hi';
-import api from '../../api/api';
+import { notificationsAPI } from '../../api/api';
 import Skeleton from '../../components/ui/Skeleton';
 import toast from 'react-hot-toast';
 
@@ -104,10 +104,10 @@ const DashboardNotifications = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isProcessing, setIsProcessing] = useState(false);
 
-    const fetchNotifications = async () => {
+    const fetchNotifications = useCallback(async () => {
         try {
             setIsLoading(true);
-            const response = await api.get('/notifications/');
+            const response = await notificationsAPI.getAll();
             setNotifications(response.data.results || response.data || []);
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
@@ -115,20 +115,21 @@ const DashboardNotifications = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchNotifications();
-    }, []);
+    }, [fetchNotifications]);
 
     const markAllRead = async () => {
         if (isProcessing) return;
 
         try {
             setIsProcessing(true);
-            await api.post('/notifications/mark_all_read/');
+            await notificationsAPI.markAllRead();
             setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
             toast.success('All notifications marked as read');
+            window.dispatchEvent(new CustomEvent('notifications:refresh'));
         } catch (error) {
             toast.error('Failed to mark notifications as read');
         } finally {
@@ -138,10 +139,11 @@ const DashboardNotifications = () => {
 
     const markAsRead = async (id) => {
         try {
-            await api.patch(`/notifications/${id}/mark_read/`);
+            await notificationsAPI.markRead(id);
             setNotifications(prev => prev.map(n =>
                 n.id === id ? { ...n, is_read: true } : n
             ));
+            window.dispatchEvent(new CustomEvent('notifications:refresh'));
         } catch (error) {
             console.error('Failed to mark as read:', error);
             toast.error('Failed to mark notification as read');
@@ -150,9 +152,10 @@ const DashboardNotifications = () => {
 
     const deleteNotification = async (id) => {
         try {
-            await api.delete(`/notifications/${id}/`);
+            await notificationsAPI.delete(id);
             setNotifications(prev => prev.filter(n => n.id !== id));
             toast.success('Notification deleted');
+            window.dispatchEvent(new CustomEvent('notifications:refresh'));
         } catch (error) {
             toast.error('Failed to delete notification');
         }
@@ -163,9 +166,10 @@ const DashboardNotifications = () => {
 
         try {
             setIsProcessing(true);
-            await api.delete('/notifications/clear_all/');
+            await notificationsAPI.clearAll();
             setNotifications([]);
             toast.success('All notifications cleared');
+            window.dispatchEvent(new CustomEvent('notifications:refresh'));
         } catch (error) {
             toast.error('Failed to clear notifications');
         } finally {

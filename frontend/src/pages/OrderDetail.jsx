@@ -487,7 +487,7 @@ const OrderDetail = () => {
                                     <div className="flex justify-between text-sm">
                                         <span className="text-gray-500">Shipping</span>
                                         <span className={parseFloat(order.shipping_cost) === 0 ? 'text-emerald-600 font-semibold' : 'text-gray-900 font-medium'}>
-                                            {parseFloat(order.shipping_cost) === 0 ? 'Gratuit' : formatPrice(order.shipping_cost)}
+                                            {parseFloat(order.shipping_cost) === 0 ? 'Free' : formatPrice(order.shipping_cost)}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-sm">

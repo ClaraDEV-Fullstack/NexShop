@@ -373,7 +373,7 @@ const ProductDetail = () => {
                                 <>
                                     <span className="text-base sm:text-lg md:text-xl text-gray-400 line-through">{formatPrice(product.compare_price)}</span>
                                     <span className="text-[10px] sm:text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-                                        Économie {formatPrice(product.compare_price - product.price)}
+                                        Save {formatPrice(product.compare_price - product.price)}
                                     </span>
                                 </>
                             )}

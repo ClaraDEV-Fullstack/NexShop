@@ -7,6 +7,7 @@ from .models import Order
 from .serializers import OrderSerializer, CreateOrderSerializer
 from products.models import Product
 from .emails import send_order_confirmation_email
+from alerts.services import notify_user, frontend_link
 import logging
 
 logger = logging.getLogger(__name__)
@@ -73,6 +74,14 @@ class OrderViewSet(viewsets.ModelViewSet):
             except Exception as exc:
                 logger.error('Failed to send order confirmation email for #%s: %s', order.id, exc)
 
+            notify_user(
+                request.user,
+                'order',
+                f'Order #{order.id} placed',
+                f'Your order totaling {order.total} XOF has been placed. Complete payment to confirm.',
+                frontend_link(f'/orders/{order.id}'),
+            )
+
             return Response(
                 OrderSerializer(order).data,
                 status=status.HTTP_201_CREATED
@@ -91,6 +100,14 @@ class OrderViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        notify_user(
+            request.user,
+            'order',
+            f'Order #{order.id} cancelled',
+            'Your order has been cancelled and inventory has been restored.',
+            frontend_link('/orders'),
+        )
+
         return Response(
             {'detail': 'Order cancelled successfully.'},
             status=status.HTTP_200_OK
@@ -108,6 +125,14 @@ class OrderViewSet(viewsets.ModelViewSet):
                 {'detail': f'Cannot cancel order with status "{order.get_status_display()}".'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+        notify_user(
+            request.user,
+            'order',
+            f'Order #{order.id} cancelled',
+            'Your order has been cancelled and inventory has been restored.',
+            frontend_link('/orders'),
+        )
 
         return Response(
             OrderSerializer(order).data,

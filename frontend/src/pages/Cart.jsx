@@ -226,11 +226,11 @@ const Cart = () => {
                                                 Shipping
                                             </span>
                                             <span className={`font-medium ${shippingCost === 0 ? 'text-green-600' : 'text-gray-800'}`}>
-                                                {shippingCost === 0 ? 'Gratuit' : formatPrice(SHIPPING_COST)}
+                                                {shippingCost === 0 ? 'Free' : formatPrice(SHIPPING_COST)}
                                             </span>
                                         </div>
                                         <div className="flex justify-between text-xs sm:text-sm text-gray-600">
-                                            <span>TVA (19,25%)</span>
+                                            <span>Tax (19.25%)</span>
                                             <span className="font-medium text-gray-800">{formatPrice(tax)}</span>
                                         </div>
 
@@ -238,8 +238,8 @@ const Cart = () => {
                                         {cartTotal < FREE_SHIPPING_THRESHOLD && (
                                             <div className="bg-primary-50 rounded-lg sm:rounded-xl p-3 sm:p-4 mt-3 sm:mt-4">
                                                 <div className="flex items-center justify-between text-[10px] sm:text-xs md:text-sm mb-1.5 sm:mb-2">
-                                                    <span className="text-primary-700 font-medium">Livraison gratuite dès 50 000 FCFA</span>
-                                                    <span className="text-primary-600">encore {formatPrice(FREE_SHIPPING_THRESHOLD - cartTotal)}</span>
+                                                    <span className="text-primary-700 font-medium">Free shipping on orders over 50,000 FCFA</span>
+                                                    <span className="text-primary-600">{formatPrice(FREE_SHIPPING_THRESHOLD - cartTotal)} to go</span>
                                                 </div>
                                                 <div className="h-1.5 sm:h-2 bg-primary-200 rounded-full overflow-hidden">
                                                     <div

@@ -344,7 +344,7 @@ const Contact = () => {
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                             <div>
                                 <p className="font-semibold text-gray-900 text-sm">NEXSHOP</p>
-                                <p className="text-xs text-gray-600">Rue de la Joie, Akwa, Douala</p>
+                                <p className="text-xs text-gray-600">Joy Street, Akwa, Douala</p>
                             </div>
                             <div className="flex flex-wrap gap-2 md:gap-3 text-xs">
                                 <a href="tel:+237683669723" className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700">

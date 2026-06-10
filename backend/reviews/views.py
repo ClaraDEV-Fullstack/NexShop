@@ -6,6 +6,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from .models import Review
 from .serializers import ReviewSerializer, CreateReviewSerializer, ProductReviewStatsSerializer
 from products.models import Product
+from alerts.services import notify_user, frontend_link
 
 
 @extend_schema_view(
@@ -47,7 +48,32 @@ class ReviewViewSet(viewsets.ModelViewSet):
         return context
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        review = serializer.save(user=self.request.user)
+        notify_user(
+            self.request.user,
+            'system',
+            'Review submitted',
+            f'Your review for "{review.product.name}" has been submitted and is pending approval.',
+            frontend_link(f'/products/{review.product.slug}'),
+        )
+
+    def destroy(self, request, *args, **kwargs):
+        review = self.get_object()
+        if review.user != request.user:
+            return Response(
+                {'detail': 'You can only delete your own reviews'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        product_name = review.product.name
+        response = super().destroy(request, *args, **kwargs)
+        notify_user(
+            request.user,
+            'system',
+            'Review deleted',
+            f'Your review for "{product_name}" was removed.',
+            frontend_link('/dashboard'),
+        )
+        return response
 
     def update(self, request, *args, **kwargs):
         """Only allow users to update their own reviews"""
@@ -58,16 +84,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN
             )
         return super().update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        """Only allow users to delete their own reviews"""
-        review = self.get_object()
-        if review.user != request.user:
-            return Response(
-                {'detail': 'You can only delete your own reviews'},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        return super().destroy(request, *args, **kwargs)
 
     @extend_schema(tags=['Reviews'])
     @action(detail=False, methods=['get'])

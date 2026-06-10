@@ -52,10 +52,22 @@ services:
       SUPABASE_BUCKET: ${SUPABASE_BUCKET:-media}
       # Google OAuth — set in .env file
       GOOGLE_OAUTH_CLIENT_ID: ${GOOGLE_OAUTH_CLIENT_ID:-}
-      # CinetPay — set in .env file
+      # Payments — mock for local/portfolio demo; set live + CinetPay keys for real gateway
+      PAYMENT_MODE: ${PAYMENT_MODE:-mock}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      BACKEND_URL: ${BACKEND_URL:-http://localhost:8000}
       CINETPAY_API_KEY: ${CINETPAY_API_KEY:-}
       CINETPAY_SITE_ID: ${CINETPAY_SITE_ID:-}
       CINETPAY_CURRENCY: ${CINETPAY_CURRENCY:-XOF}
+      # Email — Brevo (preferred) or SMTP fallback
+      BREVO_API_KEY: ${BREVO_API_KEY:-}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL:-noreply@nexshop.com}
+      DEFAULT_FROM_NAME: ${DEFAULT_FROM_NAME:-NEXSHOP}
+      EMAIL_HOST: ${EMAIL_HOST:-smtp-relay.brevo.com}
+      EMAIL_PORT: ${EMAIL_PORT:-587}
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS:-True}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
     networks:
       - app_network
 

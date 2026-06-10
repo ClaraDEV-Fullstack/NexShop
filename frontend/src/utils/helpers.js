@@ -83,7 +83,7 @@ export const getImageUrl = (imageData) => {
 export const formatPrice = (price) => {
     if (price === null || price === undefined) return '0 FCFA';
     const amount = Math.round(parseFloat(price));
-    return amount.toLocaleString('fr-FR') + ' FCFA';
+    return amount.toLocaleString('en-US') + ' FCFA';
 };
 
 // Format date

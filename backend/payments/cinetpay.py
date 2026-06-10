@@ -23,20 +23,44 @@ def _site_id():
     return getattr(settings, 'CINETPAY_SITE_ID', '')
 
 
-def init_payment(order, return_url: str, notify_url: str, channels: str = 'ALL') -> dict:
+def is_mock_mode() -> bool:
+    return getattr(settings, 'PAYMENT_MODE', 'mock').lower() == 'mock'
+
+
+def init_payment(
+    order,
+    return_url: str,
+    notify_url: str,
+    channels: str = 'MOBILE_MONEY',
+    payment_method: str = 'orange_money',
+    payer_name: str = '',
+    phone_number: str = '',
+) -> dict:
     """
     Initialise a CinetPay payment and return the redirect URL.
 
     channels options:
-      'ALL'          – all available (card + mobile money)
-      'MOBILE_MONEY' – Orange Money, MTN MoMo, Wave, Moov only
-      'CREDIT_CARD'  – Visa / Mastercard only
+      'MOBILE_MONEY' – Orange Money, MTN MoMo (portfolio default)
+
+    payment_method: 'orange_money' | 'mtn_money'
 
     Returns:
         {'success': True, 'payment_url': '...', 'transaction_id': '...'}
         {'success': False, 'error': '...'}
     """
     transaction_id = f"NSS-{order.id}-{uuid.uuid4().hex[:8].upper()}"
+
+    if is_mock_mode():
+        logger.info(
+            'Mock mobile money payment for order #%s via %s (%s)',
+            order.id, payment_method, phone_number,
+        )
+        return {
+            'success': True,
+            'transaction_id': transaction_id,
+            'mock': True,
+        }
+
     user = order.user
 
     payload = {
@@ -49,12 +73,12 @@ def init_payment(order, return_url: str, notify_url: str, channels: str = 'ALL')
         'notify_url': notify_url,
         'return_url': return_url,
         'channels': channels,
-        'lang': 'fr',
+        'lang': 'en',
         # Customer details (required for card payments)
-        'customer_name': user.first_name or user.username,
+        'customer_name': payer_name or user.first_name or user.username,
         'customer_surname': user.last_name or '',
         'customer_email': user.email,
-        'customer_phone_number': getattr(user, 'phone', '') or '',
+        'customer_phone_number': phone_number or getattr(user, 'phone', '') or '',
         'customer_address': order.shipping_address,
         'customer_city': order.shipping_city,
         'customer_country': order.shipping_country[:2].upper() if order.shipping_country else 'CI',
@@ -91,6 +115,14 @@ def verify_payment(transaction_id: str) -> dict:
         {'success': True, 'status': 'ACCEPTED'|'REFUSED'|..., 'data': {...}}
         {'success': False, 'error': '...'}
     """
+    if is_mock_mode():
+        return {
+            'success': True,
+            'accepted': True,
+            'status': 'ACCEPTED',
+            'data': {'transaction_id': transaction_id, 'mock': True},
+        }
+
     payload = {
         'apikey': _api_key(),
         'site_id': _site_id(),

@@ -148,10 +148,14 @@ export const wishlistAPI = {
 
 // Payments API
 export const paymentsAPI = {
-    // Initiate CinetPay payment — returns { payment_url, transaction_id }
-    initiate: (orderId, channels = 'ALL') =>
-        api.post('/payments/initiate/', { order_id: orderId, channels }),
-    // Verify payment after CinetPay redirect
+    getConfig: () => api.get('/payments/config/'),
+    initiate: ({ orderId, paymentMethod, phoneNumber, payerName }) =>
+        api.post('/payments/initiate/', {
+            order_id: orderId,
+            payment_method: paymentMethod,
+            phone_number: phoneNumber,
+            payer_name: payerName,
+        }),
     verify: (transactionId) =>
         api.post('/payments/verify/', { transaction_id: transactionId }),
     getAll: () => api.get('/payments/'),
@@ -159,9 +163,14 @@ export const paymentsAPI = {
     getByOrder: (orderId) => api.get(`/payments/order/${orderId}/`),
 };
 
-// Coupons API
-export const couponsAPI = {
-    validate: (code, subtotal) => api.post('/coupons/validate/', { code, subtotal }),
+// Notifications API
+export const notificationsAPI = {
+    getAll: () => api.get('/notifications/'),
+    getUnreadCount: () => api.get('/notifications/unread_count/'),
+    markRead: (id) => api.patch(`/notifications/${id}/mark_read/`),
+    markAllRead: () => api.post('/notifications/mark_all_read/'),
+    delete: (id) => api.delete(`/notifications/${id}/`),
+    clearAll: () => api.delete('/notifications/clear_all/'),
 };
 
 // Cart API

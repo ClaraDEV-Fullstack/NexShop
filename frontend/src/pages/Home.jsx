@@ -195,7 +195,7 @@ const Home = () => {
                                         color: '#79db8d',
                                         fontFamily: "'Hanken Grotesk', sans-serif"
                                     }}>
-                                    🚚 Livraison gratuite dès 50 000 FCFA
+                                    🚚 Free shipping on orders over 50,000 FCFA
                                 </span>
                             </motion.div>
 
@@ -217,8 +217,8 @@ const Home = () => {
                             <motion.p initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.18 }}
                                 className="text-sm sm:text-base max-w-md leading-relaxed"
                                 style={{ color: '#becabc', fontFamily: "'Hanken Grotesk', sans-serif" }}>
-                                Électronique, Mode, Beauté, Maison &amp; plus —
-                                prix imbattables, livraison rapide, paiement 100% sécurisé.
+                                Electronics, Fashion, Beauty, Home &amp; more —
+                                unbeatable prices, fast delivery, 100% secure checkout.
                             </motion.p>
 
                             {/* Category chips */}
@@ -226,9 +226,9 @@ const Home = () => {
                                 className="flex overflow-x-auto gap-2 py-1"
                                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                                 {[
-                                    { icon: HiLightningBolt, label: 'Électronique' },
-                                    { icon: HiTag,           label: 'Mode' },
-                                    { icon: HiSparkles,      label: 'Beauté' },
+                                    { icon: HiLightningBolt, label: 'Electronics' },
+                                    { icon: HiTag,           label: 'Fashion' },
+                                    { icon: HiSparkles,      label: 'Beauty' },
                                 ].map((chip, i) => (
                                     <Link key={i} to="/products"
                                         className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-opacity hover:opacity-80"
@@ -268,7 +268,7 @@ const Home = () => {
                                         fontFamily: "'Hanken Grotesk', sans-serif"
                                     }}>
                                     <HiTag className="w-5 h-5" />
-                                    Promotions
+                                    On Sale
                                 </Link>
                             </motion.div>
 
@@ -277,9 +277,9 @@ const Home = () => {
                                 className="grid grid-cols-3 gap-2 py-5 mt-2"
                                 style={{ borderTop: '1px solid rgba(63,73,63,0.35)', borderBottom: '1px solid rgba(63,73,63,0.35)' }}>
                                 {[
-                                    { value: '50K+', label: 'CLIENTS' },
-                                    { value: '40+',  label: 'CATÉGORIES', mid: true },
-                                    { value: '4.9★', label: 'NOTE' },
+                                    { value: '50K+', label: 'CUSTOMERS' },
+                                    { value: '40+',  label: 'CATEGORIES', mid: true },
+                                    { value: '4.9★', label: 'RATING' },
                                 ].map((s, i) => (
                                     <div key={i}
                                         className={s.mid ? 'text-center' : 'text-left md:text-center'}
@@ -333,7 +333,7 @@ const Home = () => {
                                     </div>
                                     <p className="text-sm font-black text-slate-900 leading-none">4.9</p>
                                     <p className="text-[9px] text-slate-500 font-bold leading-tight text-center mt-0.5">
-                                        2.5k+ avis<br/>vérifiés
+                                        2.5k+ verified<br/>reviews
                                     </p>
                                 </motion.div>
 
@@ -349,10 +349,10 @@ const Home = () => {
                                         }}>
                                         <p className="text-sm font-bold text-white leading-tight"
                                             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                                            Qualité Premium
+                                            Premium Quality
                                         </p>
                                         <p className="text-[11px] mt-0.5 leading-snug" style={{ color: '#becabc' }}>
-                                            Sélection rigoureuse des meilleures marques.
+                                            Carefully selected from the best brands.
                                         </p>
                                     </div>
                                     <Link to="/products"
