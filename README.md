@@ -134,12 +134,12 @@ docker-compose up --build
 
 | Service | Variable | Example |
 |---------|----------|---------|
-| **nexshop-api** | `ALLOWED_HOSTS` | `nexshop-api.onrender.com` |
-| | `BACKEND_URL` | `https://nexshop-api.onrender.com` |
-| | `CORS_ALLOWED_ORIGINS` | `https://nexshop-ui.onrender.com` |
-| | `CSRF_TRUSTED_ORIGINS` | `https://nexshop-ui.onrender.com` |
-| | `FRONTEND_URL` | `https://nexshop-ui.onrender.com` |
-| **nexshop-ui** | `VITE_API_URL` | `https://nexshop-api.onrender.com/api` |
+| **NexShop (backend)** | `ALLOWED_HOSTS` | `nexshop-shur.onrender.com` |
+| | `BACKEND_URL` | `https://nexshop-shur.onrender.com` |
+| | `CORS_ALLOWED_ORIGINS` | `https://nextshop-ui.onrender.com` |
+| | `CSRF_TRUSTED_ORIGINS` | `https://nextshop-ui.onrender.com,https://nexshop-shur.onrender.com` |
+| | `FRONTEND_URL` | `https://nextshop-ui.onrender.com` |
+| **NextShop_ui (frontend)** | `VITE_API_URL` | `https://nexshop-shur.onrender.com/api` |
 | | `VITE_GOOGLE_CLIENT_ID` | *(same as backend)* |
 
 3. Use **Static Site** for the frontend (included in blueprint) — assets are CDN-cached for faster loads.
