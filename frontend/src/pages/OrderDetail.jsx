@@ -183,7 +183,7 @@ const OrderDetail = () => {
 
             {/* Compact Header */}
             <div className="bg-white border-b border-gray-100 sticky top-0 z-40 shadow-sm">
-                <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
+                <div className="page-container">
                     <div className="py-3 sm:py-4">
                         <Link
                             to="/orders"
@@ -237,7 +237,7 @@ const OrderDetail = () => {
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
+            <div className="page-container py-4 sm:py-6">
                 {/* Status Alerts */}
                 {order.status === 'pending' && (
                     <div className="flex items-center gap-3 p-3 sm:p-4 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl mb-4 text-white shadow-lg shadow-emerald-500/20">

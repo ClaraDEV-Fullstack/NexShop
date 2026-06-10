@@ -141,7 +141,7 @@ const Checkout = () => {
         <div className="min-h-screen bg-gray-50">
             {/* Progress Bar */}
             <div className="bg-white border-b border-gray-100">
-                <div className="w-full px-3 sm:px-4 md:px-6 lg:w-[90%] max-w-7xl mx-auto py-2.5 sm:py-3 md:py-4">
+                <div className="page-container py-2.5 sm:py-3 md:py-4">
                     <div className="flex items-center justify-center gap-1 xs:gap-2 sm:gap-3 md:gap-4">
                         {[
                             { icon: HiShoppingCart, label: 'Cart', done: true },
@@ -179,7 +179,7 @@ const Checkout = () => {
                 </div>
             </div>
 
-            <div className="w-full px-3 sm:px-4 md:px-6 lg:w-[90%] max-w-7xl mx-auto py-4 sm:py-6 md:py-8">
+            <div className="page-container py-4 sm:py-6 md:py-8">
                 {/* Header */}
                 <div className="mb-4 sm:mb-6 md:mb-8">
                     <Link

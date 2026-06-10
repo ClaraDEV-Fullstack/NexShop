@@ -132,7 +132,7 @@ const DashboardOverview = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-white to-primary-50/30 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800">
-            <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-2 md:px-4 py-4 md:py-6 lg:py-8">
+            <div className="page-container py-4 md:py-6 lg:py-8">
                 <div className="space-y-4 md:space-y-6">
 
                     {/* Welcome Section - Compact */}

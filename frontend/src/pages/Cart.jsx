@@ -34,7 +34,7 @@ const Cart = () => {
                     <div className="absolute bottom-20 right-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-1000"></div>
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-4 py-12 sm:py-16 md:py-24 text-center">
+                <div className="page-container relative py-12 sm:py-16 md:py-24 text-center">
                     {/* Empty Cart Icon */}
                     <div className="relative inline-block mb-6 sm:mb-8">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-400 rounded-full blur-2xl opacity-20 scale-150"></div>
@@ -90,7 +90,7 @@ const Cart = () => {
                 <div className="absolute bottom-40 -right-20 w-64 sm:w-96 h-64 sm:h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 lg:py-12">
+            <div className="page-container relative py-4 sm:py-6 md:py-8 lg:py-12">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-10">
                     <div>

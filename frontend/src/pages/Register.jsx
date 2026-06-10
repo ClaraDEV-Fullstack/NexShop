@@ -5,7 +5,7 @@ import { HiMail, HiLockClosed, HiUser, HiEye, HiEyeOff, HiShieldCheck, HiCheck, 
 import { registerUser, clearError } from '../store/authSlice';
 import toast from 'react-hot-toast';
 import { API_URL } from '../config';
-import { GoogleLogin } from '@react-oauth/google';
+import ResponsiveGoogleLogin from '../components/auth/ResponsiveGoogleLogin';
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-amber-50 to-yellow-50 flex items-center justify-center px-4 py-12">
+        <div className="min-h-screen bg-gradient-to-br from-amber-50 to-yellow-50 flex items-center justify-center px-4 py-12 overflow-x-hidden">
             <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Left Side - Content */}
                 <div className="hidden lg:block">
@@ -266,8 +266,7 @@ const Register = () => {
                     </div>
 
                     {/* Google Signup Button */}
-                    <div className="flex justify-center">
-                        <GoogleLogin
+                    <ResponsiveGoogleLogin
                             onSuccess={async (credentialResponse) => {
                                 const loadingToastId = toast.loading('Signing you in with Google...');
 
@@ -318,9 +317,7 @@ const Register = () => {
                             size="large"
                             text="signup_with"
                             shape="rectangular"
-                            width={400}
                         />
-                    </div>
 
                     {/* Login Link */}
                     <p className="text-center mt-6 text-gray-600">

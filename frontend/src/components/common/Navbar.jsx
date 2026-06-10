@@ -206,7 +206,7 @@ const Navbar = () => {
         <>
             {/* Top Bar */}
             <div className="hidden lg:block text-white" style={{ backgroundColor: '#0b1326', borderBottom: '1px solid rgba(121,219,141,0.12)' }}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="page-container">
                     <div className="flex items-center justify-between h-8 text-xs">
                         <div className="flex items-center gap-4">
                             <a
@@ -254,7 +254,7 @@ const Navbar = () => {
                     ? 'bg-white/95 dark:bg-secondary-900/95 backdrop-blur-xl shadow-lg shadow-gray-200/50 dark:shadow-none'
                     : 'bg-white dark:bg-secondary-900 border-b border-gray-100 dark:border-secondary-800'
             }`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="page-container">
                     <div className="flex items-center justify-between h-14 py-1">
 
                         {/* Logo */}

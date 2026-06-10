@@ -22,7 +22,7 @@ import ProductCard from '../components/products/ProductCard';
 // ========== PRODUCT SECTION SKELETON LOADER ==========
 const ProductSectionSkeleton = ({ count = 4 }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
             {[...Array(count)].map((_, i) => (
                 <div
                     key={i}
@@ -180,7 +180,7 @@ const Home = () => {
                 </div>
 
                 {/* ── Main grid ── */}
-                <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-16">
+                <div className="relative z-10 page-container">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 sm:py-12 md:py-16 lg:py-20 pb-20 sm:pb-24 md:pb-28 lg:pb-32">
 
                         {/* ─── LEFT: text ─── */}
@@ -376,7 +376,7 @@ const Home = () => {
 
             {/* ==================== FEATURES BAR ==================== */}
             <section className="bg-white dark:bg-secondary-900 py-4 sm:py-6 md:py-8 border-b border-secondary-100 dark:border-secondary-800">
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 sm:px-4">
+                <div className="page-container">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                         {[
                             { icon: HiTruck, title: 'Free Shipping', desc: 'Orders $50+', color: 'primary' },
@@ -409,7 +409,7 @@ const Home = () => {
                     }} />
                 </div>
 
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 sm:px-4 relative">
+                <div className="page-container relative">
                     {/* Section Header */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -483,7 +483,7 @@ const Home = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-bl from-primary-200/40 to-transparent rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-tr from-primary-200/30 to-transparent rounded-full blur-3xl" />
 
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
+                <div className="page-container relative">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
@@ -514,7 +514,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={8} />
                     ) : featuredProducts.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
                             {featuredProducts.slice(0, 8).map((product, idx) => (
                                 <ProductCard key={product.id} product={product} priority={idx < 4} />
                             ))}
@@ -529,7 +529,7 @@ const Home = () => {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500" />
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-orange-200/50 to-transparent rounded-full blur-3xl" />
 
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
+                <div className="page-container relative">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
@@ -560,7 +560,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={4} />
                     ) : onSale.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
                             {onSale.slice(0, 4).map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
@@ -574,7 +574,7 @@ const Home = () => {
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-primary-200/30 to-transparent rounded-full blur-3xl" />
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-gold-200/20 to-transparent rounded-full blur-3xl" />
 
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
+                <div className="page-container relative">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
@@ -603,7 +603,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={8} />
                     ) : newArrivals.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
                             {newArrivals.slice(0, 8).map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
@@ -617,7 +617,7 @@ const Home = () => {
                 <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-gold-200/40 to-transparent rounded-full blur-3xl" />
                 <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-gold-200/30 to-transparent rounded-full blur-3xl" />
 
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-7xl mx-auto px-4 relative">
+                <div className="page-container relative">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
@@ -646,7 +646,7 @@ const Home = () => {
                     {productsLoading ? (
                         <ProductSectionSkeleton count={8} />
                     ) : bestsellers.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
                             {bestsellers.slice(0, 8).map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
@@ -665,7 +665,7 @@ const Home = () => {
                     }} />
                 </div>
 
-                <div className="w-[92%] sm:w-[95%] lg:w-[90%] max-w-4xl mx-auto px-4 text-center relative">
+                <div className="page-container text-center relative">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}

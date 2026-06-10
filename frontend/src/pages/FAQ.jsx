@@ -114,7 +114,7 @@ const FAQ = () => {
         <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
             {/* Hero */}
             <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-16 lg:py-20">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div className="page-container text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
                         <HiQuestionMarkCircle className="w-4 h-4" />
                         Help Center
@@ -139,7 +139,7 @@ const FAQ = () => {
             </div>
 
             {/* FAQ Content */}
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="page-container py-16">
                 {filteredCategories.length === 0 ? (
                     <div className="text-center py-12">
                         <HiQuestionMarkCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />

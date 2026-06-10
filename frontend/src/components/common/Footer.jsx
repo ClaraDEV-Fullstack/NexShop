@@ -59,7 +59,7 @@ const Footer = () => {
     return (
         <footer className="bg-gray-900 text-gray-300 relative overflow-hidden text-xs">
             {/* Main Footer */}
-            <div className="relative w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 py-6 md:py-8">
+            <div className="page-container relative py-6 md:py-8">
                 <div className="grid grid-cols-2 lg:grid-cols-12 gap-4 md:gap-6">
 
                     {/* Brand Section - Full width on mobile */}
@@ -187,7 +187,7 @@ const Footer = () => {
 
             {/* Bottom Bar */}
             <div className="border-t border-gray-800 bg-black/20">
-                <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-1.5 text-[10px] text-gray-500">
+                <div className="page-container py-3 flex flex-col sm:flex-row items-center justify-between gap-1.5 text-[10px] text-gray-500">
                     <span>© {currentYear} NEXSHOP. All rights reserved.</span>
                     <span className="flex items-center gap-0.5">
                         Made with <HiHeart className="w-2.5 h-2.5 text-red-500 mx-0.5" /> in Cameroon 🇨🇲

@@ -191,7 +191,7 @@ const ProductDetail = () => {
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50/30">
             {/* Breadcrumb */}
             <div className="bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-10">
-                <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-2 sm:py-2.5">
+                <div className="page-container relative py-2 sm:py-2.5">
                     <nav className="text-[10px] sm:text-xs md:text-sm">
                         <ol className="flex items-center gap-1 sm:gap-1.5 text-gray-500 overflow-x-auto whitespace-nowrap scrollbar-hide">
                             <li>
@@ -222,7 +222,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Main Content */}
-            <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-3 sm:py-4 md:py-6 lg:py-8">
+            <div className="page-container py-3 sm:py-4 md:py-6 lg:py-8">
 
                 {/* Product Detail Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 xl:gap-12 mb-6 sm:mb-8 md:mb-12">

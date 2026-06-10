@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { API_URL } from '../config';
 import WelcomeToast from '../components/toasts/WelcomeToast';
 import { toastConfig } from '../utils/toastConfig';
-import { GoogleLogin } from '@react-oauth/google';
+import ResponsiveGoogleLogin from '../components/auth/ResponsiveGoogleLogin';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -82,8 +82,8 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center px-4 py-12">
-            <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center px-4 py-12 overflow-x-hidden">
+            <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Left Side - Content */}
                 <div className="hidden lg:block">
                     <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl p-10 text-white shadow-2xl">
@@ -232,8 +232,7 @@ const Login = () => {
                             </div>
 
                             {/* Google Login */}
-                            <div className="w-full flex justify-center">
-                                <GoogleLogin
+                            <ResponsiveGoogleLogin
                                     onSuccess={async (credentialResponse) => {
                                         const loadingToastId = toast.loading('Signing you in with Google...');
 
@@ -284,9 +283,7 @@ const Login = () => {
                                     size="large"
                                     text="continue_with"
                                     shape="rectangular"
-                                    width={400}
                                 />
-                            </div>
                         </div>
                     </form>
 

@@ -249,7 +249,7 @@ const Profile = () => {
                 </div>
             )}
 
-            <div className="w-[95%] lg:w-[90%] max-w-6xl mx-auto px-2 md:px-4">
+            <div className="page-container">
                 {/* Page Header - Compact */}
                 <div className="mb-4 md:mb-6">
                     <h1 className="text-xl md:text-2xl font-bold text-gray-900">My Profile</h1>

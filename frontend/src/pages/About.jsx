@@ -71,7 +71,7 @@ const About = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800">
                     <div className="absolute inset-0 bg-black/20"></div>
                 </div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                <div className="page-container relative py-12 sm:py-16 lg:py-20">
                     <div className="text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4 text-white">
                             <HiGlobe className="w-4 h-4" />
@@ -105,7 +105,7 @@ const About = () => {
 
             {/* Our Story Section - More Compact and Modern */}
             <section className="py-10 sm:py-12 lg:py-16 bg-white dark:bg-secondary-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="page-container">
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         <div>
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-4">
@@ -173,7 +173,7 @@ const About = () => {
 
             {/* Our Values Section - More Compact and Modern */}
             <section className="py-10 sm:py-12 lg:py-16 bg-gray-50 dark:bg-secondary-900">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="page-container">
                     <div className="text-center mb-8 lg:mb-12">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Values</h2>
                         <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -197,7 +197,7 @@ const About = () => {
 
             {/* Why Choose Us Section - More Compact and Modern */}
             <section className="py-10 sm:py-12 lg:py-16 bg-white dark:bg-secondary-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="page-container">
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         <div>
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-4">
@@ -259,7 +259,7 @@ const About = () => {
 
             {/* Contact CTA Section - More Compact and Modern */}
             <section className="py-10 sm:py-12 lg:py-16 bg-gradient-to-br from-primary-600 to-primary-700">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div className="page-container text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Have Questions?</h2>
                     <p className="text-primary-100 max-w-2xl mx-auto mb-8">
                         Our team is here to help. Contact us anytime and we'll get back to you within 24 hours.

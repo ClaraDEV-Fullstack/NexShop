@@ -67,7 +67,7 @@ const Contact = () => {
                     <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary-500/30 rounded-full blur-3xl" />
                 </div>
 
-                <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 relative">
+                <div className="page-container relative">
                     <div className="text-center max-w-2xl mx-auto">
                         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium mb-4">
                             <HiChatAlt2 className="w-3.5 h-3.5" />
@@ -91,7 +91,7 @@ const Contact = () => {
                 </div>
             </div>
 
-            <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 py-6 md:py-12">
+            <div className="page-container py-6 md:py-12">
                 {/* Contact Cards - Compact */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 -mt-12 md:-mt-16 mb-6 md:mb-12 relative z-10">
                     {contactInfo.map((info, idx) => (

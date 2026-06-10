@@ -210,7 +210,7 @@ const Orders = () => {
 
             {/* Hero Header - Compact */}
             <div className="bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 text-white">
-                <div className="max-w-6xl mx-auto px-4 py-5 md:py-6">
+                <div className="page-container py-5 md:py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
                             <h1 className="text-xl md:text-2xl font-bold">My Orders</h1>
@@ -251,7 +251,7 @@ const Orders = () => {
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
+            <div className="page-container py-4 md:py-6">
                 {orders.length === 0 ? (
                     <div className="bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm">
                         <div className="max-w-sm mx-auto">

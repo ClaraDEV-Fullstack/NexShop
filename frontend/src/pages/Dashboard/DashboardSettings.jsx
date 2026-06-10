@@ -294,7 +294,7 @@ const DashboardSettings = () => {
                 </div>
             )}
 
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="page-container">
                 {/* Header */}
                 <div className="mb-10">
                     <Link

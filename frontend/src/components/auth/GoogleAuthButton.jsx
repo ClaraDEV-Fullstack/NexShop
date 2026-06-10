@@ -1,4 +1,4 @@
-import { GoogleLogin } from '@react-oauth/google';
+import ResponsiveGoogleLogin from './ResponsiveGoogleLogin';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setCredentials } from '../../store/authSlice';
@@ -65,18 +65,15 @@ const GoogleAuthButton = ({ mode = 'login' }) => {
     };
 
     return (
-        <div className="w-full flex justify-center">
-            <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleError}
-                useOneTap={false}
-                theme="outline"
-                size="large"
-                text={mode === 'login' ? 'signin_with' : 'signup_with'}
-                shape="rectangular"
-                width={400}
-            />
-        </div>
+        <ResponsiveGoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            useOneTap={false}
+            theme="outline"
+            size="large"
+            text={mode === 'login' ? 'signin_with' : 'signup_with'}
+            shape="rectangular"
+        />
     );
 };
 

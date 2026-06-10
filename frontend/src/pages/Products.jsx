@@ -39,7 +39,7 @@ const setCachedData = (key, data) => {
 // ========== SKELETON LOADER COMPONENT ==========
 const ProductSkeleton = ({ count = 8 }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-3 lg:gap-4">
             {[...Array(count)].map((_, index) => (
                 <div
                     key={index}
@@ -75,7 +75,7 @@ const ProductGrid = ({ products }) => {
     if (!products || products.length === 0) return null;
 
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-3 lg:gap-4">
             {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
             ))}
@@ -326,7 +326,7 @@ const Products = () => {
         <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900">
             {/* Page Header */}
             <div className="bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 text-white">
-                <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 py-4 md:py-6">
+                <div className="page-container py-4 md:py-6">
                     <div className="text-center">
                         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-0.5">
                             {getCurrentCategoryName()}
@@ -343,7 +343,7 @@ const Products = () => {
                 </div>
             </div>
 
-            <div className="w-[95%] lg:w-[90%] max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-4">
+            <div className="page-container py-3 md:py-4">
                 {/* Search and Filter Bar */}
                 <div className="bg-white dark:bg-secondary-800 rounded-lg shadow-sm border border-secondary-100 dark:border-secondary-700 p-2 md:p-3 mb-3">
                     <div className="flex flex-row gap-1.5 md:gap-2">
