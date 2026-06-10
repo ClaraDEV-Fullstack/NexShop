@@ -181,14 +181,14 @@ const Home = () => {
 
                 {/* ── Main grid ── */}
                 <div className="relative z-10 page-container">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 sm:py-12 md:py-16 lg:py-20 pb-20 sm:pb-24 md:pb-28 lg:pb-32">
+                    <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 lg:gap-10 xl:gap-12 items-center py-8 sm:py-12 md:py-16 lg:py-20 pb-20 sm:pb-24 md:pb-28 lg:pb-32">
 
                         {/* ─── LEFT: text ─── */}
-                        <div className="flex flex-col gap-4 order-2 md:order-1">
+                        <div className="flex flex-col gap-4 lg:gap-5 order-2 lg:order-1 max-w-none">
 
                             {/* Shipping badge */}
                             <motion.div initial={{ opacity:0, y:-14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.45 }}>
-                                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold w-fit"
+                                <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold w-fit"
                                     style={{
                                         background: 'rgba(21,128,61,0.2)',
                                         border: '1px solid rgba(121,219,141,0.3)',
@@ -201,13 +201,13 @@ const Home = () => {
 
                             {/* Headline */}
                             <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.55, delay:0.1 }}
-                                className="space-y-1">
-                                <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.15 }}
-                                    className="text-4xl sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem]">
+                                className="space-y-1 sm:space-y-2">
+                                <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.08 }}
+                                    className="text-[2.35rem] leading-[1.08] sm:text-5xl md:text-6xl lg:text-[3.85rem] xl:text-[4.75rem] 2xl:text-[5.5rem]">
                                     <span className="block" style={{ color: '#dae2fd' }}>Discover Your</span>
                                     <span className="block" style={{ color: '#ffe083' }}>Perfect Style</span>
                                 </h1>
-                                <p className="text-lg sm:text-xl font-bold pt-1"
+                                <p className="text-xl sm:text-2xl lg:text-3xl xl:text-[2rem] font-bold pt-1 sm:pt-2"
                                     style={{ color: '#becabc', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                                     Shop Smarter, Live Better
                                 </p>
@@ -215,7 +215,7 @@ const Home = () => {
 
                             {/* Description */}
                             <motion.p initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.18 }}
-                                className="text-sm sm:text-base max-w-md leading-relaxed"
+                                className="text-base sm:text-lg lg:text-xl xl:text-[1.35rem] max-w-xl lg:max-w-2xl xl:max-w-3xl leading-relaxed"
                                 style={{ color: '#becabc', fontFamily: "'Hanken Grotesk', sans-serif" }}>
                                 Electronics, Fashion, Beauty, Home &amp; more —
                                 unbeatable prices, fast delivery, 100% secure checkout.
@@ -231,7 +231,7 @@ const Home = () => {
                                     { icon: HiSparkles,      label: 'Beauty' },
                                 ].map((chip, i) => (
                                     <Link key={i} to="/products"
-                                        className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-opacity hover:opacity-80"
+                                        className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-opacity hover:opacity-80"
                                         style={{
                                             background: 'rgba(255,255,255,0.05)',
                                             backdropFilter: 'blur(12px)',
@@ -250,7 +250,7 @@ const Home = () => {
                             <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.3 }}
                                 className="flex flex-row gap-3 mt-1">
                                 <Link to="/products"
-                                    className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-[0.98] hover:brightness-110"
+                                    className="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 active:scale-[0.98] hover:brightness-110"
                                     style={{
                                         background: '#79db8d',
                                         color: '#003916',
@@ -261,7 +261,7 @@ const Home = () => {
                                     Shop Now
                                 </Link>
                                 <Link to="/products?on_sale=true"
-                                    className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 active:scale-[0.98] hover:bg-white/10"
+                                    className="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 active:scale-[0.98] hover:bg-white/10"
                                     style={{
                                         border: '1px solid rgba(121,219,141,0.3)',
                                         color: '#dae2fd',
@@ -274,7 +274,7 @@ const Home = () => {
 
                             {/* Stats bar */}
                             <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5, delay:0.38 }}
-                                className="grid grid-cols-3 gap-2 py-5 mt-2"
+                                className="grid grid-cols-3 gap-2 sm:gap-4 py-5 sm:py-6 mt-2 max-w-2xl lg:max-w-none"
                                 style={{ borderTop: '1px solid rgba(63,73,63,0.35)', borderBottom: '1px solid rgba(63,73,63,0.35)' }}>
                                 {[
                                     { value: '50K+', label: 'CUSTOMERS' },
@@ -288,11 +288,11 @@ const Home = () => {
                                             borderRight: '1px solid rgba(63,73,63,0.35)',
                                             paddingLeft: '8px', paddingRight: '8px'
                                         } : {}}>
-                                        <p className="font-black text-2xl sm:text-[2rem] leading-none"
+                                        <p className="font-black text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem] leading-none"
                                             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#79db8d' }}>
                                             {s.value}
                                         </p>
-                                        <p className="text-[10px] font-bold uppercase mt-1.5"
+                                        <p className="text-[10px] sm:text-xs font-bold uppercase mt-1.5 sm:mt-2"
                                             style={{ color: '#becabc', letterSpacing: '0.06em', fontFamily: "'Hanken Grotesk', sans-serif" }}>
                                             {s.label}
                                         </p>
@@ -304,7 +304,7 @@ const Home = () => {
                         {/* ─── RIGHT: image ─── */}
                         <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }}
                             transition={{ duration:0.7, delay:0.15, ease:[0.25,0.46,0.45,0.94] }}
-                            className="relative order-1 md:order-2">
+                            className="relative order-1 lg:order-2 lg:max-w-xl xl:max-w-2xl lg:justify-self-end w-full">
 
                             {/* Image frame */}
                             <div className="relative group rounded-2xl overflow-hidden shadow-2xl"
@@ -315,7 +315,7 @@ const Home = () => {
                                     fetchpriority="high"
                                     loading="eager"
                                     className="w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                                    style={{ aspectRatio: '3/4', maxHeight: '520px' }}
+                                    style={{ aspectRatio: '3/4', maxHeight: '560px' }}
                                 />
                                 {/* Bottom gradient */}
                                 <div className="absolute inset-0 pointer-events-none" style={{
