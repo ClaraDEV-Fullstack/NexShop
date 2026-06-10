@@ -18,8 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
-
-# Import settings to access DEBUG and MEDIA_ROOT
+from django.shortcuts import redirect
 from django.conf import settings
 
 # Import static() to serve media files in development
@@ -38,7 +37,22 @@ from drf_spectacular.views import (
 def health_check(request):
     return JsonResponse({'status': 'healthy', 'service': 'nexshop-api'})
 
+
+def root_view(request):
+    """Redirect visitors to the storefront; this service is API-only."""
+    frontend_url = getattr(settings, 'FRONTEND_URL', '') or ''
+    if frontend_url:
+        return redirect(frontend_url)
+    return JsonResponse({
+        'service': 'nexshop-api',
+        'message': 'This is the API server. Use the frontend URL for the shop.',
+        'health': '/api/health/',
+        'docs': '/api/docs/',
+        'admin': '/admin/',
+    })
+
 urlpatterns = [
+    path('', root_view, name='root'),
     # =============================================
     # ADMIN
     # =============================================
