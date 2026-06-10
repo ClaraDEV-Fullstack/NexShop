@@ -1,11 +1,10 @@
 import { useState } from 'react';
+import { PLACEHOLDER_IMAGE } from '../../utils/helpers';
 
 /**
  * Optimised product image.
  * - priority=true  → eager load + fetchpriority="high" (use for above-fold images)
  * - priority=false → native browser lazy loading (default)
- *
- * Cloudinary-specific URL transforms have been removed — images are on Supabase CDN.
  */
 const OptimizedImage = ({
     src,
@@ -17,7 +16,8 @@ const OptimizedImage = ({
     const [isLoaded, setIsLoaded] = useState(false);
     const [hasError, setHasError] = useState(false);
 
-    const imgSrc = src || '/placeholder-product.jpg';
+    const imgSrc = src || PLACEHOLDER_IMAGE;
+    const displaySrc = hasError ? PLACEHOLDER_IMAGE : imgSrc;
 
     return (
         <div className={`relative overflow-hidden ${placeholderClassName}`}>
@@ -27,7 +27,7 @@ const OptimizedImage = ({
             )}
 
             <img
-                src={hasError ? '/placeholder-product.jpg' : imgSrc}
+                src={displaySrc}
                 alt={alt}
                 loading={priority ? 'eager' : 'lazy'}
                 decoding="async"

@@ -10,21 +10,35 @@ from .models import (
 )
 
 
-# ============ CLOUDINARY URL HELPER ============
+# ============ IMAGE URL HELPER ============
+
+def _supabase_public_url(relative_path):
+    """Build a public Supabase Storage URL from a stored file path."""
+    from django.conf import settings
+
+    supabase_url = getattr(settings, 'SUPABASE_URL', '')
+    service_key = getattr(settings, 'SUPABASE_SERVICE_KEY', '')
+    if not supabase_url or not service_key:
+        return None
+
+    bucket = getattr(settings, 'SUPABASE_BUCKET', 'media')
+    clean = relative_path.lstrip('/')
+    if clean.startswith('media/'):
+        clean = clean[len('media/'):]
+    return f'{supabase_url.rstrip("/")}/storage/v1/object/public/{bucket}/{clean}'
+
 
 def get_image_url(image_field, request=None):
     """
-    Extract clean Cloudinary URL from image field.
-    Handles malformed URLs like:
-    - http://localhost:8000/media/https%3A/res.cloudinary.com/...
-    - /media/https%3A/res.cloudinary.com/...
-    - https%3A/res.cloudinary.com/...
+    Return a browser-ready image URL.
+    Handles Cloudinary/Supabase CDN URLs, localhost paths, and relative storage paths.
     """
+    from django.conf import settings
+
     if not image_field:
         return None
 
     try:
-        # Get the raw URL/value
         if hasattr(image_field, 'url'):
             url = image_field.url
         elif hasattr(image_field, 'name'):
@@ -35,29 +49,20 @@ def get_image_url(image_field, request=None):
         if not url:
             return None
 
-        # Step 1: Decode URL-encoded characters (%3A -> :, %2F -> /)
         url = unquote(url)
 
-        # Step 2: Check if there's a Cloudinary URL embedded in the path
-        # Pattern: anything before "https://res.cloudinary.com" or "http://res.cloudinary.com"
         cloudinary_pattern = r'(https?://res\.cloudinary\.com/[^\s]+)'
         match = re.search(cloudinary_pattern, url)
-
         if match:
-            # Found Cloudinary URL embedded - extract it
             return match.group(1)
 
-        # Step 3: Check for malformed URL patterns
-        # Pattern: /media/https:/... or http://localhost:8000/media/https:/...
         if 'res.cloudinary.com' in url:
-            # Extract everything from res.cloudinary.com onwards
             cloudinary_match = re.search(r'(res\.cloudinary\.com/[^\s]+)', url)
             if cloudinary_match:
                 return 'https://' + cloudinary_match.group(1)
 
-        # Step 4: Fix common malformations
         if url.startswith('/media/https:/'):
-            url = 'https://' + url[14:]  # Remove '/media/https:/'
+            url = 'https://' + url[14:]
         elif url.startswith('/media/http:/'):
             url = 'http://' + url[13:]
         elif url.startswith('https:/') and not url.startswith('https://'):
@@ -65,11 +70,25 @@ def get_image_url(image_field, request=None):
         elif url.startswith('http:/') and not url.startswith('http://'):
             url = 'http://' + url[6:]
 
-        # Step 5: If it's already a valid URL, return it
+        supabase_pattern = r'(https?://[^/]+\.supabase\.co/storage/v1/object/public/[^\s]+)'
+        supabase_match = re.search(supabase_pattern, url)
+        if supabase_match:
+            return supabase_match.group(1)
+
         if url.startswith('http://') or url.startswith('https://'):
+            if 'localhost' in url or '127.0.0.1' in url:
+                from urllib.parse import urlparse
+                path = urlparse(url).path
+                if '/media/' in path:
+                    rel = path.split('/media/', 1)[-1]
+                    supabase_url = _supabase_public_url(rel)
+                    if supabase_url:
+                        return supabase_url
+                backend = getattr(settings, 'BACKEND_URL', '')
+                if backend:
+                    return f"{backend.rstrip('/')}{path}"
             return url
 
-        # Step 6: Try Cloudinary's build_url method if available
         if hasattr(image_field, 'build_url'):
             try:
                 built_url = image_field.build_url()
@@ -78,9 +97,22 @@ def get_image_url(image_field, request=None):
             except Exception:
                 pass
 
-        # Step 7: For local development with relative paths
-        if request and url.startswith('/'):
-            return request.build_absolute_uri(url)
+        if url.startswith('/media/'):
+            rel = url.split('/media/', 1)[-1]
+            supabase_url = _supabase_public_url(rel)
+            if supabase_url:
+                return supabase_url
+
+        supabase_url = _supabase_public_url(url)
+        if supabase_url:
+            return supabase_url
+
+        if url.startswith('/'):
+            if request:
+                return request.build_absolute_uri(url)
+            backend = getattr(settings, 'BACKEND_URL', '')
+            if backend:
+                return f"{backend.rstrip('/')}{url}"
 
         return url
 
@@ -207,7 +239,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         if obj.image:
-            return obj.image.url  # ✅ THIS LINE FIXES EVERYTHING
+            return get_image_url(obj.image, self.context.get('request'))
         return None
 
 

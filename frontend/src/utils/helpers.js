@@ -33,6 +33,19 @@ export const getImageUrl = (imageData) => {
         }
         // Already a full URL
         if (imageData.startsWith('http://') || imageData.startsWith('https://')) {
+            // Rewrite dev localhost URLs to Supabase/CDN when embedded in path
+            if (imageData.includes('localhost') || imageData.includes('127.0.0.1')) {
+                const supabaseMatch = imageData.match(/(https?:\/\/[^/]+\.supabase\.co\/storage\/v1\/object\/public\/[^\s]+)/);
+                if (supabaseMatch) return supabaseMatch[1];
+                const cloudinaryMatch = imageData.match(/(https?:\/\/res\.cloudinary\.com\/[^\s]+)/);
+                if (cloudinaryMatch) return cloudinaryMatch[1];
+                try {
+                    const path = new URL(imageData).pathname;
+                    return `${BACKEND_URL}${path}`;
+                } catch {
+                    return imageData;
+                }
+            }
             return imageData;
         }
         // Data URL (SVG, base64)
