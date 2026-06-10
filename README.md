@@ -1,21 +1,26 @@
 # 🛒 NEXSHOP
 
-A modern, full-stack e-commerce ecosystem featuring a responsive **React** frontend and a robust **Django REST Framework** backend. This project showcases end-to-end development, from secure JWT/OAuth authentication to containerized deployment.
+A modern, full-stack e-commerce platform built for the Cameroon market — featuring a responsive **React** frontend and a **Django REST Framework** backend. Browse products, manage cart & wishlist, checkout with mobile money (demo mode), track orders, and receive email confirmations.
 
-**🚀 [Live Demo](https://nexshop-ui.onrender.com/)**
-⚠️ Note: Free Render instances sleep after ~15 min idle. The UI loads from a static CDN; the API may take up to ~60s to wake on first visit.
+| | |
+|---|---|
+| **Live demo** | [nextshop-ui.onrender.com](https://nextshop-ui.onrender.com) |
+| **API** | [nexshop-shur.onrender.com/api](https://nexshop-shur.onrender.com/api) |
+| **Repository** | [github.com/ClaraDEV-Fullstack/NexShop](https://github.com/ClaraDEV-Fullstack/NexShop) |
 
+> ⚠️ **Note:** Free Render instances sleep after ~15 min idle. The UI loads from a static CDN; the API may take up to ~60s to wake on first visit.
 
 <p align="center">
   <img width="90%" alt="NEXSHOP Landing Page" src="https://github.com/user-attachments/assets/1dcfcdb6-47bb-4a6b-b5d7-19a1c5684ad3" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react&style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Django-5.1.4-092E20?logo=django&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/React-18.2-61DAFB?logo=react&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Django-6.0-092E20?logo=django&style=for-the-badge" />
   <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&style=for-the-badge" />
   <img src="https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Redux-Toolkit-764ABC?logo=redux&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Redux_Toolkit-764ABC?logo=redux&style=for-the-badge" />
 </p>
 
 ---
@@ -27,6 +32,7 @@ A modern, full-stack e-commerce ecosystem featuring a responsive **React** front
 - [📸 Screenshots](#-screenshots)
 - [📁 Project Structure](#-project-structure)
 - [🚀 Installation](#-installation)
+- [🌐 Deploy on Render](#-deploy-on-render)
 - [📚 API Documentation](#-api-documentation)
 - [👨‍💻 Author](#-author)
 
@@ -34,57 +40,87 @@ A modern, full-stack e-commerce ecosystem featuring a responsive **React** front
 
 ## ✨ Features
 
-### 🛍️ Shopping Experience
-- **Dynamic Catalog:** Product browsing with advanced categories and filtering.
-- **Smart Search:** Real-time search functionality for products.
-- **Rich Galleries:** Interactive image galleries for product details.
-- **Recommendations:** Related products and curated bestseller collections.
+### 🛍️ Shopping
+- Product catalog with categories, filters, sorting, and pagination
+- Smart search and product detail pages with image galleries
+- Related products, featured sections, and bestseller collections
+- FCFA pricing tailored for the Cameroon market
 
-### 👤 User & Security
-- **Secure Auth:** JWT-based login and **Google OAuth 2.0** integration.
-- **Profile Management:** User-specific dashboards with profile picture uploads.
-- **Protected Routes:** Secure checkout and account management.
+### 👤 Authentication & Account
+- JWT login / register with **Google OAuth 2.0**
+- User profile and settings
+- Protected routes for checkout and dashboard pages
+- Personal dashboard: orders, wishlist, notifications, settings
 
-### 🛒 Cart & Orders
-- **Full Cart Logic:** Persistent shopping cart managed via Redux.
-- **Order Lifecycle:** Placement, history tracking, and cancellation capabilities.
-- **Wishlist:** Personal "save for later" functionality.
+### 🛒 Cart, Checkout & Orders
+- Persistent shopping cart (Redux Toolkit)
+- Multi-step checkout with shipping details
+- Order history, order detail, and cancellation
+- Wishlist (save for later)
+
+### 💳 Payments
+- **Orange Money** and **MTN Mobile Money** checkout UI
+- Demo mode (`PAYMENT_MODE=mock`) for portfolio — no real charges
+- Production-ready **CinetPay** integration for live payments
 
 ### ⭐ Engagement
-- **Reviews & Ratings:** Comprehensive feedback system with statistical summaries.
-- **Notifications:** Dashboard alerts and user feedback via **React Hot Toast**.
+- Product reviews and star ratings
+- In-app notifications dashboard
+- Order & payment confirmation emails via **Brevo SMTP**
+- Toast alerts and animated payment success feedback
+
+### 🚀 Production
+- Dockerized backend with Gunicorn
+- Static React frontend on Render CDN (Vite build)
+- Product images served from **Supabase Storage**
+- Auto-seed catalog on empty production database
+- Open Graph meta tags for rich link previews (WhatsApp, LinkedIn)
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **React** | 18.2.0 | Core UI Library |
-| **Redux Toolkit** | 2.11.1 | State & Cart Management |
-| **React Router** | 6.22.0 | Client-side Navigation |
-| **Axios** | 1.13.2 | API Communication |
-| **Tailwind CSS** | 3.4.18 | Responsive UI & Styling |
-| **Framer Motion** | 10.18.0 | High-quality UI Animations |
+| Technology | Purpose |
+|------------|---------|
+| **React 18** | UI library |
+| **Vite 6** | Build tool & dev server |
+| **Redux Toolkit** | Auth, cart & global state |
+| **React Router v6** | Routing & protected routes |
+| **Tailwind CSS** | Responsive UI & dark mode |
+| **Framer Motion** | Animations |
+| **Axios** | API client |
+| **@react-oauth/google** | Google Sign-In |
+| **React Hot Toast** | Notifications |
 
 ### Backend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Django** | 5.1.4 | Robust Web Framework |
-| **Django REST Framework** | 3.15.2 | RESTful API Architecture |
-| **SimpleJWT** | 5.4.0 | Token-based Authentication |
-| **PostgreSQL** | 16 | Relational Database |
-| **Docker** | Latest | Containerization & Orchestration |
+| Technology | Purpose |
+|------------|---------|
+| **Django 6** | Web framework |
+| **Django REST Framework** | REST API |
+| **SimpleJWT** | Token authentication |
+| **PostgreSQL** | Database |
+| **django-filter** | Product filtering |
+| **drf-spectacular** | OpenAPI / Swagger docs |
+| **Gunicorn + WhiteNoise** | Production server |
+
+### Infrastructure & Integrations
+| Technology | Purpose |
+|------------|---------|
+| **Docker** | Backend containerization |
+| **Render** | Hosting (API + static frontend) |
+| **Supabase Storage** | Product media CDN |
+| **Brevo (SMTP)** | Transactional emails |
+| **CinetPay** | Mobile money payments (live mode) |
+| **Google OAuth 2.0** | Social login |
 
 ---
 
 ## 📸 Screenshots
 
-### 📊 Admin Dashboard
-*Effortless management of products, orders, and user analytics.*
+### User Dashboard
 <p align="center">
-  <img width="90%" alt="Dashboard" src="https://github.com/user-attachments/assets/8abcca37-b766-4c70-be11-a8b6e8b83845" />
+  <img width="90%" alt="NEXSHOP Dashboard" src="https://github.com/user-attachments/assets/8abcca37-b766-4c70-be11-a8b6e8b83845" />
 </p>
 
 ---
@@ -92,88 +128,141 @@ A modern, full-stack e-commerce ecosystem featuring a responsive **React** front
 ## 📁 Project Structure
 
 ```text
-NEXSHOP/
-├── backend/               # Django REST Framework
-│   ├── accounts/          # User Auth & Google OAuth
-│   ├── products/          # Catalog Management
-│   ├── orders/            # Order Processing
-│   └── nexshop/    # Core Settings
-├── frontend/              # React SPA
-│   ├── src/
-│   │   ├── redux/         # Slices (Cart, Auth, UI)
-│   │   ├── api/           # Axios Interceptors
-│   │   └── components/    # Atomic Design UI Components
-└── nginx/                 # Reverse Proxy Configuration
+NexShop/
+├── backend/                  # Django REST API
+│   ├── accounts/             # Auth, profiles, Google OAuth
+│   ├── products/             # Catalog, categories, images
+│   ├── cart/                 # Server-side cart logic
+│   ├── orders/               # Order processing & emails
+│   ├── payments/             # Mobile money / CinetPay
+│   ├── reviews/              # Ratings & feedback
+│   ├── wishlist/             # Saved products
+│   ├── alerts/               # User notifications
+│   └── nexshop/              # Settings, URLs, storage
+├── frontend/                 # React SPA (Vite)
+│   ├── public/               # Static assets, og-image, _redirects
+│   └── src/
+│       ├── api/                # Axios client & endpoints
+│       ├── store/              # Redux slices (auth, cart)
+│       ├── pages/              # Route pages
+│       └── components/         # Reusable UI
+├── Dockerfile                # Render backend image
+├── docker-compose.yml        # Local full-stack dev
+├── render.yaml               # Render Blueprint
+└── nginx/                    # Reverse proxy (local/prod)
+```
 
-🚀 Installation
-1. Clone & Setup Backend
-Bash
+---
 
-git clone [https://github.com/ClaraDEV-Fullstack/NEXSHOP.git](https://github.com/ClaraDEV-Fullstack/NEXSHOP.git)
-cd NEXSHOP/backend
+## 🚀 Installation
+
+### Prerequisites
+- Python 3.11+
+- Node.js 20+
+- PostgreSQL (or Docker)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ClaraDEV-Fullstack/NexShop.git
+cd NexShop
+```
+
+### 2. Backend setup
+
+```bash
+cd backend
 python -m venv venv
-source venv/bin/activate  # Windows: .\venv\Scripts\activate
+source venv/bin/activate          # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
+cp ../.env.example ../.env        # Edit with your values
 python manage.py migrate
 python manage.py runserver
-2. Setup Frontend
-Bash
+```
 
-cd ../frontend
+API runs at `http://localhost:8000`
+
+### 3. Frontend setup
+
+```bash
+cd frontend
 npm install
-npm start
-3. Docker Quickstart
-Bash
+cp .env.example .env.local        # Set VITE_API_URL and VITE_GOOGLE_CLIENT_ID
+npm run dev
+```
 
+App runs at `http://localhost:5173`
+
+### 4. Docker (optional)
+
+```bash
 docker-compose up --build
+```
 
-## 🌐 Deploy on Render (fast setup)
+---
+
+## 🌐 Deploy on Render
 
 1. Push to GitHub, then in [Render](https://render.com) → **New → Blueprint** → select this repo (`render.yaml` is included).
-2. Set these env vars after the blueprint is applied:
+2. Fill secret env vars after the blueprint is applied (see `.env.render.example` for the full list).
 
 | Service | Variable | Example |
 |---------|----------|---------|
-| **NexShop (backend)** | `ALLOWED_HOSTS` | `nexshop-shur.onrender.com` |
+| **nexshop-api (backend)** | `ALLOWED_HOSTS` | `nexshop-shur.onrender.com` |
 | | `BACKEND_URL` | `https://nexshop-shur.onrender.com` |
+| | `FRONTEND_URL` | `https://nextshop-ui.onrender.com` |
 | | `CORS_ALLOWED_ORIGINS` | `https://nextshop-ui.onrender.com` |
 | | `CSRF_TRUSTED_ORIGINS` | `https://nextshop-ui.onrender.com,https://nexshop-shur.onrender.com` |
-| | `FRONTEND_URL` | `https://nextshop-ui.onrender.com` |
-| **NextShop_ui (frontend)** | `VITE_API_URL` | `https://nexshop-shur.onrender.com/api` |
-| | `VITE_GOOGLE_CLIENT_ID` | *(same as backend)* |
+| | `PAYMENT_MODE` | `mock` |
+| | `GOOGLE_OAUTH_CLIENT_ID` | *(Google Cloud Console)* |
+| | `GOOGLE_OAUTH_CLIENT_SECRET` | *(Google Cloud Console)* |
+| **nextshop-ui (frontend)** | `VITE_API_URL` | `https://nexshop-shur.onrender.com/api` |
+| | `VITE_GOOGLE_CLIENT_ID` | *(same Client ID as backend)* |
 
-3. Use **Static Site** for the frontend (included in blueprint) — assets are CDN-cached for faster loads.
-4. Optional: add [UptimeRobot](https://uptimerobot.com) to ping `https://nexshop-shur.onrender.com/api/health/` every 5 minutes to reduce cold starts.
+3. Frontend is deployed as a **Static Site** (CDN-cached Vite build).
+4. Optional: ping `https://nexshop-shur.onrender.com/api/health/` with [UptimeRobot](https://uptimerobot.com) every 5 minutes to reduce cold starts.
 
 ### Empty database / images on Render free tier
 
-Render free Web Services have **no Shell**. Images are served from **Supabase CDN** (not Render disk).
+Render free Web Services have **no Shell**. Product images are served from **Supabase CDN**.
 
-Add to the **NexShop backend** environment:
+Add to the **backend** environment:
 
 ```env
-SUPABASE_URL=https://oknwvldrydezoxazfqgx.supabase.co
-SUPABASE_SERVICE_KEY=<Supabase → Settings → API → service_role key>
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_KEY=<service_role key>
 SUPABASE_BUCKET=media
 AUTO_SEED_DB=true
 ```
 
-Redeploy — the backend auto-seeds products and uploads images to Supabase in the background (~5–10 min). Watch logs for `AUTO_SEED_DB: seeding finished.`
+Redeploy — the backend auto-seeds products and uploads images in the background (~5–10 min). Watch logs for `AUTO_SEED_DB: seeding finished.`
 
-📚 API Documentation
-Fully documented endpoints via Swagger UI:
+### Google OAuth (production)
 
-Development: http://localhost:8000/api/docs/
+In [Google Cloud Console](https://console.cloud.google.com/), add authorized origins:
 
-Schema: http://localhost:8000/api/schema/
+- `https://nextshop-ui.onrender.com`
 
-👨‍💻 Author
-ClaraDEV-Fullstack
+---
 
-GitHub: @ClaraDEV-Fullstack
+## 📚 API Documentation
 
-LinkedIn: Clara Beri
+Interactive Swagger UI (when backend is running):
 
-Portfolio: claradev.vercel.app
+| | URL |
+|---|---|
+| **Swagger UI** | `http://localhost:8000/api/docs/` |
+| **OpenAPI schema** | `http://localhost:8000/api/schema/` |
+| **Health check** | `https://nexshop-shur.onrender.com/api/health/` |
 
-<p align="center"> Built with ❤️ for the modern web. </p>
+---
+
+## 👨‍💻 Author
+
+**Clara Beri** — [ClaraDEV-Fullstack](https://github.com/ClaraDEV-Fullstack)
+
+- GitHub: [@ClaraDEV-Fullstack](https://github.com/ClaraDEV-Fullstack)
+- LinkedIn: [Clara Beri](https://linkedin.com/in/clara-beri-794097217/)
+- Portfolio: [claradev.vercel.app](https://claradev.vercel.app)
+
+<p align="center">Built with ❤️ in Cameroon 🇨🇲</p>
